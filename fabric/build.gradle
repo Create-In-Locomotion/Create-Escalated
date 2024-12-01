@@ -33,8 +33,6 @@ repositories {
 
     maven { url = "https://maven.shedaniel.me" } // Cloth Config, REI
     maven { url = "https://maven.blamejared.com" } // JEI
-
-    maven { url = "https://api.modrinth.com/maven" } // LazyDFU
     maven { url = "https://maven.terraformersmc.com/releases" } // Mod Menu, EMI
 }
 
@@ -57,7 +55,6 @@ dependencies {
     modImplementation("com.simibubi.create:create-fabric-$minecraft_version:$create_fabric_version")
 
     // Development QOL
-    modLocalRuntime("maven.modrinth:lazydfu:$lazydfu_version")
     modLocalRuntime("com.terraformersmc:modmenu:$modmenu_version")
 
     // Recipe Viewers - Create Fabric supports JEI, REI, and EMI.
