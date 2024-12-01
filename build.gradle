@@ -1,11 +1,10 @@
- plugins {
-    id "architectury-plugin" version "3.4-SNAPSHOT"
-    id "dev.architectury.loom" version "1.5-SNAPSHOT" apply false
-    id "io.github.p03w.machete" version "1.+" // automatic jar compressing on build
+plugins {
+    id "architectury-plugin" version "3.4.+"
+    id "dev.architectury.loom" version "1.7.+" apply false
 }
 
 architectury {
-    minecraft = rootProject.minecraft_version
+    minecraft = minecraft_version
 }
 
 subprojects {
@@ -16,30 +15,19 @@ subprojects {
     }
 
     repositories {
-        mavenCentral()
-        maven { url = "https://maven.shedaniel.me/" } // Cloth Config, REI
-        maven { url = "https://maven.blamejared.com/" } // JEI
         maven { url = "https://maven.parchmentmc.org" } // Parchment mappings
-        maven { url = "https://maven.quiltmc.org/repository/release" } // Quilt Mappings
-        maven { // Flywheel
-            url = "https://maven.tterrag.com/"
-            content {
-                // need to be specific here due to version overlaps
-                includeGroup("com.jozufozu.flywheel")
-            }
-        }
+
+        // mavens used on both forge and fabric
+        maven { url = "https://maven.blamejared.com/" } // JEI
+        maven { url = "https://maven.tterrag.com/" } // Flywheel on both, Create and Registrate on forge
     }
 
     dependencies {
-        minecraft "com.mojang:minecraft:${minecraft_version}"
-        // layered mappings - Mojmap names, parchment and QM docs and parameters
-        mappings(loom.layered {
-            it.mappings("org.quiltmc:quilt-mappings:${minecraft_version}+build.${qm_version}:intermediary-v2")
-            it.parchment("org.parchmentmc.data:parchment-${minecraft_version}:${parchment_version}@zip")
-            it.officialMojangMappings { nameSyntheticMembers = false }
-        })
+        minecraft "com.mojang:minecraft:$minecraft_version"
+        // Can't use parchment for some reason, game ends up completely unmapped
+        mappings loom.officialMojangMappings()
 
-        // see each subproject for dependencies.
+        // see each subproject for more dependencies.
     }
 }
 
@@ -48,32 +36,19 @@ allprojects {
     apply plugin: "architectury-plugin"
     apply plugin: "maven-publish"
 
-    archivesBaseName = rootProject.archives_base_name
-    group = rootProject.maven_group
+    base.archivesName = archives_base_name
+    group = maven_group
 
     // Formats the mod version to include the loader, Minecraft version, and build number (if present)
-    // example: 1.0.0+fabric-1.18.2-100
+    // example: 1.0.0+fabric-1.18.2-build.100
     String buildNumber = System.getenv("GITHUB_RUN_NUMBER")
-    version = "${mod_version}+${project.name}-${minecraft_version}" + (buildNumber != null ? "-${buildNumber}" : "")
+    version = "$mod_version+$project.name-$minecraft_version" + (buildNumber != null ? "-build.$buildNumber" : "")
 
-    repositories {
-        // Add repositories to retrieve artifacts from in here.
-        // You should only use this when depending on other mods because
-        // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
-        // See https://docs.gradle.org/current/userguide/declaring_repositories.html
-        // for more information about repositories.
-    }
-
-    tasks.withType(JavaCompile) {
+    tasks.withType(JavaCompile).configureEach {
         options.encoding = "UTF-8"
     }
 
     java {
         withSourcesJar()
-    }
-
-    machete {
-        // disable machete locally for faster builds
-        enabled = buildNumber != null
     }
 }

@@ -1,5 +1,5 @@
 # Create Multi-Loader Addon Template
-A template based on Architectury for creating addons for Create on Forge, Fabric, and Quilt, simultaneously.
+A template based on Architectury for creating addons for Create on Forge and Fabric simultaneously.
 
 ## How does it work?
 This template is powered by the [Architectury](https://github.com/architectury) toolchain.
@@ -44,11 +44,8 @@ so you can use your helper from common code.
 
 ## Features
 - Access to Create and all of its dependencies on both loaders
-- Mojang Mappings base, with Quilt Mappings and Parchment providing Javadoc and parameters
-- VineFlower decompiler for high quality Minecraft sources: `gradlew genSourcesWithVineflower`
-- GitHub Actions automatic build workflow
-- Machete Gradle plugin to shrink jar file sizes
-- Developer QOL: Mod Menu, LazyDFU, JEI
+- Automatic build workflow with GitHub Actions
+- Developer QOL: Mod Menu, LazyDFU, recipe viewers
 
 ## Use
 Ready to get started? First you'll want to create a new repository using this template. You can do it
@@ -77,8 +74,8 @@ Get modding!
   [Forgix](https://github.com/PacifistMC/Forgix).
 - The file names and versions of jars are configured in the root [build.gradle](build.gradle). Feel 
 free to change the format if desired, but make sure it follows SemVer to work well on Fabric.
-- When publishing, you should always let GitHub Actions build your release jars. These builds will
-have build number metadata, and will be compressed by the Machete plugin.
+- When publishing, you should always let GitHub Actions build your release jars. These jars are built in predictable
+environments and have build metadata.
 
 ## Other Templates
 - [Fabric-only template](https://github.com/Fabricators-of-Create/create-fabric-addon-template)
