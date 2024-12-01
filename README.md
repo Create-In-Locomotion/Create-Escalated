@@ -45,7 +45,7 @@ so you can use your helper from common code.
 ## Features
 - Access to Create and all of its dependencies on both loaders
 - Automatic build workflow with GitHub Actions
-- Developer QOL: Mod Menu, LazyDFU, recipe viewers
+- Developer QOL: Mod Menu, recipe viewers
 
 ## Use
 Ready to get started? First you'll want to create a new repository using this template. You can do it
