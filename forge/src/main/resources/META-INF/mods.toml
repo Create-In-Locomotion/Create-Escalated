@@ -1,33 +1,31 @@
 modLoader = "javafml"
 loaderVersion = "[${forge_version},)"
-#issueTrackerURL = ""
-license = "Insert License Here"
+issueTrackerURL = "https://github.com/Create-In-Locomotion/Create-Escalated/issues"
+license = "MIT"
 
 [[mods]]
-modId = "examplemod"
+modId = "escalated"
 version = "${version}"
-displayName = "Example Mod"
-authors = "Me!"
-description = '''
-This is an example description! Tell everyone what your mod is about!
-'''
+displayName = "Create: Escalated"
+authors = "rbasmoyai"
+description = "Bringing you to higher places in your Create mod builds"
 logoFile = "icon.png"
 
-[[dependencies.examplemod]]
+[[dependencies.escalated]]
 modId = "forge"
 mandatory = true
 versionRange = "[${forge_version},)"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.examplemod]]
+[[dependencies.escalated]]
 modId = "minecraft"
 mandatory = true
 versionRange = "${minecraft_version}"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.examplemod]]
+[[dependencies.escalated]]
 modId="create"
 mandatory=true
 versionRange="${create_version}"

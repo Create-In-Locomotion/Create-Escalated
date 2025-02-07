@@ -1,27 +1,27 @@
 {
   "schemaVersion": 1,
-  "id": "examplemod",
+  "id": "escalated",
   "version": "${version}",
-  "name": "Example Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "Create: Escalated",
+  "description": "Bringing you to higher places in your Create mod builds",
   "authors": [
-    "Me!"
+    "rbasamoyai"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://github.com/Create-In-Locomotion/Create-Escalated",
+    "sources": "https://github.com/Create-In-Locomotion/Create-Escalated/issues"
   },
-  "license": "Insert License Here",
-  "icon": "assets/examplemod/icon.png",
+  "license": "MIT",
+  "icon": "assets/escalated/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.examplemod.fabric.ExampleModFabric"
+      "rbasamoyai.escalated.fabric.CreateEscalatedFabric"
     ]
   },
   "mixins": [
-    "examplemod.mixins.json",
-    "examplemod-common.mixins.json"
+    "escalated.mixins.json",
+    "escalated-common.mixins.json"
   ],
   "depends": {
     "minecraft": "${minecraft_version}",

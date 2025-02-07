@@ -1,4 +1,4 @@
-package net.examplemod.fabric;
+package rbasamoyai.escalated.fabric;
 
 import net.fabricmc.loader.api.FabricLoader;
 

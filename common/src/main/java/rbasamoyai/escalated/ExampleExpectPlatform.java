@@ -1,4 +1,4 @@
-package net.examplemod;
+package rbasamoyai.escalated;
 
 import dev.architectury.injectables.annotations.ExpectPlatform;
 
