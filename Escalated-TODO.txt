@@ -1,0 +1,21 @@
+[feature, incomplete: Added escalator terminal blocks]
+TODO:
+    - Add block/blockstate code
+    - Add KBE
+    - Add models
+      - Item model
+      - Block model
+
+[feature, incomplete: Added moving walkway blocks]
+TODO:
+    - Add block/blockstate code
+    - Add placement code
+    - Add KBE
+    - Add entity movement on belts
+    - Add block model
+
+[feature, incomplete: Added escalator blocks]
+TODO:
+    - Add block/blockstate code
+    - Add placement
+    - Add KBE
