@@ -1,21 +1,71 @@
-[feature, incomplete: Added escalator terminal blocks]
-TODO:
-    - Add block/blockstate code
-    - Add KBE
-    - Add models
-      - Item model
-      - Block model
+feature, incomplete: Added Metal Walkway Belt item and Walkway Terminal block
 
-[feature, incomplete: Added moving walkway blocks]
-TODO:
+- Added Metal Walkway Belt item and Walkway Terminal block
+- Added data generation boilerplate
+
+[feature, incomplete: Added functional walkway blocks]
+
+- Added walkway belt item functionality for walkways
+TODO walkway:
     - Add block/blockstate code
-    - Add placement code
+      - side: narrow, left, right, center
+      - part: start, middle, end
+      - facing: north, east, south, west
+      - caps: none, left, right, both
+    - Add placement code through WalkwayConnectorItem
+      - Shaft addition and transmission
     - Add KBE
     - Add entity movement on belts
     - Add block model
 
-[feature, incomplete: Added escalator blocks]
-TODO:
+[feature, incomplete: Added walkway merging]
+
+[feature, incomplete: Added functional escalator blocks]
+
+- Added walkway belt item functionality for escalators
+TODO escalator:
     - Add block/blockstate code
-    - Add placement
+      - side: narrow, left, right, center
+      - part: start, middle, end
+      - facing: north, east, south, west
+      - caps: none, left, right, both
+    - Add placement code through WalkwayConnectorItem
     - Add KBE
+      - Shaft addition and transmission
+    - Add entity movement with steps
+      - Look at contraption code for hints?
+
+[feature: Added length config for walkway belt]
+
+- Added config boilerplate
+
+[feature: Added recipe for walkway belts]
+
+- Added recipe generation boilerplate
+
+[feature: Added dyeable steps]
+
+[feature: Added decorative handrails]
+TODO:
+    - Add handrails item
+    - Add walkway handrail block
+      - part: start, middle, end
+      - side: left, right, both
+    - Add escalator handrail block
+      - part: start, middle, end
+      - side: left, right, both
+    - Add handrails={true, false} attribute to walkway terminals and walkway/escalator blocks
+      - Add hitboxes for affected blocks
+
+[feature: Added wooden steps]
+
+[documentation: Added ponders for walkways and escalators]
+TODO:
+    - Creating walkways and escalators
+    - Adding extra shafts to walkways and escalators
+    - Merging walkways and escalators
+    - Customizing walkways and escalators using handrails and dyes
+
+[feature: Added Escalated-related advancements]
+
+[documentation: Added CHANGELOG.md]

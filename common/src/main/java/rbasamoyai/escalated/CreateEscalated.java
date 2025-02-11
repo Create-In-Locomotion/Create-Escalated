@@ -4,6 +4,9 @@ import com.simibubi.create.foundation.data.CreateRegistrate;
 import net.minecraft.resources.ResourceLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import rbasamoyai.escalated.index.EscalatedBlockEntities;
+import rbasamoyai.escalated.index.EscalatedBlocks;
+import rbasamoyai.escalated.index.EscalatedItems;
 
 public class CreateEscalated {
 
@@ -14,9 +17,13 @@ public class CreateEscalated {
     public static final CreateRegistrate REGISTRATE = CreateRegistrate.create(CreateEscalated.MOD_ID);
 
     public static void init() {
+        ModGroup.register();
+
         EscalatedBlocks.register();
+        EscalatedItems.register();
+        EscalatedBlockEntities.register();
     }
 
-    public static ResourceLocation id(String path) { return new ResourceLocation(MOD_ID, path); }
+    public static ResourceLocation resource(String path) { return new ResourceLocation(MOD_ID, path); }
 
 }

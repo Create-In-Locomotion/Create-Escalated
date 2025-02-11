@@ -1,6 +1,9 @@
 package rbasamoyai.escalated.forge;
 
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import rbasamoyai.escalated.CreateEscalated;
@@ -9,9 +12,15 @@ import rbasamoyai.escalated.CreateEscalated;
 public class CreateEscalatedForge {
 
     public CreateEscalatedForge() {
-        IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        CreateEscalated.REGISTRATE.registerEventListeners(eventBus);
+        IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
+        IEventBus forgeBus = MinecraftForge.EVENT_BUS;
+
+        CreateEscalated.REGISTRATE.registerEventListeners(modBus);
+
         CreateEscalated.init();
+        ModGroupImpl.registerForge(modBus);
+
+        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> EscalatedClientForge.prepareClient(modBus, forgeBus));
     }
 
 }

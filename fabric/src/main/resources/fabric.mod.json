@@ -17,6 +17,12 @@
   "entrypoints": {
     "main": [
       "rbasamoyai.escalated.fabric.CreateEscalatedFabric"
+    ],
+    "client": [
+      "rbasamoyai.escalated.fabric.EscalatedClientFabric"
+    ],
+    "fabric-datagen": [
+      "rbasamoyai.escalated.fabric.EscalatedDataGeneration"
     ]
   },
   "mixins": [
