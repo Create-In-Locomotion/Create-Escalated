@@ -15,31 +15,34 @@ public class EscalatedPartialsGen extends BlockModelProvider {
 
     @Override
     protected void registerModels() {
-        walkwaySteps("metal");
+        walkwaySteps("metal", "walkway_steps/metal");
     }
 
-    protected void walkwaySteps(String material) {
+    protected void walkwaySteps(String material) { walkwaySteps(material, material); }
+
+    protected void walkwaySteps(String material, String textureMaterial) {
         ResourceLocation walkwayStepBase = CreateEscalated.resource("block/walkway_step");
         ResourceLocation escalatorStepBase = CreateEscalated.resource("block/escalator_step");
 
         String walkwayStep = material + "_walkway_step";
         String escalatorStep = material + "_escalator_step";
+        String texture = textureMaterial + "_walkway_step";
 
         getBuilder("block/" + walkwayStep)
                 .parent(getExistingFile(walkwayStepBase))
-                .texture("steps", modLoc("block/" + walkwayStep));
+                .texture("steps", modLoc("block/" + texture));
         getBuilder("block/" + escalatorStep)
                 .parent(getExistingFile(escalatorStepBase))
-                .texture("steps", modLoc("block/" + walkwayStep));
+                .texture("steps", modLoc("block/" + texture));
 
 //        for (DyeColor color : DyeColor.values()) {
 //            String s = color.getSerializedName();
-//            getBuilder("block/" + s + "_" + walkwayStep)
+//            getBuilder("block/" + walkwayStep + "_" + s)
 //                    .parent(getExistingFile(walkwayStepBase))
-//                    .texture("steps", modLoc("block/" + walkwayStep));
-//            getBuilder("block/" + s + "_" + escalatorStep)
+//                    .texture("steps", modLoc("block/" + texture + "_" + s));
+//            getBuilder("block/" + escalatorStep + "_" + s)
 //                    .parent(getExistingFile(escalatorStepBase))
-//                    .texture("steps", modLoc("block/" + walkwayStep));
+//                    .texture("steps", modLoc("block/" + texture + "_" + s));
 //        }
     }
 
