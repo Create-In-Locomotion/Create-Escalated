@@ -1,5 +1,6 @@
 {
-  "block.escalated.walkway_terminal": "Walkway Terminal",
+  "block.escalated.metal_narrow_walkway": "Metal Walkway",
+  "block.escalated.metal_walkway_terminal": "Metal Walkway Terminal",
   "item.escalated.metal_walkway_steps": "Metal Walkway Steps",
   "itemGroup.escalated": "Create: Escalated"
 }

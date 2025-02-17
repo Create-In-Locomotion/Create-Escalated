@@ -12,8 +12,8 @@ public class EscalatedItems {
     static { ModGroup.useModTab(ModGroup.MAIN_TAB_KEY); }
 
     public static final ItemEntry<WalkwayConnectorItem> METAL_WALKWAY_STEPS = REGISTRATE
-            .item("metal_walkway_steps", p -> new WalkwayConnectorItem(p, false))
-            .transform(EscalatedBuilderTransformers.metalWalkwaySteps())
+            .item("metal_walkway_steps", p -> new WalkwayConnectorItem(EscalatedBlocks.METAL_WALKWAY_TERMINAL.get(), p))
+            .transform(EscalatedBuilderTransformers.existingItemModel())
             .register();
 
     public static void register() {}

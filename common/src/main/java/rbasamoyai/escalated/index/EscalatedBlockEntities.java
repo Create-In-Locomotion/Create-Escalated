@@ -1,20 +1,24 @@
 package rbasamoyai.escalated.index;
 
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
-import rbasamoyai.escalated.walkways.WalkwayTerminalBlockEntity;
-import rbasamoyai.escalated.walkways.WalkwayTerminalInstance;
-import rbasamoyai.escalated.walkways.WalkwayTerminalRenderer;
+import rbasamoyai.escalated.walkways.WalkwayBlockEntity;
+import rbasamoyai.escalated.walkways.WalkwayInstance;
+import rbasamoyai.escalated.walkways.WalkwayRenderer;
 
 import static rbasamoyai.escalated.CreateEscalated.REGISTRATE;
 
 public class EscalatedBlockEntities {
 
-    public static final BlockEntityEntry<WalkwayTerminalBlockEntity> WALKWAY_TERMINAL = REGISTRATE
-            .blockEntity("walkway_terminal", WalkwayTerminalBlockEntity::new)
-            .instance(() -> WalkwayTerminalInstance::new)
-            .renderer(() -> WalkwayTerminalRenderer::new)
-            .validBlocks(EscalatedBlocks.WALKWAY_TERMINAL)
+    public static final BlockEntityEntry<WalkwayBlockEntity> WALKWAY = REGISTRATE
+            .blockEntity("walkway", WalkwayBlockEntity::new)
+            .instance(() -> WalkwayInstance::new)
+            .renderer(() -> WalkwayRenderer::new)
+            .validBlocks(EscalatedBlocks.METAL_WALKWAY_TERMINAL, EscalatedBlocks.METAL_NARROW_WALKWAY)
             .register();
+
+    // TODO wide walkway blocks
+
+    // TODO escalator blocks
 
     public static void register() {}
 

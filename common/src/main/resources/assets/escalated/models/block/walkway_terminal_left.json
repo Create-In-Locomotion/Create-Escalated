@@ -2,11 +2,11 @@
 	"credit": "Made with Blockbench",
 	"parent": "minecraft:block/block",
 	"textures": {
-		"0": "escalated:block/walkway_terminal_top",
-		"1": "escalated:block/walkway_terminal_hole",
-		"2": "escalated:block/walkway_terminal_side",
-		"3": "escalated:block/walkway_terminal_bottom",
-		"particle": "escalated:block/walkway_terminal_top"
+		"0": "#top",
+		"1": "#hole",
+		"2": "#side",
+		"3": "#bottom",
+		"particle": "#top"
 	},
 	"elements": [
 		{
@@ -22,12 +22,12 @@
 			}
 		},
 		{
-			"from": [1, 5, 5],
-			"to": [16, 11, 11],
+			"from": [0, 5, 5],
+			"to": [15, 11, 11],
 			"rotation": {"angle": 0, "axis": "y", "origin": [1, 5, 5]},
 			"faces": {
-				"east": {"uv": [5, 5, 11, 11], "texture": "#2"},
-				"west": {"uv": [5, 5, 11, 11], "texture": "#1"}
+				"east": {"uv": [5, 5, 11, 11], "texture": "#1"},
+				"west": {"uv": [5, 5, 11, 11], "texture": "#2"}
 			}
 		},
 		{

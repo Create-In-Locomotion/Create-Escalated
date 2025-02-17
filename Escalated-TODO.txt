@@ -1,24 +1,33 @@
-feature, incomplete: Added Metal Walkway Belt item and Walkway Terminal block
+feature, incomplete: Added narrow walkway blocks
 
-- Added Metal Walkway Belt item and Walkway Terminal block
-- Added data generation boilerplate
+- Added walkway belt item functionality for narrow walkways
+- Added moving walkway functionality
+- Added walkway rendering
 
-[feature, incomplete: Added functional walkway blocks]
+[feature: Added dyeable steps]
+TODO
+    - Add dye field [5 mins]
+    - Add dye color setting to WalkwayBlockEntity [10 mins]
+        - Copy dye setting code from BeltBlockEntity
+    - Add dye interaction in AbstractWalkwayBlock [15 mins]
+        - Copy dye setting code from BeltBlock
+        - Add sided dye setting (@ExpectPlatform)
+    - Add rendering
+    - Add render partial model picking [15 mins]
 
-- Added walkway belt item functionality for walkways
-TODO walkway:
+[feature, incomplete: Added wide walkways and walkway merging]
+TODO wide walkway:
     - Add block/blockstate code
-      - side: narrow, left, right, center
-      - part: start, middle, end
+    - wide_walkway_side
       - facing: north, east, south, west
-      - caps: none, left, right, both
-    - Add placement code through WalkwayConnectorItem
+      - capped: true, false
+    - wide_walkway_center
+      - axis: x, z
+    - Add wrenching behavior using tops of terminals
       - Shaft addition and transmission
     - Add KBE
     - Add entity movement on belts
     - Add block model
-
-[feature, incomplete: Added walkway merging]
 
 [feature, incomplete: Added functional escalator blocks]
 
@@ -42,8 +51,6 @@ TODO escalator:
 [feature: Added recipe for walkway belts]
 
 - Added recipe generation boilerplate
-
-[feature: Added dyeable steps]
 
 [feature: Added decorative handrails]
 TODO:

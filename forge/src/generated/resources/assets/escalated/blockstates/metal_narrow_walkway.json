@@ -1,0 +1,79 @@
+{
+  "variants": {
+    "caps=both,facing=east": {
+      "model": "escalated:block/metal_narrow_walkway_both",
+      "y": 90
+    },
+    "caps=both,facing=north": {
+      "model": "escalated:block/metal_narrow_walkway_both"
+    },
+    "caps=both,facing=south": {
+      "model": "escalated:block/metal_narrow_walkway_both",
+      "y": 180
+    },
+    "caps=both,facing=west": {
+      "model": "escalated:block/metal_narrow_walkway_both",
+      "y": 270
+    },
+    "caps=left,facing=east": {
+      "model": "escalated:block/metal_narrow_walkway_left",
+      "y": 90
+    },
+    "caps=left,facing=north": {
+      "model": "escalated:block/metal_narrow_walkway_left"
+    },
+    "caps=left,facing=south": {
+      "model": "escalated:block/metal_narrow_walkway_left",
+      "y": 180
+    },
+    "caps=left,facing=west": {
+      "model": "escalated:block/metal_narrow_walkway_left",
+      "y": 270
+    },
+    "caps=no_shaft,facing=east": {
+      "model": "escalated:block/metal_narrow_walkway_no_shaft",
+      "y": 90
+    },
+    "caps=no_shaft,facing=north": {
+      "model": "escalated:block/metal_narrow_walkway_no_shaft"
+    },
+    "caps=no_shaft,facing=south": {
+      "model": "escalated:block/metal_narrow_walkway_no_shaft",
+      "y": 180
+    },
+    "caps=no_shaft,facing=west": {
+      "model": "escalated:block/metal_narrow_walkway_no_shaft",
+      "y": 270
+    },
+    "caps=none,facing=east": {
+      "model": "escalated:block/metal_narrow_walkway_none",
+      "y": 90
+    },
+    "caps=none,facing=north": {
+      "model": "escalated:block/metal_narrow_walkway_none"
+    },
+    "caps=none,facing=south": {
+      "model": "escalated:block/metal_narrow_walkway_none",
+      "y": 180
+    },
+    "caps=none,facing=west": {
+      "model": "escalated:block/metal_narrow_walkway_none",
+      "y": 270
+    },
+    "caps=right,facing=east": {
+      "model": "escalated:block/metal_narrow_walkway_right",
+      "y": 90
+    },
+    "caps=right,facing=north": {
+      "model": "escalated:block/metal_narrow_walkway_right"
+    },
+    "caps=right,facing=south": {
+      "model": "escalated:block/metal_narrow_walkway_right",
+      "y": 180
+    },
+    "caps=right,facing=west": {
+      "model": "escalated:block/metal_narrow_walkway_right",
+      "y": 270
+    }
+  }
+}
