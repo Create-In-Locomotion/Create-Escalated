@@ -15,12 +15,12 @@ public class EscalatedPartialsGen extends BlockModelProvider {
 
     @Override
     protected void registerModels() {
-        walkwaySteps("metal", "walkway_steps/metal");
+        walkwayAndEscalatorSteps("metal", "walkway_steps/metal");
     }
 
-    protected void walkwaySteps(String material) { walkwaySteps(material, material); }
+    protected void walkwayAndEscalatorSteps(String material) { walkwayAndEscalatorSteps(material, material); }
 
-    protected void walkwaySteps(String material, String textureMaterial) {
+    protected void walkwayAndEscalatorSteps(String material, String textureMaterial) {
         ResourceLocation walkwayStepBase = CreateEscalated.resource("block/walkway_step");
         ResourceLocation escalatorStepBase = CreateEscalated.resource("block/escalator_step");
 
@@ -35,15 +35,15 @@ public class EscalatedPartialsGen extends BlockModelProvider {
                 .parent(getExistingFile(escalatorStepBase))
                 .texture("steps", modLoc("block/" + texture));
 
-//        for (DyeColor color : DyeColor.values()) {
-//            String s = color.getSerializedName();
-//            getBuilder("block/" + walkwayStep + "_" + s)
-//                    .parent(getExistingFile(walkwayStepBase))
-//                    .texture("steps", modLoc("block/" + texture + "_" + s));
-//            getBuilder("block/" + escalatorStep + "_" + s)
-//                    .parent(getExistingFile(escalatorStepBase))
-//                    .texture("steps", modLoc("block/" + texture + "_" + s));
-//        }
+        for (DyeColor color : DyeColor.values()) {
+            String s = color.getSerializedName();
+            getBuilder("block/" + walkwayStep + "_" + s)
+                    .parent(getExistingFile(walkwayStepBase))
+                    .texture("steps", modLoc("block/" + texture + "_" + s));
+            getBuilder("block/" + escalatorStep + "_" + s)
+                    .parent(getExistingFile(escalatorStepBase))
+                    .texture("steps", modLoc("block/" + texture + "_" + s));
+        }
     }
 
 }

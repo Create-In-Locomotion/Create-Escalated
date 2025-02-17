@@ -16,6 +16,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import org.joml.Vector3f;
@@ -105,11 +106,11 @@ public class WalkwayRenderer extends KineticBlockEntityRenderer<WalkwayBlockEnti
     }
 
     public static PartialModel baseGetStepModel(WalkwayBlockEntity be) {
-        return EscalatedBlockPartials.METAL_WALKWAY_STEP;
+        DyeColor color = be.getColor();
+        return EscalatedBlockPartials.DYED_METAL_WALKWAY_STEPS.getOrDefault(color, EscalatedBlockPartials.METAL_WALKWAY_STEP);
 
         // TODO wide steps
         // TODO escalator steps
-        // TODO dyed steps
         // TODO wooden steps
     }
 

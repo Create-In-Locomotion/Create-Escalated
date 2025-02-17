@@ -10,6 +10,7 @@ import com.simibubi.create.content.kinetics.base.KineticBlockEntityInstance;
 import com.simibubi.create.content.kinetics.base.flwdata.RotatingData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.Level;
 
 import static rbasamoyai.escalated.walkways.WalkwayRenderer.getStepOffset;
@@ -21,6 +22,7 @@ public class WalkwayInstance extends KineticBlockEntityInstance<WalkwayBlockEnti
     private RotatingData bottomShaft;
     private OrientedData backStep;
     private OrientedData frontStep;
+    private DyeColor color;
 
     public WalkwayInstance(MaterialManager materialManager, WalkwayBlockEntity blockEntity) {
         super(materialManager, blockEntity);
@@ -58,6 +60,8 @@ public class WalkwayInstance extends KineticBlockEntityInstance<WalkwayBlockEnti
         boolean isController = this.blockEntity.isController();
         Direction facing = this.getFacing();
         BlockPos pos1 = this.getInstancePosition();
+
+        this.color = this.blockEntity.getColor();
 
         PartialModel model = this.getStepModel();
         if (isTerminal) {
@@ -124,7 +128,13 @@ public class WalkwayInstance extends KineticBlockEntityInstance<WalkwayBlockEnti
 
     @Override
     public boolean shouldReset() {
-        return super.shouldReset() && this.blockState != this.blockEntity.getBlockState();
+        if (super.shouldReset())
+            return true;
+        if (this.blockState != this.blockEntity.getBlockState())
+            return true;
+        if (this.blockEntity.getColor() != this.color)
+            return true;
+        return false;
     }
 
     @Override

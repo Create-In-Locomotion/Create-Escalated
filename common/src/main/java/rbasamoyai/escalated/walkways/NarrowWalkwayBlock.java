@@ -48,7 +48,7 @@ public class NarrowWalkwayBlock extends AbstractWalkwayBlock  {
 
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand,
-                                 BlockHitResult hit) {
+                                 BlockHitResult hitResult) {
         if (player.isShiftKeyDown() || !player.mayBuild())
             return InteractionResult.PASS;
         ItemStack heldItem = player.getItemInHand(hand);
@@ -64,7 +64,7 @@ public class NarrowWalkwayBlock extends AbstractWalkwayBlock  {
             return InteractionResult.SUCCESS;
         }
 
-        return super.use(state, level, pos, player, hand, hit);
+        return super.use(state, level, pos, player, hand, hitResult);
     }
 
     @Override

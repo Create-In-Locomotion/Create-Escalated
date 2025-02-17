@@ -2,15 +2,19 @@ package rbasamoyai.escalated.walkways;
 
 import com.simibubi.create.content.kinetics.base.IRotate;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
+import com.simibubi.create.foundation.utility.NBTHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
+import net.minecraft.nbt.Tag;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import rbasamoyai.escalated.walkways.WalkwayMovementHandler.TransportedEntityInfo;
 
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -27,12 +31,13 @@ public class WalkwayBlockEntity extends KineticBlockEntity {
     protected BlockPos controller;
     public float visualProgress = 0;
 
-    // TODO dye
+    private DyeColor color;
 
     // TODO items? [loader sided]
 
     public WalkwayBlockEntity(BlockEntityType<?> typeIn, BlockPos pos, BlockState state) {
         super(typeIn, pos, state);
+        this.color = null;
     }
 
     @Override
@@ -131,6 +136,24 @@ public class WalkwayBlockEntity extends KineticBlockEntity {
         return controller == null ? 0 : controller.visualProgress;
     }
 
+    public boolean applyColor(@Nullable DyeColor colorIn) {
+        if (colorIn == this.color)
+            return false;
+        if (this.level.isClientSide)
+            return true;
+
+        for (BlockPos pos : WalkwayBlock.getWalkwayChain(this.level, this.getController())) {
+            WalkwayBlockEntity walkway = WalkwayHelper.getSegmentBE(this.level, pos);
+            if (walkway == null)
+                continue;
+            walkway.color = colorIn;
+            walkway.notifyUpdate();
+        }
+        return true;
+    }
+
+    @Nullable public DyeColor getColor() { return this.color; }
+
     @Override
     protected void write(CompoundTag compound, boolean clientPacket) {
         if (this.controller != null)
@@ -139,6 +162,9 @@ public class WalkwayBlockEntity extends KineticBlockEntity {
         compound.putInt("Length", this.walkwayLength);
         if (this.isController())
             compound.putFloat("VisualProgress", this.visualProgress);
+
+        if (this.color != null)
+            NBTHelper.writeEnum(compound, "Dye", this.color);
 
         super.write(compound, clientPacket);
     }
@@ -153,6 +179,8 @@ public class WalkwayBlockEntity extends KineticBlockEntity {
             this.controller = this.worldPosition;
             this.visualProgress = compound.getFloat("VisualProgress");
         }
+
+        this.color = compound.contains("Dye", Tag.TAG_STRING) ? NBTHelper.readEnum(compound, "Dye", DyeColor.class) : null;
 
         if (!this.wasMoved) {
             if (!this.isController())

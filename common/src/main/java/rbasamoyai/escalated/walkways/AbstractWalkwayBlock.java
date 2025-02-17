@@ -8,6 +8,8 @@ import com.simibubi.create.foundation.block.ProperWaterloggedBlock;
 import com.simibubi.create.foundation.utility.Iterate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -19,6 +21,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.phys.BlockHitResult;
 import rbasamoyai.escalated.index.EscalatedBlockEntities;
 
 import java.util.List;
@@ -136,6 +139,23 @@ public abstract class AbstractWalkwayBlock extends HorizontalKineticBlock implem
         if (this.hasWalkwayShaft(state))
             drops.addAll(AllBlocks.SHAFT.getDefaultState().getDrops(builder));
         return drops;
+    }
+
+    @Override
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand,
+                                 BlockHitResult hitResult) {
+        if (player.isShiftKeyDown() || !player.mayBuild())
+            return InteractionResult.PASS;
+        ItemStack heldItem = player.getItemInHand(hand);
+
+        boolean isDye = WalkwayHelper.isDye(heldItem);
+        boolean hasWater = WalkwayHelper.hasWater(level, heldItem);
+
+        if (isDye || hasWater)
+            return onBlockEntityUse(level, pos, be -> be.applyColor(WalkwayHelper.getDyeColorFromItem(heldItem))
+                    ? InteractionResult.SUCCESS : InteractionResult.PASS);
+
+        return super.use(state, level, pos, player, hand, hitResult);
     }
 
 }
