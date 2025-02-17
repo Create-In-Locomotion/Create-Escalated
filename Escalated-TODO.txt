@@ -1,6 +1,4 @@
-
-
-[improvement: Adjusted hitbox of narrow walkway]
+bug: Fixed removal of walkway terminals
 
 [feature, incomplete: Added wide walkways and walkway merging]
 TODO wide walkway:
