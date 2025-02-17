@@ -116,7 +116,7 @@ public abstract class AbstractWalkwayBlock extends HorizontalKineticBlock implem
 
         // Destroy chain
         for (boolean forward : Iterate.trueAndFalse) {
-            BlockPos currentPos = WalkwayBlock.nextSegmentPosition(state, pos, forward, walkwayBlock.isTerminal(currentState));
+            BlockPos currentPos = WalkwayBlock.nextSegmentPosition(state, pos, forward, false);
             if (currentPos == null)
                 continue;
             currentState = level.getBlockState(currentPos);

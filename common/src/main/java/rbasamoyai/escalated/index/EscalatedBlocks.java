@@ -1,6 +1,7 @@
 package rbasamoyai.escalated.index;
 
 import com.simibubi.create.foundation.data.SharedProperties;
+import com.simibubi.create.foundation.data.TagGen;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
@@ -27,6 +28,7 @@ public class EscalatedBlocks {
 					.mapColor(MapColor.METAL)
 					.isRedstoneConductor(EscalatedBlocks::neverConducts))
 			.transform(EscalatedBuilderTransformers.walkwayTerminal("metal"))
+			.transform(TagGen.pickaxeOnly())
 			.register();
 
 	public static final BlockEntry<NarrowWalkwayBlock> METAL_NARROW_WALKWAY = REGISTRATE
@@ -39,6 +41,7 @@ public class EscalatedBlocks {
 					.mapColor(MapColor.METAL)
 					.isRedstoneConductor(EscalatedBlocks::neverConducts))
 			.transform(EscalatedBuilderTransformers.narrowWalkway("metal", EscalatedItems.METAL_WALKWAY_STEPS::asItem))
+			.transform(TagGen.pickaxeOnly())
 			.register();
 
 	// TODO wide walkway blocks, side and center

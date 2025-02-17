@@ -1,6 +1,4 @@
-bug: Fixed removal of walkway terminals
-
-[feature, incomplete: Added wide walkways and walkway merging]
+feature, incomplete: Added wide walkways and walkway merging
 TODO wide walkway:
     - Add block/blockstate code
     - wide_walkway_side
