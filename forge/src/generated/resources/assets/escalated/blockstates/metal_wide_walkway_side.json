@@ -1,0 +1,94 @@
+{
+  "variants": {
+    "caps=both,facing=east,left=false": {
+      "model": "escalated:block/metal_wide_walkway_side_right_both",
+      "y": 90
+    },
+    "caps=both,facing=east,left=true": {
+      "model": "escalated:block/metal_wide_walkway_side_left_both",
+      "y": 90
+    },
+    "caps=both,facing=north,left=false": {
+      "model": "escalated:block/metal_wide_walkway_side_right_both"
+    },
+    "caps=both,facing=north,left=true": {
+      "model": "escalated:block/metal_wide_walkway_side_left_both"
+    },
+    "caps=both,facing=south,left=false": {
+      "model": "escalated:block/metal_wide_walkway_side_right_both",
+      "y": 180
+    },
+    "caps=both,facing=south,left=true": {
+      "model": "escalated:block/metal_wide_walkway_side_left_both",
+      "y": 180
+    },
+    "caps=both,facing=west,left=false": {
+      "model": "escalated:block/metal_wide_walkway_side_right_both",
+      "y": 270
+    },
+    "caps=both,facing=west,left=true": {
+      "model": "escalated:block/metal_wide_walkway_side_left_both",
+      "y": 270
+    },
+    "caps=no_shaft,facing=east,left=false": {
+      "model": "escalated:block/metal_wide_walkway_side_right_no_shaft",
+      "y": 90
+    },
+    "caps=no_shaft,facing=east,left=true": {
+      "model": "escalated:block/metal_wide_walkway_side_left_no_shaft",
+      "y": 90
+    },
+    "caps=no_shaft,facing=north,left=false": {
+      "model": "escalated:block/metal_wide_walkway_side_right_no_shaft"
+    },
+    "caps=no_shaft,facing=north,left=true": {
+      "model": "escalated:block/metal_wide_walkway_side_left_no_shaft"
+    },
+    "caps=no_shaft,facing=south,left=false": {
+      "model": "escalated:block/metal_wide_walkway_side_right_no_shaft",
+      "y": 180
+    },
+    "caps=no_shaft,facing=south,left=true": {
+      "model": "escalated:block/metal_wide_walkway_side_left_no_shaft",
+      "y": 180
+    },
+    "caps=no_shaft,facing=west,left=false": {
+      "model": "escalated:block/metal_wide_walkway_side_right_no_shaft",
+      "y": 270
+    },
+    "caps=no_shaft,facing=west,left=true": {
+      "model": "escalated:block/metal_wide_walkway_side_left_no_shaft",
+      "y": 270
+    },
+    "caps=none,facing=east,left=false": {
+      "model": "escalated:block/metal_wide_walkway_side_right_none",
+      "y": 90
+    },
+    "caps=none,facing=east,left=true": {
+      "model": "escalated:block/metal_wide_walkway_side_left_none",
+      "y": 90
+    },
+    "caps=none,facing=north,left=false": {
+      "model": "escalated:block/metal_wide_walkway_side_right_none"
+    },
+    "caps=none,facing=north,left=true": {
+      "model": "escalated:block/metal_wide_walkway_side_left_none"
+    },
+    "caps=none,facing=south,left=false": {
+      "model": "escalated:block/metal_wide_walkway_side_right_none",
+      "y": 180
+    },
+    "caps=none,facing=south,left=true": {
+      "model": "escalated:block/metal_wide_walkway_side_left_none",
+      "y": 180
+    },
+    "caps=none,facing=west,left=false": {
+      "model": "escalated:block/metal_wide_walkway_side_right_none",
+      "y": 270
+    },
+    "caps=none,facing=west,left=true": {
+      "model": "escalated:block/metal_wide_walkway_side_left_none",
+      "y": 270
+    }
+  }
+}

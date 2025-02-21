@@ -19,8 +19,10 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.joml.Vector3f;
 import rbasamoyai.escalated.index.EscalatedBlockPartials;
+import rbasamoyai.escalated.index.EscalatedBlocks;
 
 public class WalkwayRenderer extends KineticBlockEntityRenderer<WalkwayBlockEntity> {
 
@@ -54,7 +56,6 @@ public class WalkwayRenderer extends KineticBlockEntityRenderer<WalkwayBlockEnti
             if (kinetic.hasShaftTowards(level, pos, state, right))
                 renderRotatingBuffer(be, this.getHalfShaftRotatedModel(be, state, right), ms, cons, light);
 
-            // TODO render steps
             boolean isTerminal = walkway.isTerminal(state);
             boolean flag = facing == Direction.NORTH || facing == Direction.EAST;
             boolean isController = be.isController();
@@ -107,7 +108,24 @@ public class WalkwayRenderer extends KineticBlockEntityRenderer<WalkwayBlockEnti
 
     public static PartialModel baseGetStepModel(WalkwayBlockEntity be) {
         DyeColor color = be.getColor();
-        return EscalatedBlockPartials.DYED_METAL_WALKWAY_STEPS.getOrDefault(color, EscalatedBlockPartials.METAL_WALKWAY_STEP);
+        BlockState state = be.getBlockState();
+        Level level = be.getLevel();
+        BlockPos pos = be.getBlockPos();
+
+        if (EscalatedBlocks.METAL_WALKWAY_TERMINAL.has(state)) {
+            Direction facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
+            state = level.getBlockState(pos.relative(facing));
+        }
+        if (EscalatedBlocks.METAL_NARROW_WALKWAY.has(state))
+            return EscalatedBlockPartials.DYED_METAL_WALKWAY_STEPS.getOrDefault(color, EscalatedBlockPartials.METAL_WALKWAY_STEP);
+        if (EscalatedBlocks.METAL_WIDE_WALKWAY_SIDE.has(state)) {
+            boolean left = state.getValue(WideWalkwaySideBlock.LEFT);
+            return left ? EscalatedBlockPartials.DYED_METAL_WALKWAY_STEPS_RIGHT.getOrDefault(color, EscalatedBlockPartials.METAL_WALKWAY_STEP_RIGHT)
+                    : EscalatedBlockPartials.DYED_METAL_WALKWAY_STEPS_LEFT.getOrDefault(color, EscalatedBlockPartials.METAL_WALKWAY_STEP_LEFT);
+        }
+        if (EscalatedBlocks.METAL_WIDE_WALKWAY_CENTER.has(state))
+            return EscalatedBlockPartials.DYED_METAL_WALKWAY_STEPS_CENTER.getOrDefault(color, EscalatedBlockPartials.METAL_WALKWAY_STEP_CENTER);
+        return EscalatedBlockPartials.METAL_WALKWAY_STEP;
 
         // TODO wide steps
         // TODO escalator steps

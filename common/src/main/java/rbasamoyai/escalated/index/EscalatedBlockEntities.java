@@ -13,12 +13,12 @@ public class EscalatedBlockEntities {
             .blockEntity("walkway", WalkwayBlockEntity::new)
             .instance(() -> WalkwayInstance::new)
             .renderer(() -> WalkwayRenderer::new)
-            .validBlocks(EscalatedBlocks.METAL_WALKWAY_TERMINAL, EscalatedBlocks.METAL_NARROW_WALKWAY)
+            .validBlocks(EscalatedBlocks.METAL_WALKWAY_TERMINAL, EscalatedBlocks.METAL_NARROW_WALKWAY,
+                    EscalatedBlocks.METAL_WIDE_WALKWAY_SIDE, EscalatedBlocks.METAL_WIDE_WALKWAY_CENTER)
             .register();
 
-    // TODO wide walkway blocks
-
     // TODO escalator blocks
+    // TODO wooden walkway/escalator blocks
 
     public static void register() {}
 

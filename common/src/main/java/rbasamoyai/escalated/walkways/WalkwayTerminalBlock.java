@@ -2,6 +2,7 @@ package rbasamoyai.escalated.walkways;
 
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.belt.BeltSlope;
+import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
@@ -14,8 +15,8 @@ import net.minecraft.world.level.block.state.StateDefinition;
 
 public class WalkwayTerminalBlock extends AbstractWalkwayBlock {
 
-    public WalkwayTerminalBlock(Properties properties) {
-        super(properties);
+    public WalkwayTerminalBlock(Properties properties, NonNullSupplier<WalkwaySet> walkwaySetSupplier) {
+        super(properties, walkwaySetSupplier);
         this.registerDefaultState(this.getStateDefinition().any().setValue(CAPS_SHAFT, WalkwayCaps.NONE));
     }
 
@@ -70,6 +71,26 @@ public class WalkwayTerminalBlock extends AbstractWalkwayBlock {
         } else {
             return InteractionResult.PASS;
         }
+    }
+
+    @Override
+    public BlockState transformFromMerge(Level level, BlockState state, BlockPos pos, boolean left, boolean shaft, boolean remove) {
+        return state;
+    }
+
+    @Override
+    public boolean connectedToWalkwayOnSide(Level level, BlockState state, BlockPos pos, Direction face) {
+        Direction facing = state.getValue(HORIZONTAL_FACING);
+        if (face == facing)
+            return true;
+        if (face == facing.getOpposite())
+            return false;
+        BlockPos otherPos = pos.relative(facing);
+        BlockState otherState = level.getBlockState(otherPos);
+        if (otherState.getBlock() instanceof WalkwayBlock walkway && !(otherState.getBlock() instanceof WalkwayTerminalBlock)
+            && walkway.connectedToWalkwayOnSide(level, otherState, otherPos, face))
+            return true;
+        return false;
     }
 
 }

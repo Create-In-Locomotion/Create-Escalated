@@ -1,16 +1,11 @@
-feature, incomplete: Added wide walkways and walkway merging
-TODO wide walkway:
-    - Add block/blockstate code
-    - wide_walkway_side
-      - facing: north, east, south, west
-      - capped: true, false
-    - wide_walkway_center
-      - axis: x, z
-    - Add wrenching behavior using tops of terminals
-      - Shaft addition and transmission
-    - Add KBE
-    - Add entity movement on belts
-    - Add block model
+bug: Fixed wide walkway syncing, breaking, and rotation propagation
+
+TODO 02.21.2025
+
+TODO breaking center
+TODO walkway syncing
+TODO width management
+TODO rotation propagation being weird somehow
 
 [feature, incomplete: Added functional escalator blocks]
 

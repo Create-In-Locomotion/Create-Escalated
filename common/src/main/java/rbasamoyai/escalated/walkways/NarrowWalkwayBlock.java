@@ -3,6 +3,7 @@ package rbasamoyai.escalated.walkways;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.belt.BeltSlope;
+import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -23,8 +24,8 @@ import rbasamoyai.escalated.index.EscalatedShapes;
 
 public class NarrowWalkwayBlock extends AbstractWalkwayBlock  {
 
-    public NarrowWalkwayBlock(Properties properties) {
-        super(properties);
+    public NarrowWalkwayBlock(Properties properties, NonNullSupplier<WalkwaySet> walkwaySetSupplier) {
+        super(properties, walkwaySetSupplier);
         this.registerDefaultState(this.getStateDefinition().any().setValue(CAPS, WalkwayCaps.NO_SHAFT));
     }
 
@@ -123,6 +124,25 @@ public class NarrowWalkwayBlock extends AbstractWalkwayBlock  {
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter blockGetter, BlockPos pos, CollisionContext context) {
         return EscalatedShapes.NARROW_WALKWAY.get(state.getValue(HORIZONTAL_FACING));
+    }
+
+    @Override
+    public BlockState transformFromMerge(Level level, BlockState state, BlockPos pos, boolean left, boolean shaft, boolean remove) {
+        if (remove)
+            return state;
+        WalkwayCaps caps = shaft ? WalkwayCaps.NONE : WalkwayCaps.NO_SHAFT;
+        WalkwayCaps srcCaps = state.getValue(CAPS);
+        if (shaft && (srcCaps.hasRightCap() && left || srcCaps.hasLeftCap() && !left))
+            caps = WalkwayCaps.BOTH;
+        return this.getWalkwaySet().getWideSideBlock(level, state, pos)
+                .setValue(HORIZONTAL_FACING, state.getValue(HORIZONTAL_FACING))
+                .setValue(WideWalkwaySideBlock.CAPS_SIDED, caps)
+                .setValue(WideWalkwaySideBlock.LEFT, !left);
+    }
+
+    @Override
+    public boolean connectedToWalkwayOnSide(Level level, BlockState state, BlockPos pos, Direction face) {
+        return face.getAxis() == state.getValue(HORIZONTAL_FACING).getAxis();
     }
 
 }

@@ -1,5 +1,6 @@
 package rbasamoyai.escalated.walkways;
 
+import com.simibubi.create.content.kinetics.base.KineticBlock;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.belt.BeltSlope;
 import com.simibubi.create.content.kinetics.simpleRelays.AbstractSimpleShaftBlock;
@@ -15,6 +16,8 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -23,9 +26,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import rbasamoyai.escalated.index.EscalatedBlocks;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Adpated from {@link com.simibubi.create.content.kinetics.belt.item.BeltConnectorItem}.
@@ -33,7 +34,12 @@ import java.util.List;
  */
 public class WalkwayConnectorItem extends BlockItem {
 
-    public WalkwayConnectorItem(Block block, Properties properties) { super(block, properties); }
+    private final Set<Block> otherBlocks = new HashSet<>();
+
+    public WalkwayConnectorItem(Block primaryBlock, Properties properties, Block... otherBlocks) {
+        super(primaryBlock, properties);
+        this.otherBlocks.addAll(Arrays.asList(otherBlocks));
+    }
 
     @Override public String getDescriptionId() { return this.getOrCreateDescriptionId(); }
 
@@ -72,7 +78,7 @@ public class WalkwayConnectorItem extends BlockItem {
             if (!this.canConnect(level, firstTerminal, pos))
                 return InteractionResult.FAIL;
             if (firstTerminal != null && !firstTerminal.equals(pos)) {
-                this.createSteps(level, firstTerminal, pos); // TODO functionality
+                this.createSteps(level, firstTerminal, pos);
 //                AllAdvancements.BELT.awardTo(playerEntity); // TODO: advancements?
                 if (!playerEntity.isCreative())
                     context.getItemInHand().shrink(1);
@@ -91,29 +97,87 @@ public class WalkwayConnectorItem extends BlockItem {
     }
 
     public int maxLength() { return 25; } // TODO config
-    // TODO max width
+    public int maxWidth() { return 10; } // TODO config
 
     public static boolean validateAxis(Level level, BlockPos pos) {
-        return level.isLoaded(pos) && ShaftBlock.isShaft(level.getBlockState(pos));
+        BlockState state = level.getBlockState(pos);
+        return level.isLoaded(pos) && (ShaftBlock.isShaft(state) || state.getBlock() instanceof WalkwayBlock);
     }
 
     public boolean canConnect(Level level, BlockPos first, BlockPos second) {
         if (!level.isLoaded(first) || !level.isLoaded(second) || !second.closerThan(first, this.maxLength()))
             return false;
 
-        Direction.Axis shaftAxis = level.getBlockState(first).getValue(BlockStateProperties.AXIS);
+        BlockState firstState = level.getBlockState(first);
+        BlockState secondState = level.getBlockState(second);
+        Direction.Axis shaftAxis = Direction.Axis.Y;
+        if (ShaftBlock.isShaft(firstState)) {
+            shaftAxis = firstState.getValue(BlockStateProperties.AXIS);
+        } else if (firstState.getBlock() instanceof KineticBlock kinetic && kinetic instanceof WalkwayBlock) {
+            shaftAxis = kinetic.getRotationAxis(firstState);
+        }
+
         if (shaftAxis == Direction.Axis.Y)
             return false;
         BlockPos diff = second.subtract(first);
         int x = diff.getX();
         int y = diff.getY();
         int z = diff.getZ();
+
+        // Walkway extension
+        if (Math.abs(shaftAxis.choose(x, y, z)) == 1) {
+            BlockPos actualDiff = new BlockPos(shaftAxis.choose(x, 0, 0), 0, shaftAxis.choose(0, 0, z));
+            if (!(ShaftBlock.isShaft(firstState) && secondState.getBlock() instanceof WalkwayBlock
+                    || firstState.getBlock() instanceof WalkwayBlock && ShaftBlock.isShaft(secondState)))
+                return false;
+            Direction.Axis secondAxis = Direction.Axis.Y;
+            if (ShaftBlock.isShaft(secondState)) {
+                secondAxis = secondState.getValue(BlockStateProperties.AXIS);
+            } else if (secondState.getBlock() instanceof KineticBlock kinetic) {
+                secondAxis = kinetic.getRotationAxis(secondState);
+                actualDiff = actualDiff.multiply(-1);
+            }
+            if (shaftAxis != secondAxis)
+                return false;
+
+            List<BlockPos> list = new ArrayList<>();
+            float matchSpeed = 0;
+            if (level.getBlockEntity(first) instanceof WalkwayBlockEntity walkwayBE) {
+                list = walkwayBE.getAllBlocks();
+                matchSpeed = walkwayBE.getTheoreticalSpeed();
+            } else if (level.getBlockEntity(second) instanceof WalkwayBlockEntity walkwayBE) {
+                list = walkwayBE.getAllBlocks();
+                matchSpeed = walkwayBE.getTheoreticalSpeed();
+            }
+            if (list.isEmpty())
+                return false;
+            int sz = list.size();
+            for (int i = 0; i < sz; ++i) {
+                BlockPos pos = list.get(i);
+                BlockPos destPos = pos.offset(actualDiff);
+                BlockState currentState = level.getBlockState(destPos);
+                boolean correctShaft = ShaftBlock.isShaft(currentState) && currentState.getValue(BlockStateProperties.AXIS) == shaftAxis;
+                boolean empty = currentState.canBeReplaced();
+                if ((i == 0 || i == sz - 1) && !correctShaft || !correctShaft && !empty)
+                    return false;
+                if (correctShaft) {
+                    if (!(level.getBlockEntity(destPos) instanceof KineticBlockEntity kbe))
+                        return false;
+                    float speed2 = kbe.getTheoreticalSpeed();
+                    if (Math.signum(matchSpeed) != Math.signum(speed2) && matchSpeed != 0 && speed2 != 0)
+                        return false;
+                }
+            }
+            return true;
+        }
+
         if (shaftAxis.choose(x, y, z) != 0)
             return false;
         boolean escalator = y != 0;
         if (escalator && Math.abs(x) != Math.abs(y) + 3 && Math.abs(z) != Math.abs(y) + 3) // Escalator checking
             return false;
-        if (shaftAxis != level.getBlockState(second).getValue(BlockStateProperties.AXIS))
+
+        if (!ShaftBlock.isShaft(secondState) || shaftAxis != secondState.getValue(BlockStateProperties.AXIS))
             return false;
 
         if (!(level.getBlockEntity(first) instanceof KineticBlockEntity kbe) || !(level.getBlockEntity(second) instanceof KineticBlockEntity kbe1))
@@ -161,6 +225,76 @@ public class WalkwayConnectorItem extends BlockItem {
     public void createSteps(Level level, BlockPos start, BlockPos end) {
         level.playSound(null, BlockPos.containing(VecHelper.getCenterOf(start.offset(end))
                 .scale(.5f)), this.getPlaceSoundEvent(), SoundSource.BLOCKS, 0.5F, 1F);
+
+        BlockPos diff = end.subtract(start);
+        int x = diff.getX();
+        int y = diff.getY();
+        int z = diff.getZ();
+
+        BlockState firstState = level.getBlockState(start);
+        Direction.Axis shaftAxis = Direction.Axis.Y;
+        if (ShaftBlock.isShaft(firstState)) {
+            shaftAxis = firstState.getValue(BlockStateProperties.AXIS);
+        } else if (firstState.getBlock() instanceof KineticBlock kinetic && kinetic instanceof WalkwayBlock) {
+            shaftAxis = kinetic.getRotationAxis(firstState);
+        }
+        if (shaftAxis == Direction.Axis.Y)
+            return;
+
+        // Walkway extension
+        if (Math.abs(shaftAxis.choose(x, y, z)) == 1) {
+            BlockPos actualDiff = new BlockPos(shaftAxis.choose(x, 0, 0), 0, shaftAxis.choose(0, 0, z));
+            List<BlockPos> list = new ArrayList<>();
+            float offset = 0;
+            if (level.getBlockEntity(start) instanceof WalkwayBlockEntity walkwayBE) {
+                list = walkwayBE.getAllBlocks();
+                offset = walkwayBE.getWalkwayMovementSpeed();
+            } else if (level.getBlockEntity(end) instanceof WalkwayBlockEntity walkwayBE) {
+                list = walkwayBE.getAllBlocks();
+                actualDiff = actualDiff.multiply(-1);
+                offset = walkwayBE.getWalkwayMovementSpeed();
+            }
+            if (list.isEmpty())
+                return;
+            Collections.reverse(list);
+            int sz = list.size();
+            Direction face = Direction.getNearest(actualDiff.getX(), actualDiff.getY(), actualDiff.getZ());
+            for (int i = 0; i < sz; ++i) {
+                BlockPos srcPos = list.get(i);
+                BlockPos destPos = srcPos.offset(actualDiff);
+                BlockState srcState = level.getBlockState(srcPos);
+                BlockState destState = level.getBlockState(destPos);
+                boolean isShaft = ShaftBlock.isShaft(destState);
+                if (!(srcState.getBlock() instanceof WalkwayBlock walkwaySrc) || !(level.getBlockEntity(srcPos) instanceof WalkwayBlockEntity walkwayBE))
+                    continue;
+                DyeColor color = walkwayBE.getColor();
+                float visualProgress = walkwayBE.getVisualProgress();
+
+                Direction walkwayFacing = walkwaySrc.getFacing(srcState);
+                boolean left = walkwayFacing.getCounterClockWise() == face;
+                if (i == 0)
+                    left = !left;
+                boolean srcShaft = walkwaySrc.hasWalkwayShaft(srcState);
+                BlockState replaceSrcState = walkwaySrc.transformFromMerge(level, srcState, srcPos, left, srcShaft, false);
+                BlockState placeState = walkwaySrc.transformFromMerge(level, srcState, srcPos, !left, isShaft, false);
+                KineticBlockEntity.switchToBlockState(level, srcPos, replaceSrcState);
+                KineticBlockEntity.switchToBlockState(level, destPos, placeState);
+
+                if (level.getBlockEntity(srcPos) instanceof WalkwayBlockEntity newWalkwayBE) {
+                    newWalkwayBE.applyColor(color);
+                    newWalkwayBE.setVisualProgress(visualProgress + offset);
+                    newWalkwayBE.resetClientRender = true;
+                    newWalkwayBE.notifyUpdate();
+                }
+                if (level.getBlockEntity(destPos) instanceof WalkwayBlockEntity destWalkwayBE) {
+                    destWalkwayBE.applyColor(color);
+                    destWalkwayBE.setVisualProgress(visualProgress);
+                    destWalkwayBE.resetClientRender = true;
+                    destWalkwayBE.notifyUpdate();
+                }
+            }
+            return;
+        }
 
         BeltSlope slope = getSlopeBetween(start, end);
         if (slope == BeltSlope.VERTICAL)
@@ -259,6 +393,13 @@ public class WalkwayConnectorItem extends BlockItem {
 
         positions.remove(start);
         return positions;
+    }
+
+    @Override
+    public void registerBlocks(Map<Block, Item> map, Item item) {
+        super.registerBlocks(map, item);
+        for (Block b : this.otherBlocks)
+            map.put(b, item);
     }
 
 }

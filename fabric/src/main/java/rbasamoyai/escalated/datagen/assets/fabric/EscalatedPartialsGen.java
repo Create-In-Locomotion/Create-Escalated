@@ -22,6 +22,10 @@ public class EscalatedPartialsGen extends BlockModelProvider {
 
     protected void walkwayAndEscalatorSteps(String material, String textureMaterial) {
         ResourceLocation walkwayStepBase = CreateEscalated.resource("block/walkway_step");
+        ResourceLocation walkwayStepLeftBase = CreateEscalated.resource("block/walkway_step_left");
+        ResourceLocation walkwayStepRightBase = CreateEscalated.resource("block/walkway_step_right");
+        ResourceLocation walkwayStepCenterBase = CreateEscalated.resource("block/walkway_step_center");
+
         ResourceLocation escalatorStepBase = CreateEscalated.resource("block/escalator_step");
 
         String walkwayStep = material + "_walkway_step";
@@ -31,6 +35,16 @@ public class EscalatedPartialsGen extends BlockModelProvider {
         getBuilder("block/" + walkwayStep)
                 .parent(getExistingFile(walkwayStepBase))
                 .texture("steps", modLoc("block/" + texture));
+        getBuilder("block/" + walkwayStep + "_left")
+                .parent(getExistingFile(walkwayStepLeftBase))
+                .texture("steps", modLoc("block/" + texture));
+        getBuilder("block/" + walkwayStep + "_right")
+                .parent(getExistingFile(walkwayStepRightBase))
+                .texture("steps", modLoc("block/" + texture));
+        getBuilder("block/" + walkwayStep + "_center")
+                .parent(getExistingFile(walkwayStepCenterBase))
+                .texture("steps", modLoc("block/" + texture));
+
         getBuilder("block/" + escalatorStep)
                 .parent(getExistingFile(escalatorStepBase))
                 .texture("steps", modLoc("block/" + texture));
@@ -40,6 +54,16 @@ public class EscalatedPartialsGen extends BlockModelProvider {
             getBuilder("block/" + walkwayStep + "_" + s)
                     .parent(getExistingFile(walkwayStepBase))
                     .texture("steps", modLoc("block/" + texture + "_" + s));
+            getBuilder("block/" + walkwayStep + "_left_" + s)
+                    .parent(getExistingFile(walkwayStepLeftBase))
+                    .texture("steps", modLoc("block/" + texture + "_" + s));
+            getBuilder("block/" + walkwayStep + "_right_" + s)
+                    .parent(getExistingFile(walkwayStepRightBase))
+                    .texture("steps", modLoc("block/" + texture + "_" + s));
+            getBuilder("block/" + walkwayStep + "_center_" + s)
+                    .parent(getExistingFile(walkwayStepCenterBase))
+                    .texture("steps", modLoc("block/" + texture + "_" + s));
+
             getBuilder("block/" + escalatorStep + "_" + s)
                     .parent(getExistingFile(escalatorStepBase))
                     .texture("steps", modLoc("block/" + texture + "_" + s));

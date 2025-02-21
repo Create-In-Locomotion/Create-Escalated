@@ -130,9 +130,9 @@ public class WalkwayInstance extends KineticBlockEntityInstance<WalkwayBlockEnti
     public boolean shouldReset() {
         if (super.shouldReset())
             return true;
-        if (this.blockState != this.blockEntity.getBlockState())
-            return true;
         if (this.blockEntity.getColor() != this.color)
+            return true;
+        if (this.blockEntity.resetClientRender)
             return true;
         return false;
     }

@@ -1,0 +1,18 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "minecraft:block/block",
+	"texture_size": [32, 32],
+	"textures": {
+		"0": "#steps"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 4],
+			"to": [16, 0, 12],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 0, 8]},
+			"faces": {
+				"up": {"uv": [7, 0, 15, 4], "rotation": 180, "texture": "#0"}
+			}
+		}
+	]
+}

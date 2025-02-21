@@ -2,8 +2,10 @@ package rbasamoyai.escalated.walkways;
 
 import com.simibubi.create.content.kinetics.base.IRotate;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
+import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.NBTHelper;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
@@ -15,9 +17,7 @@ import net.minecraft.world.phys.AABB;
 import rbasamoyai.escalated.walkways.WalkwayMovementHandler.TransportedEntityInfo;
 
 import javax.annotation.Nullable;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 import static com.simibubi.create.content.kinetics.belt.BeltSlope.HORIZONTAL;
 
@@ -28,16 +28,20 @@ public class WalkwayBlockEntity extends KineticBlockEntity {
 
     public Map<Entity, TransportedEntityInfo> passengers;
     public int walkwayLength;
+    public int walkwayWidth = 1;
     protected BlockPos controller;
     public float visualProgress = 0;
 
     private DyeColor color;
+
+    public boolean resetClientRender;
 
     // TODO items? [loader sided]
 
     public WalkwayBlockEntity(BlockEntityType<?> typeIn, BlockPos pos, BlockState state) {
         super(typeIn, pos, state);
         this.color = null;
+        this.setLazyTickRate(3);
     }
 
     @Override
@@ -84,6 +88,26 @@ public class WalkwayBlockEntity extends KineticBlockEntity {
         }
     }
 
+    @Override
+    public void lazyTick() {
+        super.lazyTick();
+
+        if (!this.isController())
+            return;
+
+        BlockState thisState = this.getBlockState();
+        if (!(thisState.getBlock() instanceof WalkwayBlock walkwayBlock))
+            return;
+
+        Direction facing = walkwayBlock.getFacing(thisState);
+        Direction left = facing.getCounterClockWise();
+        BlockPos pos = this.getBlockPos();
+
+        if (walkwayBlock.connectedToWalkwayOnSide(this.level, thisState, pos, left)) {
+
+        }
+    }
+
     @Override public float calculateStressApplied() { return this.isController() ? super.calculateStressApplied() : 0; }
 
     @Override
@@ -117,6 +141,26 @@ public class WalkwayBlockEntity extends KineticBlockEntity {
         return false; // TODO escalator code
     }
 
+    public List<BlockPos> getAllBlocks() {
+        List<BlockPos> list = new ArrayList<>();
+        WalkwayBlockEntity controller = this.getControllerBE();
+        if (controller == null)
+            return list;
+
+        if (controller.isEscalator()) {
+            // TODO escalator block code
+        } else {
+            BlockPos current = controller.getBlockPos();
+            BlockState controllerBlock = controller.getBlockState();
+            Direction facing = ((WalkwayBlock) controllerBlock.getBlock()).getFacing(controllerBlock);
+            for (int i = 0; i < this.walkwayLength; ++i) {
+                list.add(current);
+                current = current.relative(facing);
+            }
+        }
+        return list;
+    }
+
     @Override
     protected boolean canPropagateDiagonally(IRotate block, BlockState state) {
         return super.canPropagateDiagonally(block, state);
@@ -136,18 +180,35 @@ public class WalkwayBlockEntity extends KineticBlockEntity {
         return controller == null ? 0 : controller.visualProgress;
     }
 
+    public void setVisualProgress(float visualProgress) { this.visualProgress = visualProgress; }
+
     public boolean applyColor(@Nullable DyeColor colorIn) {
         if (colorIn == this.color)
             return false;
         if (this.level.isClientSide)
             return true;
 
-        for (BlockPos pos : WalkwayBlock.getWalkwayChain(this.level, this.getController())) {
-            WalkwayBlockEntity walkway = WalkwayHelper.getSegmentBE(this.level, pos);
-            if (walkway == null)
-                continue;
-            walkway.color = colorIn;
-            walkway.notifyUpdate();
+        int WIDTH_LIMIT = 100;
+
+        Direction facing = ((WalkwayBlock) this.getBlockState().getBlock()).getFacing(this.getBlockState());
+        Direction left = facing.getCounterClockWise();
+
+        List<BlockPos> walkwayChain = WalkwayBlock.getWalkwayChain(this.level, this.getController());
+        for (BlockPos pos : walkwayChain) {
+            for (Direction dir : Iterate.directionsInAxis(left.getAxis())) {
+                for (int i = 0; i < WIDTH_LIMIT; ++i) {
+                    BlockPos currentPos = pos.relative(dir, i);
+                    WalkwayBlockEntity walkway = WalkwayHelper.getSegmentBE(this.level, currentPos);
+                    if (walkway != null) {
+                        walkway.color = colorIn;
+                        walkway.notifyUpdate();
+                    }
+                    BlockState currentState = this.level.getBlockState(currentPos);
+                    if (!(currentState.getBlock() instanceof WalkwayBlock walkwayBlock)
+                            || !walkwayBlock.connectedToWalkwayOnSide(this.level, currentState, currentPos, dir))
+                        break;
+                }
+            }
         }
         return true;
     }
@@ -167,6 +228,12 @@ public class WalkwayBlockEntity extends KineticBlockEntity {
             NBTHelper.writeEnum(compound, "Dye", this.color);
 
         super.write(compound, clientPacket);
+
+        if (!clientPacket)
+            return;
+
+        if (this.resetClientRender)
+            compound.putBoolean("UpdateRendering", false);
     }
 
     @Override
@@ -198,6 +265,8 @@ public class WalkwayBlockEntity extends KineticBlockEntity {
 
         if (!clientPacket)
             return;
+
+        this.resetClientRender = compound.contains("UpdateRendering");
     }
 
 }

@@ -16,10 +16,13 @@ public interface WalkwayBlock {
 
     EnumProperty<WalkwayCaps> CAPS = EnumProperty.create("caps", WalkwayCaps.class);
     EnumProperty<WalkwayCaps> CAPS_SHAFT = EnumProperty.create("caps", WalkwayCaps.class, e -> e != WalkwayCaps.NO_SHAFT);
+    EnumProperty<WalkwayCaps> CAPS_SIDED = EnumProperty.create("caps", WalkwayCaps.class, WalkwayCaps.NONE, WalkwayCaps.BOTH, WalkwayCaps.NO_SHAFT);
 
     Direction getFacing(BlockState state);
     BeltSlope getWalkwaySlope(BlockState state);
     boolean hasWalkwayShaft(BlockState state);
+    BlockState transformFromMerge(Level level, BlockState state, BlockPos pos, boolean left, boolean shaft, boolean remove);
+    boolean connectedToWalkwayOnSide(Level level, BlockState state, BlockPos pos, Direction face);
 
     default boolean isTerminal(BlockState state) { return false; }
     default boolean movesEntities(BlockState state) { return true; }
@@ -52,18 +55,18 @@ public interface WalkwayBlock {
         }
 
         // Init belts
-        List<BlockPos> beltChain = getWalkwayChain(level, currentPos);
+        List<BlockPos> walkwayChain = getWalkwayChain(level, currentPos);
         int minSize = escalator ? 5 : 3;
-        if (beltChain.size() < minSize) { // TODO escalator
+        if (walkwayChain.size() < minSize) { // TODO escalator
             level.destroyBlock(currentPos, true);
             return;
         }
 
-        for (BlockPos beltPos : beltChain) {
+        for (BlockPos beltPos : walkwayChain) {
             BlockState currentState = level.getBlockState(beltPos);
             if (level.getBlockEntity(beltPos) instanceof WalkwayBlockEntity walkway && currentState.getBlock() instanceof WalkwayBlock) {
                 walkway.setController(currentPos);
-                walkway.walkwayLength = beltChain.size();
+                walkway.walkwayLength = walkwayChain.size();
                 walkway.attachKinetics();
                 walkway.notifyUpdate();
             } else {

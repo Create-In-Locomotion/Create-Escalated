@@ -16,10 +16,16 @@ public class EscalatedBlockPartials {
     //////// Metal steps ////////
     public static final PartialModel
         METAL_ESCALATOR_STEP = escalatorSteps("metal"),
-        METAL_WALKWAY_STEP = walkwaySteps("metal");
+        METAL_WALKWAY_STEP = walkwaySteps("metal"),
+        METAL_WALKWAY_STEP_LEFT = walkwaySteps("metal", "_left"),
+        METAL_WALKWAY_STEP_RIGHT = walkwaySteps("metal", "_right"),
+        METAL_WALKWAY_STEP_CENTER = walkwaySteps("metal", "_center");
     public static final Map<DyeColor, PartialModel>
         DYED_METAL_ESCALATOR_STEPS = dyedEscalatorSteps("metal"),
-        DYED_METAL_WALKWAY_STEPS = dyedWalkwaySteps("metal");
+        DYED_METAL_WALKWAY_STEPS = dyedWalkwaySteps("metal"),
+        DYED_METAL_WALKWAY_STEPS_LEFT = dyedWalkwaySteps("metal", "_left"),
+        DYED_METAL_WALKWAY_STEPS_RIGHT = dyedWalkwaySteps("metal", "_right"),
+        DYED_METAL_WALKWAY_STEPS_CENTER = dyedWalkwaySteps("metal", "_center");
 
     private static PartialModel escalatorSteps(String material) { return escalatorSteps(material, ""); }
 
@@ -40,10 +46,24 @@ public class EscalatedBlockPartials {
         return map;
     }
 
+    private static Map<DyeColor, PartialModel> dyedEscalatorSteps(String material, String suffix) {
+        Map<DyeColor, PartialModel> map = new EnumMap<>(DyeColor.class);
+        for (DyeColor color : DyeColor.values())
+            map.put(color, escalatorSteps(material, suffix + "_" + color.getName()));
+        return map;
+    }
+
     private static Map<DyeColor, PartialModel> dyedWalkwaySteps(String material) {
         Map<DyeColor, PartialModel> map = new EnumMap<>(DyeColor.class);
         for (DyeColor color : DyeColor.values())
             map.put(color, walkwaySteps(material, "_" + color.getName()));
+        return map;
+    }
+
+    private static Map<DyeColor, PartialModel> dyedWalkwaySteps(String material, String suffix) {
+        Map<DyeColor, PartialModel> map = new EnumMap<>(DyeColor.class);
+        for (DyeColor color : DyeColor.values())
+            map.put(color, walkwaySteps(material, suffix + "_" + color.getName()));
         return map;
     }
 
