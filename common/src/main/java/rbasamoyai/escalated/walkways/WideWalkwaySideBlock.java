@@ -86,8 +86,6 @@ public class WideWalkwaySideBlock extends AbstractWalkwayBlock {
         BlockState newState = state;
 
         Direction facing = state.getValue(HORIZONTAL_FACING);
-        Direction left = facing.getCounterClockWise();
-        Direction right = left.getOpposite();
         Direction clicked = context.getClickedFace();
         WalkwayCaps caps = state.getValue(CAPS_SIDED);
         if (caps == WalkwayCaps.NO_SHAFT)
@@ -130,6 +128,14 @@ public class WideWalkwaySideBlock extends AbstractWalkwayBlock {
 
     @Override
     public BlockState transformFromMerge(Level level, BlockState state, BlockPos pos, boolean left, boolean shaft, boolean remove) {
+        WalkwayCaps caps = state.getValue(CAPS_SIDED);
+        if (shaft && caps == WalkwayCaps.NO_SHAFT) {
+            caps = WalkwayCaps.NONE;
+        } else if (!shaft) {
+            caps = WalkwayCaps.NO_SHAFT;
+        }
+        state = state.setValue(CAPS_SIDED, caps);
+
         boolean srcLeft = state.getValue(LEFT);
         Direction facing = state.getValue(HORIZONTAL_FACING);
         if (remove) {
@@ -137,7 +143,7 @@ public class WideWalkwaySideBlock extends AbstractWalkwayBlock {
                 return state;
             return this.getWalkwaySet().getNarrowBlock(level, state, pos)
                     .setValue(HORIZONTAL_FACING, facing)
-                    .setValue(NarrowWalkwayBlock.CAPS, state.getValue(CAPS_SIDED)); // CAPS_SIDED is a subset of CAPS
+                    .setValue(NarrowWalkwayBlock.CAPS, caps); // CAPS_SIDED is a subset of CAPS
         } else {
             if (srcLeft != left)
                 return state;

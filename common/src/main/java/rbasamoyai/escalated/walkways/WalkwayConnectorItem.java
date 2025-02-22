@@ -142,12 +142,17 @@ public class WalkwayConnectorItem extends BlockItem {
 
             List<BlockPos> list = new ArrayList<>();
             float matchSpeed = 0;
+            int MAX_WIDTH = this.maxWidth();
             if (level.getBlockEntity(first) instanceof WalkwayBlockEntity walkwayBE) {
                 list = walkwayBE.getAllBlocks();
                 matchSpeed = walkwayBE.getTheoreticalSpeed();
+                if (walkwayBE.getWalkwayWidth() >= MAX_WIDTH)
+                    return false;
             } else if (level.getBlockEntity(second) instanceof WalkwayBlockEntity walkwayBE) {
                 list = walkwayBE.getAllBlocks();
                 matchSpeed = walkwayBE.getTheoreticalSpeed();
+                if (walkwayBE.getWalkwayWidth() >= MAX_WIDTH)
+                    return false;
             }
             if (list.isEmpty())
                 return false;
@@ -245,14 +250,14 @@ public class WalkwayConnectorItem extends BlockItem {
         if (Math.abs(shaftAxis.choose(x, y, z)) == 1) {
             BlockPos actualDiff = new BlockPos(shaftAxis.choose(x, 0, 0), 0, shaftAxis.choose(0, 0, z));
             List<BlockPos> list = new ArrayList<>();
-            float offset = 0;
+            BlockPos referencePos = start;
             if (level.getBlockEntity(start) instanceof WalkwayBlockEntity walkwayBE) {
                 list = walkwayBE.getAllBlocks();
-                offset = walkwayBE.getWalkwayMovementSpeed();
+                referencePos = walkwayBE.widthReferencePos;
             } else if (level.getBlockEntity(end) instanceof WalkwayBlockEntity walkwayBE) {
                 list = walkwayBE.getAllBlocks();
                 actualDiff = actualDiff.multiply(-1);
-                offset = walkwayBE.getWalkwayMovementSpeed();
+                referencePos = walkwayBE.widthReferencePos;
             }
             if (list.isEmpty())
                 return;
@@ -282,13 +287,15 @@ public class WalkwayConnectorItem extends BlockItem {
 
                 if (level.getBlockEntity(srcPos) instanceof WalkwayBlockEntity newWalkwayBE) {
                     newWalkwayBE.applyColor(color);
-                    newWalkwayBE.setVisualProgress(visualProgress + offset);
+                    newWalkwayBE.setVisualProgress(visualProgress);
+                    newWalkwayBE.widthReferencePos = referencePos;
                     newWalkwayBE.resetClientRender = true;
                     newWalkwayBE.notifyUpdate();
                 }
                 if (level.getBlockEntity(destPos) instanceof WalkwayBlockEntity destWalkwayBE) {
                     destWalkwayBE.applyColor(color);
                     destWalkwayBE.setVisualProgress(visualProgress);
+                    destWalkwayBE.widthReferencePos = referencePos;
                     destWalkwayBE.resetClientRender = true;
                     destWalkwayBE.notifyUpdate();
                 }

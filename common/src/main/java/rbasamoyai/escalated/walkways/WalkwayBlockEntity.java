@@ -30,17 +30,17 @@ public class WalkwayBlockEntity extends KineticBlockEntity {
     public int walkwayLength;
     public int walkwayWidth = 1;
     protected BlockPos controller;
+    protected BlockPos widthReferencePos;
     public float visualProgress = 0;
+    protected int updateCount = 0;
 
-    private DyeColor color;
+    private DyeColor color = null;
 
     public boolean resetClientRender;
 
-    // TODO items? [loader sided]
-
     public WalkwayBlockEntity(BlockEntityType<?> typeIn, BlockPos pos, BlockState state) {
         super(typeIn, pos, state);
-        this.color = null;
+        this.widthReferencePos = this.getBlockPos();
         this.setLazyTickRate(3);
     }
 
@@ -57,21 +57,26 @@ public class WalkwayBlockEntity extends KineticBlockEntity {
         if (!this.isController())
             return;
 
-        this.visualProgress += this.getWalkwayMovementSpeed();
-        if (Math.abs(this.visualProgress) > 0.5f) // reset offset
-            this.visualProgress = Math.signum(this.visualProgress) * (Math.abs(this.visualProgress) % 0.5f);
+        BlockState state = this.getBlockState();
+
+        if (this.updateCount <= 0) {
+            this.visualProgress += this.getWalkwayMovementSpeed();
+            if (Math.abs(this.visualProgress) > 0.5f) // reset offset
+                this.visualProgress = Math.signum(this.visualProgress) * (Math.abs(this.visualProgress) % 0.5f);
+            this.updateNeighbors();
+        } else {
+            this.updateCount = Math.max(0, this.updateCount - 1);
+        }
 
         if (this.getSpeed() == 0)
             return;
 
-        // TODO items?
-
-        // TODO transport entities on walkway
+        // TODO transport entities on escalator
         // Move Entities
         if (this.passengers == null)
             this.passengers = new HashMap<>();
 
-        boolean beltFlag = walkway.getWalkwaySlope(this.getBlockState()) != HORIZONTAL;
+        boolean beltFlag = walkway.getWalkwaySlope(state) != HORIZONTAL;
         for (Iterator<Map.Entry<Entity, TransportedEntityInfo>> iter = this.passengers.entrySet().iterator(); iter.hasNext(); ) {
             Map.Entry<Entity, TransportedEntityInfo> entry = iter.next();
             Entity entity = entry.getKey();
@@ -88,23 +93,50 @@ public class WalkwayBlockEntity extends KineticBlockEntity {
         }
     }
 
-    @Override
-    public void lazyTick() {
-        super.lazyTick();
-
-        if (!this.isController())
-            return;
-
+    public void updateNeighbors() {
+        WalkwayBlock currentWalkway = null;
         BlockState thisState = this.getBlockState();
         if (!(thisState.getBlock() instanceof WalkwayBlock walkwayBlock))
             return;
 
+        BlockPos pos = this.getBlockPos();
+        BlockPos referencePos = this.widthReferencePos;
+
         Direction facing = walkwayBlock.getFacing(thisState);
         Direction left = facing.getCounterClockWise();
-        BlockPos pos = this.getBlockPos();
 
-        if (walkwayBlock.connectedToWalkwayOnSide(this.level, thisState, pos, left)) {
+        int ITERATE_LIMIT = this.walkwayWidth + 2;
+        List<WalkwayBlockEntity> updateSecondPass = new ArrayList<>();
+        Set<BlockPos> iteratedBlocks = new HashSet<>();
+        iteratedBlocks.add(pos);
 
+        for (Direction dir : Iterate.directionsInAxis(left.getAxis())) {
+            for (int i = 0; i < ITERATE_LIMIT; ++i) {
+                BlockPos currentPos = pos.relative(dir, i);
+                BlockState currentState = this.level.getBlockState(currentPos);
+                if (!(currentState.getBlock() instanceof WalkwayBlock otherWalkway))
+                    break;
+                currentWalkway = otherWalkway;
+                if (i == 0)
+                    continue;
+                if (!(this.level.getBlockEntity(currentPos) instanceof WalkwayBlockEntity otherWalkwayBE))
+                    break;
+                iteratedBlocks.add(currentPos);
+                updateSecondPass.add(otherWalkwayBE);
+                if (!currentWalkway.connectedToWalkwayOnSide(this.level, currentState, currentPos, dir))
+                    break;
+            }
+        }
+        if (!iteratedBlocks.contains(referencePos)) // Reset reference pos
+            this.widthReferencePos = pos;
+
+        int actualWidth = iteratedBlocks.size();
+        this.walkwayWidth = actualWidth;
+        for (WalkwayBlockEntity walkwayBE : updateSecondPass) {
+            walkwayBE.visualProgress = this.visualProgress;
+            walkwayBE.setWalkwayWidth(actualWidth);
+            walkwayBE.widthReferencePos = this.widthReferencePos;
+            walkwayBE.updateCount = 1;
         }
     }
 
@@ -135,6 +167,17 @@ public class WalkwayBlockEntity extends KineticBlockEntity {
     public boolean isController() {
         return this.controller != null && this.worldPosition.getX() == this.controller.getX()
                 && this.worldPosition.getY() == this.controller.getY() && this.worldPosition.getZ() == this.controller.getZ();
+    }
+
+    public int getWalkwayWidth() {
+        WalkwayBlockEntity controller = this.getControllerBE();
+        return controller == null ? 1 : controller.walkwayWidth;
+    }
+
+    public void setWalkwayWidth(int width) {
+        WalkwayBlockEntity controller = this.getControllerBE();
+        if (controller != null)
+            controller.walkwayWidth = width;
     }
 
     public boolean isEscalator() {
@@ -221,8 +264,12 @@ public class WalkwayBlockEntity extends KineticBlockEntity {
             compound.put("Controller", NbtUtils.writeBlockPos(this.controller));
         compound.putBoolean("IsController", this.isController());
         compound.putInt("Length", this.walkwayLength);
-        if (this.isController())
+        if (this.isController()) {
             compound.putFloat("VisualProgress", this.visualProgress);
+            compound.putInt("Width", this.walkwayWidth);
+            if (this.widthReferencePos != null)
+                compound.put("WidthReferencePos", NbtUtils.writeBlockPos(this.widthReferencePos));
+        }
 
         if (this.color != null)
             NBTHelper.writeEnum(compound, "Dye", this.color);
@@ -245,6 +292,9 @@ public class WalkwayBlockEntity extends KineticBlockEntity {
         if (compound.getBoolean("IsController")) {
             this.controller = this.worldPosition;
             this.visualProgress = compound.getFloat("VisualProgress");
+            this.walkwayWidth = compound.getInt("Width");
+            this.widthReferencePos = compound.contains("WidthReferencePos", Tag.TAG_COMPOUND) ?
+                    NbtUtils.readBlockPos(compound.getCompound("WidthReferencePos")) : this.getBlockPos();
         }
 
         this.color = compound.contains("Dye", Tag.TAG_STRING) ? NBTHelper.readEnum(compound, "Dye", DyeColor.class) : null;

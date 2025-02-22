@@ -1,11 +1,4 @@
-bug: Fixed wide walkway syncing, breaking, and rotation propagation
 
-TODO 02.21.2025
-
-TODO breaking center
-TODO walkway syncing
-TODO width management
-TODO rotation propagation being weird somehow
 
 [feature, incomplete: Added functional escalator blocks]
 
@@ -52,5 +45,8 @@ TODO:
     - Customizing walkways and escalators using handrails and dyes
 
 [feature: Added Escalated-related advancements]
+
+[bug: Fixed ghost propagation]
+TODO rotation propagation being weird somehow
 
 [documentation: Added CHANGELOG.md]

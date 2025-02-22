@@ -67,9 +67,10 @@ public class WideWalkwayCenterBlock extends AbstractWalkwayBlock {
         if (remove) {
             return this.getWalkwaySet().getWideSideBlock(level, state, pos)
                     .setValue(HORIZONTAL_FACING, facing)
+                    .setValue(WideWalkwaySideBlock.LEFT, left)
                     .setValue(NarrowWalkwayBlock.CAPS_SIDED, shaft ? WalkwayCaps.NONE : WalkwayCaps.NO_SHAFT);
         } else {
-            return state;
+            return state.setValue(SHAFT, shaft);
         }
     }
 
