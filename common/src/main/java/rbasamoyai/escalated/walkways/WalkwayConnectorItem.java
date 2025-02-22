@@ -65,7 +65,7 @@ public class WalkwayConnectorItem extends BlockItem {
         // Remove first if no longer existant or valid
         if (tag.contains("FirstTerminal")) {
             firstTerminal = NbtUtils.readBlockPos(tag.getCompound("FirstTerminal"));
-            if (!validateAxis(level, firstTerminal) || !firstTerminal.closerThan(pos, maxLength() * 2)) {
+            if (!validateAxis(level, firstTerminal) || !firstTerminal.closerThan(pos, maxWalkwayLength() * 2)) {
                 tag.remove("FirstTerminal");
                 context.getItemInHand().setTag(tag);
             }
@@ -96,7 +96,8 @@ public class WalkwayConnectorItem extends BlockItem {
         return InteractionResult.SUCCESS;
     }
 
-    public int maxLength() { return 25; } // TODO config
+    public int maxEscalatorLength() { return 25; } // TODO config
+    public int maxWalkwayLength() { return 25; } // TODO config
     public int maxWidth() { return 10; } // TODO config
 
     public static boolean validateAxis(Level level, BlockPos pos) {
@@ -105,7 +106,7 @@ public class WalkwayConnectorItem extends BlockItem {
     }
 
     public boolean canConnect(Level level, BlockPos first, BlockPos second) {
-        if (!level.isLoaded(first) || !level.isLoaded(second) || !second.closerThan(first, this.maxLength()))
+        if (!level.isLoaded(first) || !level.isLoaded(second))
             return false;
 
         BlockState firstState = level.getBlockState(first);
@@ -175,10 +176,12 @@ public class WalkwayConnectorItem extends BlockItem {
             }
             return true;
         }
+        boolean escalator = y != 0;
+        if (escalator && !second.closerThan(first, this.maxEscalatorLength()) || !escalator && !second.closerThan(first, this.maxWalkwayLength()))
+            return false;
 
         if (shaftAxis.choose(x, y, z) != 0)
             return false;
-        boolean escalator = y != 0;
         if (escalator && Math.abs(x) != Math.abs(y) + 3 && Math.abs(z) != Math.abs(y) + 3) // Escalator checking
             return false;
 

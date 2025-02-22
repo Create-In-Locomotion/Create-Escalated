@@ -78,7 +78,7 @@ public class WalkwayConnectorHandler {
 				return;
 			if (!ShaftBlock.isShaft(secondState) && !(secondState.getBlock() instanceof WalkwayBlock))
 				selected = selected.relative(((BlockHitResult) rayTrace).getDirection());
-			if (!selected.closerThan(first, walkwayItem.maxLength()))
+			if (!selected.closerThan(first, walkwayItem.maxWalkwayLength()))
 				return;
 
 			boolean canConnect = WalkwayConnectorItem.validateAxis(level, selected) && walkwayItem.canConnect(level, first, selected);

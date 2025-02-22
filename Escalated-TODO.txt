@@ -1,4 +1,4 @@
-
+feature: Separated max escalator length and max walkway length
 
 [feature, incomplete: Added functional escalator blocks]
 
