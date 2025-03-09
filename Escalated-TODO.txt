@@ -1,13 +1,4 @@
-feature: Added length and width config for walkway and escalator
-
-- Added config boilerplate
-- Config options for:
- - Walkway length
- - Walkway width
- - Escalator height
- - Escalator width
-
-[feature: Added recipe for walkway belts]
+feature: Added recipe for walkway belts
 
 - Added recipe generation boilerplate
 
@@ -27,6 +18,8 @@ TODO:
 TODO:
     - Textures
 
+[bug: Fixed Fabric stuff]
+
 [documentation: Added ponders for walkways and escalators]
 TODO:
     - Creating walkways and escalators
@@ -36,7 +29,14 @@ TODO:
 
 [feature: Added Escalated-related advancements]
 
+- [Stairway to Heaven]: Ascend 100 blocks only on moving escalators
+- [No Stairway, denied!]: Ascend 100 blocks only on moving escalators in the Nether
+- [Please hold handrail]: Stylize your walkways and escalators with handrails
+
 [bug: Fixed ghost propagation]
 TODO rotation propagation being weird somehow
+
+[bug: Fixed jumping motion on north and east-facing escalators]
+[bug: Fixed jittery movement on upwards escalators]
 
 [documentation: Added CHANGELOG.md]

@@ -22,6 +22,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import rbasamoyai.escalated.config.EscalatedConfigs;
 import rbasamoyai.escalated.index.EscalatedBlocks;
 
 import java.util.*;
@@ -94,9 +95,10 @@ public class WalkwayConnectorItem extends BlockItem {
         return InteractionResult.SUCCESS;
     }
 
-    public int maxEscalatorLength() { return 25; } // TODO config
-    public int maxWalkwayLength() { return 25; } // TODO config
-    public int maxWidth() { return 10; } // TODO config
+    public int maxWalkwayLength() { return EscalatedConfigs.SERVER.maxWalkwayLength.get(); }
+    public int maxEscalatorHeight() { return EscalatedConfigs.SERVER.maxEscalatorHeight.get(); }
+    public int maxWalkwayWidth() { return EscalatedConfigs.SERVER.maxWalkwayWidth.get(); }
+    public int maxEscalatorWidth() { return EscalatedConfigs.SERVER.maxEscalatorWidth.get(); }
 
     public static boolean validateAxis(Level level, BlockPos pos) {
         BlockState state = level.getBlockState(pos);
@@ -142,17 +144,15 @@ public class WalkwayConnectorItem extends BlockItem {
 
             List<BlockPos> list = new ArrayList<>();
             float matchSpeed = 0;
-            int MAX_WIDTH = this.maxWidth();
+            int width = 1;
             if (level.getBlockEntity(first) instanceof WalkwayBlockEntity walkwayBE) {
                 list = walkwayBE.getAllBlocks();
                 matchSpeed = walkwayBE.getTheoreticalSpeed();
-                if (walkwayBE.getWalkwayWidth() >= MAX_WIDTH)
-                    return false;
+                width = walkwayBE.getWalkwayWidth();
             } else if (level.getBlockEntity(second) instanceof WalkwayBlockEntity walkwayBE) {
                 list = walkwayBE.getAllBlocks();
                 matchSpeed = walkwayBE.getTheoreticalSpeed();
-                if (walkwayBE.getWalkwayWidth() >= MAX_WIDTH)
-                    return false;
+                width = walkwayBE.getWalkwayWidth();
             }
             if (list.isEmpty())
                 return false;
@@ -165,6 +165,9 @@ public class WalkwayConnectorItem extends BlockItem {
                     break;
                 }
             }
+            int MAX_WIDTH = escalator ? this.maxEscalatorWidth() : this.maxWalkwayWidth();
+            if (width >= MAX_WIDTH)
+                return false;
             for (int i = 0; i < sz; ++i) {
                 BlockPos pos = list.get(i);
                 BlockPos destPos = pos.offset(actualDiff);
@@ -185,7 +188,7 @@ public class WalkwayConnectorItem extends BlockItem {
             }
             return true;
         }
-        if (escalator && !second.closerThan(first, this.maxEscalatorLength()) || !escalator && !second.closerThan(first, this.maxWalkwayLength()))
+        if (escalator && Math.abs(second.getY() - first.getY()) > this.maxEscalatorHeight() || !escalator && !second.closerThan(first, this.maxWalkwayLength()))
             return false;
 
         if (shaftAxis.choose(x, y, z) != 0)
