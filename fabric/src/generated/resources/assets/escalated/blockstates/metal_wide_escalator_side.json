@@ -1,0 +1,124 @@
+{
+  "variants": {
+    "facing=east,left=false,slope=bottom": {
+      "model": "escalated:block/metal_wide_escalator_side_bottom_right",
+      "y": 270
+    },
+    "facing=east,left=false,slope=horizontal": {
+      "model": "escalated:block/metal_wide_escalator_side_horizontal_right",
+      "y": 270
+    },
+    "facing=east,left=false,slope=middle": {
+      "model": "escalated:block/metal_wide_escalator_side_middle_right",
+      "y": 270
+    },
+    "facing=east,left=false,slope=top": {
+      "model": "escalated:block/metal_wide_escalator_side_top_right",
+      "y": 270
+    },
+    "facing=east,left=true,slope=bottom": {
+      "model": "escalated:block/metal_wide_escalator_side_bottom_left",
+      "y": 270
+    },
+    "facing=east,left=true,slope=horizontal": {
+      "model": "escalated:block/metal_wide_escalator_side_horizontal_left",
+      "y": 270
+    },
+    "facing=east,left=true,slope=middle": {
+      "model": "escalated:block/metal_wide_escalator_side_middle_left",
+      "y": 270
+    },
+    "facing=east,left=true,slope=top": {
+      "model": "escalated:block/metal_wide_escalator_side_top_left",
+      "y": 270
+    },
+    "facing=north,left=false,slope=bottom": {
+      "model": "escalated:block/metal_wide_escalator_side_bottom_right",
+      "y": 180
+    },
+    "facing=north,left=false,slope=horizontal": {
+      "model": "escalated:block/metal_wide_escalator_side_horizontal_right",
+      "y": 180
+    },
+    "facing=north,left=false,slope=middle": {
+      "model": "escalated:block/metal_wide_escalator_side_middle_right",
+      "y": 180
+    },
+    "facing=north,left=false,slope=top": {
+      "model": "escalated:block/metal_wide_escalator_side_top_right",
+      "y": 180
+    },
+    "facing=north,left=true,slope=bottom": {
+      "model": "escalated:block/metal_wide_escalator_side_bottom_left",
+      "y": 180
+    },
+    "facing=north,left=true,slope=horizontal": {
+      "model": "escalated:block/metal_wide_escalator_side_horizontal_left",
+      "y": 180
+    },
+    "facing=north,left=true,slope=middle": {
+      "model": "escalated:block/metal_wide_escalator_side_middle_left",
+      "y": 180
+    },
+    "facing=north,left=true,slope=top": {
+      "model": "escalated:block/metal_wide_escalator_side_top_left",
+      "y": 180
+    },
+    "facing=south,left=false,slope=bottom": {
+      "model": "escalated:block/metal_wide_escalator_side_bottom_right"
+    },
+    "facing=south,left=false,slope=horizontal": {
+      "model": "escalated:block/metal_wide_escalator_side_horizontal_right"
+    },
+    "facing=south,left=false,slope=middle": {
+      "model": "escalated:block/metal_wide_escalator_side_middle_right"
+    },
+    "facing=south,left=false,slope=top": {
+      "model": "escalated:block/metal_wide_escalator_side_top_right"
+    },
+    "facing=south,left=true,slope=bottom": {
+      "model": "escalated:block/metal_wide_escalator_side_bottom_left"
+    },
+    "facing=south,left=true,slope=horizontal": {
+      "model": "escalated:block/metal_wide_escalator_side_horizontal_left"
+    },
+    "facing=south,left=true,slope=middle": {
+      "model": "escalated:block/metal_wide_escalator_side_middle_left"
+    },
+    "facing=south,left=true,slope=top": {
+      "model": "escalated:block/metal_wide_escalator_side_top_left"
+    },
+    "facing=west,left=false,slope=bottom": {
+      "model": "escalated:block/metal_wide_escalator_side_bottom_right",
+      "y": 90
+    },
+    "facing=west,left=false,slope=horizontal": {
+      "model": "escalated:block/metal_wide_escalator_side_horizontal_right",
+      "y": 90
+    },
+    "facing=west,left=false,slope=middle": {
+      "model": "escalated:block/metal_wide_escalator_side_middle_right",
+      "y": 90
+    },
+    "facing=west,left=false,slope=top": {
+      "model": "escalated:block/metal_wide_escalator_side_top_right",
+      "y": 90
+    },
+    "facing=west,left=true,slope=bottom": {
+      "model": "escalated:block/metal_wide_escalator_side_bottom_left",
+      "y": 90
+    },
+    "facing=west,left=true,slope=horizontal": {
+      "model": "escalated:block/metal_wide_escalator_side_horizontal_left",
+      "y": 90
+    },
+    "facing=west,left=true,slope=middle": {
+      "model": "escalated:block/metal_wide_escalator_side_middle_left",
+      "y": 90
+    },
+    "facing=west,left=true,slope=top": {
+      "model": "escalated:block/metal_wide_escalator_side_top_left",
+      "y": 90
+    }
+  }
+}

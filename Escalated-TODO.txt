@@ -1,16 +1,11 @@
-feature, incomplete: Added functional narrow escalator blocks
-
-- Added walkway belt item functionality for escalators
-- Added breaking particle effects reduction
-- TODO: need improved collision system for upwards motion
-
-[feature, incomplete: Added wide escalators]
-TODO <material>_wide_escalator_side:
-TODO <material>_wide_escalator_center:
-
-[feature: Added length and width config for walkway belt]
+feature: Added length and width config for walkway and escalator
 
 - Added config boilerplate
+- Config options for:
+ - Walkway length
+ - Walkway width
+ - Escalator height
+ - Escalator width
 
 [feature: Added recipe for walkway belts]
 
@@ -29,6 +24,8 @@ TODO:
       - Add hitboxes for affected blocks
 
 [feature: Added wooden steps]
+TODO:
+    - Textures
 
 [documentation: Added ponders for walkways and escalators]
 TODO:

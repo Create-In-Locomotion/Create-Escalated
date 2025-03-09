@@ -1,0 +1,32 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "minecraft:block/block",
+	"textures": {
+		"0": "#escalator_side",
+		"1": "#bottom",
+		"3": "#top",
+		"particle": "#bottom"
+	},
+	"elements": [
+		{
+			"from": [1.975, -16, 8],
+			"to": [16, -9, 24],
+			"rotation": {"angle": -45, "axis": "x", "origin": [1.975, -16, 0], "rescale": true},
+			"faces": {
+				"up": {"uv": [2, 0, 16, 16], "texture": "#1"},
+				"down": {"uv": [2, 0, 16, 16], "texture": "#1"}
+			}
+		},
+		{
+			"from": [-0.025, 0.5, 4.5],
+			"to": [1.975, 16.5, 16.5],
+			"rotation": {"angle": 45, "axis": "x", "origin": [-0.025, 9, 8], "rescale": true},
+			"faces": {
+				"north": {"uv": [0, 0, 2, 16], "rotation": 180, "texture": "#3"},
+				"east": {"uv": [0, 2, 16, 14], "rotation": 90, "texture": "#0"},
+				"south": {"uv": [0, 0, 2, 16], "texture": "#1"},
+				"west": {"uv": [0, 2, 16, 14], "rotation": 270, "texture": "#0"}
+			}
+		}
+	]
+}

@@ -16,12 +16,18 @@ public class EscalatedBlockPartials {
     //////// Metal steps ////////
     public static final PartialModel
         METAL_ESCALATOR_STEP = escalatorSteps("metal"),
+        METAL_ESCALATOR_STEP_LEFT = escalatorSteps("metal", "_left"),
+        METAL_ESCALATOR_STEP_RIGHT = escalatorSteps("metal", "_right"),
+        METAL_ESCALATOR_STEP_CENTER = escalatorSteps("metal", "_center"),
         METAL_WALKWAY_STEP = walkwaySteps("metal"),
         METAL_WALKWAY_STEP_LEFT = walkwaySteps("metal", "_left"),
         METAL_WALKWAY_STEP_RIGHT = walkwaySteps("metal", "_right"),
         METAL_WALKWAY_STEP_CENTER = walkwaySteps("metal", "_center");
     public static final Map<DyeColor, PartialModel>
         DYED_METAL_ESCALATOR_STEPS = dyedEscalatorSteps("metal"),
+        DYED_METAL_ESCALATOR_STEPS_LEFT = dyedEscalatorSteps("metal", "_left"),
+        DYED_METAL_ESCALATOR_STEPS_RIGHT = dyedEscalatorSteps("metal", "_right"),
+        DYED_METAL_ESCALATOR_STEPS_CENTER = dyedEscalatorSteps("metal", "_center"),
         DYED_METAL_WALKWAY_STEPS = dyedWalkwaySteps("metal"),
         DYED_METAL_WALKWAY_STEPS_LEFT = dyedWalkwaySteps("metal", "_left"),
         DYED_METAL_WALKWAY_STEPS_RIGHT = dyedWalkwaySteps("metal", "_right"),

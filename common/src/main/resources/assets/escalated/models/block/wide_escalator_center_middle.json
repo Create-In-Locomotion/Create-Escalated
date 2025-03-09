@@ -1,0 +1,19 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "minecraft:block/block",
+	"textures": {
+		"1": "#bottom",
+		"particle": "#bottom"
+	},
+	"elements": [
+		{
+			"from": [0, -16, 8],
+			"to": [16, -9, 24],
+			"rotation": {"angle": -45, "axis": "x", "origin": [1.975, -16, 0], "rescale": true},
+			"faces": {
+				"up": {"uv": [0, 0, 16, 16], "texture": "#1"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#1"}
+			}
+		}
+	]
+}

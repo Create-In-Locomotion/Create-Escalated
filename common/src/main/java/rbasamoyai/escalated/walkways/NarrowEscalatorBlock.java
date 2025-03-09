@@ -64,17 +64,12 @@ public class NarrowEscalatorBlock extends AbstractWalkwayBlock {
 
     @Override
     public BlockState transformFromMerge(Level level, BlockState state, BlockPos pos, boolean left, boolean shaft, boolean remove) {
-        return state;
-//        if (remove) TODO wide blocks
-//            return state;
-//        WalkwayCaps caps = shaft ? WalkwayCaps.NONE : WalkwayCaps.NO_SHAFT;
-//        WalkwayCaps srcCaps = state.getValue(CAPS);
-//        if (shaft && (srcCaps.hasRightCap() && left || srcCaps.hasLeftCap() && !left))
-//            caps = WalkwayCaps.BOTH;
-//        return this.getWalkwaySet().getWideSideBlock(level, state, pos)
-//                .setValue(HORIZONTAL_FACING, state.getValue(HORIZONTAL_FACING))
-//                .setValue(WideWalkwaySideBlock.LEFT, !left)
-//                .setValue(SLOPE, state.getValue(SLOPE));
+        if (remove)
+            return state;
+        return this.getWalkwaySet().getWideSideBlock(level, state, pos)
+                .setValue(HORIZONTAL_FACING, state.getValue(HORIZONTAL_FACING))
+                .setValue(WideEscalatorSideBlock.LEFT, !left)
+                .setValue(SLOPE, state.getValue(SLOPE));
     }
 
     @Override

@@ -146,14 +146,18 @@ public class WalkwayRenderer extends KineticBlockEntityRenderer<WalkwayBlockEnti
 
         if (EscalatedBlocks.METAL_NARROW_ESCALATOR.has(state))
             return EscalatedBlockPartials.DYED_METAL_ESCALATOR_STEPS.getOrDefault(color, EscalatedBlockPartials.METAL_ESCALATOR_STEP);
+        if (EscalatedBlocks.METAL_WIDE_ESCALATOR_SIDE.has(state)) {
+            boolean left = state.getValue(WideEscalatorSideBlock.LEFT);
+            return left ? EscalatedBlockPartials.DYED_METAL_ESCALATOR_STEPS_RIGHT.getOrDefault(color, EscalatedBlockPartials.METAL_ESCALATOR_STEP_RIGHT)
+                    : EscalatedBlockPartials.DYED_METAL_ESCALATOR_STEPS_LEFT.getOrDefault(color, EscalatedBlockPartials.METAL_ESCALATOR_STEP_LEFT);
+        }
+        if (EscalatedBlocks.METAL_WIDE_ESCALATOR_CENTER.has(state))
+            return EscalatedBlockPartials.DYED_METAL_ESCALATOR_STEPS_CENTER.getOrDefault(color, EscalatedBlockPartials.METAL_ESCALATOR_STEP_CENTER);
 
+        // TODO wooden steps
         if (terminal && Backend.canUseInstancing(level))
             be.lazyResetClientRender = true; // Reset next tick
-        return EscalatedBlockPartials.DYED_METAL_WALKWAY_STEPS.get(DyeColor.RED);
-
-        // TODO wide steps
-        // TODO escalator steps
-        // TODO wooden steps
+        return EscalatedBlockPartials.DYED_METAL_WALKWAY_STEPS.get(DyeColor.RED); // Troubleshooting
     }
 
 }

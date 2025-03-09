@@ -7,10 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import rbasamoyai.escalated.CreateEscalated;
-import rbasamoyai.escalated.walkways.WalkwayBlock;
-import rbasamoyai.escalated.walkways.WalkwayCaps;
-import rbasamoyai.escalated.walkways.WalkwaySlope;
-import rbasamoyai.escalated.walkways.WideWalkwaySideBlock;
+import rbasamoyai.escalated.walkways.*;
 
 public class EscalatedBuilderTransformersImpl {
 
@@ -107,6 +104,42 @@ public class EscalatedBuilderTransformersImpl {
                     .texture("escalator_bottom_side", "block/" + material + "_escalator_bottom_side")
                     .texture("escalator_top_side", "block/" + material + "_escalator_top_side")
                     .texture("escalator_top_side_1", "block/" + material + "_escalator_top_side_1");
+        }, 0));
+    }
+
+    public static <T extends Block, P> NonNullUnaryOperator<BlockBuilder<T, P>> wideEscalatorSide(String material) {
+        return b -> b.blockstate((c, p) -> p.horizontalBlock(c.get(), state -> {
+            WalkwaySlope slope = state.getValue(WideEscalatorSideBlock.SLOPE);
+            boolean left = state.getValue(WideEscalatorSideBlock.LEFT);
+            String suffix = "_" + slope.getSerializedName() + "_" + (left ? "left" : "right");
+            ResourceLocation modelLoc = CreateEscalated.resource("wide_escalator_side" + suffix);
+            return p.models().withExistingParent(c.getName() + suffix, modelLoc)
+                    .texture("top", "block/" + material + "_walkway_top")
+                    .texture("bottom", "block/" + material + "_walkway_bottom")
+                    .texture("walkway_side", "block/" + material + "_walkway_side")
+                    .texture("escalator_side", "block/" + material + "_escalator_side")
+                    .texture("escalator_bottom_side", "block/" + material + "_escalator_bottom_side")
+                    .texture("escalator_top_side", "block/" + material + "_escalator_top_side")
+                    .texture("escalator_top_side_1", "block/" + material + "_escalator_top_side_1");
+        }, 0));
+    }
+
+    public static <T extends Block, P> NonNullUnaryOperator<BlockBuilder<T, P>> wideEscalatorCenter(String material) {
+        ResourceLocation horizontalLoc = CreateEscalated.resource("wide_escalator_center_horizontal");
+        ResourceLocation bottomLoc = CreateEscalated.resource("wide_escalator_center_bottom");
+        ResourceLocation middleLoc = CreateEscalated.resource("wide_escalator_center_middle");
+        ResourceLocation topLoc = CreateEscalated.resource("wide_escalator_center_top");
+        return b -> b.blockstate((c, p) -> p.horizontalBlock(c.get(), state -> {
+            WalkwaySlope slope = state.getValue(WalkwayBlock.SLOPE);
+            ResourceLocation loc = switch (slope) {
+                case HORIZONTAL -> horizontalLoc;
+                case BOTTOM -> bottomLoc;
+                case MIDDLE -> middleLoc;
+                case TOP -> topLoc;
+                case TERMINAL -> null; // Ignore
+            };
+            return p.models().withExistingParent(c.getName() + "_" + slope.getSerializedName(), loc)
+                    .texture("bottom", "block/" + material + "_walkway_bottom");
         }, 0));
     }
 

@@ -102,11 +102,6 @@ public class WalkwayBlockEntity extends KineticBlockEntity {
         super.attachKinetics();
     }
 
-    @Override
-    public void invalidate() {
-        super.invalidate();
-    }
-
     public void updateNeighbors() {
         WalkwayBlock currentWalkway = null;
         BlockState thisState = this.getBlockState();
@@ -212,16 +207,18 @@ public class WalkwayBlockEntity extends KineticBlockEntity {
         if (controller == null)
             return list;
 
-        if (controller.isEscalator()) {
-            // TODO escalator block code
-        } else {
-            BlockPos current = controller.getBlockPos();
-            BlockState controllerBlock = controller.getBlockState();
-            Direction facing = ((WalkwayBlock) controllerBlock.getBlock()).getFacing(controllerBlock);
-            for (int i = 0; i < this.walkwayLength; ++i) {
-                list.add(current);
-                current = current.relative(facing);
-            }
+        BlockPos current = controller.getBlockPos();
+        boolean terminal = false;
+        for (int i = 0; i < this.walkwayLength; ++i) {
+            list.add(current);
+            BlockState state = this.level.getBlockState(current);
+            if (!(state.getBlock() instanceof WalkwayBlock))
+                return new ArrayList<>();
+            BlockPos nextPos = WalkwayBlock.nextSegmentPosition(state, current, !terminal, terminal);
+            terminal = true;
+            if (nextPos == null)
+                break;
+            current = nextPos;
         }
         return list;
     }

@@ -157,6 +157,14 @@ public class WalkwayConnectorItem extends BlockItem {
             if (list.isEmpty())
                 return false;
             int sz = list.size();
+            // Check if escalator
+            int y1 = list.get(0).getY();
+            for (BlockPos pos : list) {
+                if (pos.getY() != y1) {
+                    escalator = true;
+                    break;
+                }
+            }
             for (int i = 0; i < sz; ++i) {
                 BlockPos pos = list.get(i);
                 BlockPos destPos = pos.offset(actualDiff);

@@ -1,0 +1,6 @@
+{
+  "parent": "escalated:block/escalator_step_right",
+  "textures": {
+    "steps": "escalated:block/walkway_steps/metal_walkway_step_cyan"
+  }
+}

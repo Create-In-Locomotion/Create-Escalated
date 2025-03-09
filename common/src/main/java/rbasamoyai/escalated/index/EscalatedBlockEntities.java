@@ -15,7 +15,7 @@ public class EscalatedBlockEntities {
             .renderer(() -> WalkwayRenderer::new)
             .validBlocks(EscalatedBlocks.METAL_WALKWAY_TERMINAL, EscalatedBlocks.METAL_NARROW_WALKWAY,
                     EscalatedBlocks.METAL_WIDE_WALKWAY_SIDE, EscalatedBlocks.METAL_WIDE_WALKWAY_CENTER,
-                    EscalatedBlocks.METAL_NARROW_ESCALATOR)
+                    EscalatedBlocks.METAL_NARROW_ESCALATOR, EscalatedBlocks.METAL_WIDE_ESCALATOR_SIDE, EscalatedBlocks.METAL_WIDE_ESCALATOR_CENTER)
             .register();
 
     // TODO escalator blocks

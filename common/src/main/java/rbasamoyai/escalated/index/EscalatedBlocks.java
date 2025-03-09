@@ -84,9 +84,33 @@ public class EscalatedBlocks {
 			.transform(TagGen.pickaxeOnly())
 			.register();
 
-	// TODO wide escalator block, side and center
+	public static final BlockEntry<WideEscalatorSideBlock> METAL_WIDE_ESCALATOR_SIDE = REGISTRATE
+			.block("metal_wide_escalator_side", p -> new WideEscalatorSideBlock(p, EscalatedWalkwaySets::metalEscalatorSet))
+			.lang("Metal Escalator")
+			.addLayer(() -> RenderType::cutoutMipped)
+			.initialProperties(SharedProperties::netheriteMetal)
+			.properties(p -> p.noOcclusion()
+					.strength(3.0f, 6.0f)
+					.mapColor(MapColor.METAL)
+					.isRedstoneConductor(EscalatedBlocks::neverConducts))
+			.transform(EscalatedBuilderTransformers.wideEscalatorSide("metal"))
+			.transform(TagGen.pickaxeOnly())
+			.register();
 
-	// TODO wooden escalator blocks
+	public static final BlockEntry<WideEscalatorCenterBlock> METAL_WIDE_ESCALATOR_CENTER = REGISTRATE
+			.block("metal_wide_escalator_center", p -> new WideEscalatorCenterBlock(p, EscalatedWalkwaySets::metalEscalatorSet))
+			.lang("Metal Escalator")
+			.addLayer(() -> RenderType::cutoutMipped)
+			.initialProperties(SharedProperties::netheriteMetal)
+			.properties(p -> p.noOcclusion()
+					.strength(3.0f, 6.0f)
+					.mapColor(MapColor.METAL)
+					.isRedstoneConductor(EscalatedBlocks::neverConducts))
+			.transform(EscalatedBuilderTransformers.wideEscalatorCenter("metal"))
+			.transform(TagGen.pickaxeOnly())
+			.register();
+
+	// TODO wooden walkway/escalator blocks
 
 	public static void register() {}
 

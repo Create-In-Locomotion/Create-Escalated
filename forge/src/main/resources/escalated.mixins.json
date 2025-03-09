@@ -4,7 +4,7 @@
   "package": "rbasamoyai.escalated.mixin.forge",
   "compatibilityLevel": "JAVA_17",
   "client": [
-    "client.NarrowEscalatorBlockMixin"
+    "client.AbstractWalkwayBlockMixin"
   ],
   "mixins": [
   ],
