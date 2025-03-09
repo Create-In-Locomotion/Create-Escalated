@@ -1,7 +1,6 @@
 package rbasamoyai.escalated.walkways;
 
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
-import com.simibubi.create.content.kinetics.belt.BeltSlope;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -38,11 +37,10 @@ public class WalkwayTerminalBlock extends AbstractWalkwayBlock {
         return super.areStatesKineticallyEquivalent(oldState, newState) && oldState.getValue(CAPS_SHAFT) == newState.getValue(CAPS_SHAFT);
     }
 
-    @Override public BeltSlope getWalkwaySlope(BlockState state) { return BeltSlope.HORIZONTAL; }
+    @Override public WalkwaySlope getWalkwaySlope(BlockState state) { return WalkwaySlope.TERMINAL; }
 
     @Override public boolean hasWalkwayShaft(BlockState state) { return true; }
 
-    @Override public boolean isTerminal(BlockState state) { return true; }
     @Override public boolean movesEntities(BlockState state) { return false; }
 
     @Override

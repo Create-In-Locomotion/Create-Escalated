@@ -1,21 +1,14 @@
-feature: Separated max escalator length and max walkway length
-
-[feature, incomplete: Added functional escalator blocks]
+feature, incomplete: Added functional narrow escalator blocks
 
 - Added walkway belt item functionality for escalators
-TODO escalator:
-    - Add block/blockstate code
-      - side: narrow, left, right, center
-      - part: start, middle, end
-      - facing: north, east, south, west
-      - caps: none, left, right, both
-    - Add placement code through WalkwayConnectorItem
-    - Add KBE
-      - Shaft addition and transmission
-    - Add entity movement with steps
-      - Look at contraption code for hints?
+- Added breaking particle effects reduction
+- TODO: need improved collision system for upwards motion
 
-[feature: Added length config for walkway belt]
+[feature, incomplete: Added wide escalators]
+TODO <material>_wide_escalator_side:
+TODO <material>_wide_escalator_center:
+
+[feature: Added length and width config for walkway belt]
 
 - Added config boilerplate
 

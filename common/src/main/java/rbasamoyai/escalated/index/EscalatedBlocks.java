@@ -10,10 +10,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 import rbasamoyai.escalated.ModGroup;
 import rbasamoyai.escalated.datagen.EscalatedBuilderTransformers;
-import rbasamoyai.escalated.walkways.NarrowWalkwayBlock;
-import rbasamoyai.escalated.walkways.WalkwayTerminalBlock;
-import rbasamoyai.escalated.walkways.WideWalkwayCenterBlock;
-import rbasamoyai.escalated.walkways.WideWalkwaySideBlock;
+import rbasamoyai.escalated.walkways.*;
 
 import static rbasamoyai.escalated.CreateEscalated.REGISTRATE;
 
@@ -73,9 +70,23 @@ public class EscalatedBlocks {
 			.transform(TagGen.pickaxeOnly())
 			.register();
 
-	// TODO narrow escalator block
+	//////// Metal escalator blocks ////////
+	public static final BlockEntry<NarrowEscalatorBlock> METAL_NARROW_ESCALATOR = REGISTRATE
+			.block("metal_narrow_escalator", p -> new NarrowEscalatorBlock(p, EscalatedWalkwaySets::metalEscalatorSet))
+			.lang("Metal Escalator")
+			.addLayer(() -> RenderType::cutoutMipped)
+			.initialProperties(SharedProperties::netheriteMetal)
+			.properties(p -> p.noOcclusion()
+					.strength(3.0f, 6.0f)
+					.mapColor(MapColor.METAL)
+					.isRedstoneConductor(EscalatedBlocks::neverConducts))
+			.transform(EscalatedBuilderTransformers.narrowEscalator("metal"))
+			.transform(TagGen.pickaxeOnly())
+			.register();
 
 	// TODO wide escalator block, side and center
+
+	// TODO wooden escalator blocks
 
 	public static void register() {}
 

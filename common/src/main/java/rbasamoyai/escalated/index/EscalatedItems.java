@@ -13,7 +13,8 @@ public class EscalatedItems {
 
     public static final ItemEntry<WalkwayConnectorItem> METAL_WALKWAY_STEPS = REGISTRATE
             .item("metal_walkway_steps", p -> new WalkwayConnectorItem(EscalatedBlocks.METAL_WALKWAY_TERMINAL.get(), p,
-                    EscalatedBlocks.METAL_NARROW_WALKWAY.get(), EscalatedBlocks.METAL_WIDE_WALKWAY_SIDE.get(), EscalatedBlocks.METAL_WIDE_WALKWAY_CENTER.get()))
+                    EscalatedBlocks.METAL_NARROW_WALKWAY.get(), EscalatedBlocks.METAL_WIDE_WALKWAY_SIDE.get(), EscalatedBlocks.METAL_WIDE_WALKWAY_CENTER.get(),
+                    EscalatedBlocks.METAL_NARROW_ESCALATOR.get()))
             .transform(EscalatedBuilderTransformers.existingItemModel())
             .register();
 

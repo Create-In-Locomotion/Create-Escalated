@@ -4,6 +4,7 @@
     "escalated:metal_walkway_terminal",
     "escalated:metal_narrow_walkway",
     "escalated:metal_wide_walkway_side",
-    "escalated:metal_wide_walkway_center"
+    "escalated:metal_wide_walkway_center",
+    "escalated:metal_narrow_escalator"
   ]
 }

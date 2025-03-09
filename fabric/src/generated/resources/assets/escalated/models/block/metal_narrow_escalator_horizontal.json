@@ -1,0 +1,12 @@
+{
+  "parent": "escalated:block/narrow_escalator_horizontal",
+  "textures": {
+    "bottom": "escalated:block/metal_walkway_bottom",
+    "escalator_bottom_side": "escalated:block/metal_escalator_bottom_side",
+    "escalator_side": "escalated:block/metal_escalator_side",
+    "escalator_top_side": "escalated:block/metal_escalator_top_side",
+    "escalator_top_side_1": "escalated:block/metal_escalator_top_side_1",
+    "top": "escalated:block/metal_walkway_top",
+    "walkway_side": "escalated:block/metal_walkway_side"
+  }
+}

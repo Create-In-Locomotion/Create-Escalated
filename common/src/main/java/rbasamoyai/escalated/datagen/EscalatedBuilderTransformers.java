@@ -13,6 +13,7 @@ public class EscalatedBuilderTransformers {
     @ExpectPlatform public static <T extends Block, P> NonNullUnaryOperator<BlockBuilder<T, P>> narrowWalkway(String material) { throw new AssertionError(); }
     @ExpectPlatform public static <T extends Block, P> NonNullUnaryOperator<BlockBuilder<T, P>> wideWalkwaySide(String material) { throw new AssertionError(); }
     @ExpectPlatform public static <T extends Block, P> NonNullUnaryOperator<BlockBuilder<T, P>> wideWalkwayCenter(String material) { throw new AssertionError(); }
+    @ExpectPlatform public static <T extends Block, P> NonNullUnaryOperator<BlockBuilder<T, P>> narrowEscalator(String material) { throw new AssertionError(); }
     @ExpectPlatform public static <T extends Item, P> NonNullUnaryOperator<ItemBuilder<T, P>> existingItemModel() { throw new AssertionError(); }
 
 }

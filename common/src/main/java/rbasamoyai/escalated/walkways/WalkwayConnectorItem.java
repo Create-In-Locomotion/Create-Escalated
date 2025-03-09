@@ -2,7 +2,6 @@ package rbasamoyai.escalated.walkways;
 
 import com.simibubi.create.content.kinetics.base.KineticBlock;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
-import com.simibubi.create.content.kinetics.belt.BeltSlope;
 import com.simibubi.create.content.kinetics.simpleRelays.AbstractSimpleShaftBlock;
 import com.simibubi.create.content.kinetics.simpleRelays.ShaftBlock;
 import com.simibubi.create.foundation.utility.VecHelper;
@@ -21,7 +20,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import rbasamoyai.escalated.index.EscalatedBlocks;
@@ -124,6 +122,7 @@ public class WalkwayConnectorItem extends BlockItem {
         int x = diff.getX();
         int y = diff.getY();
         int z = diff.getZ();
+        boolean escalator = y != 0;
 
         // Walkway extension
         if (Math.abs(shaftAxis.choose(x, y, z)) == 1) {
@@ -166,6 +165,8 @@ public class WalkwayConnectorItem extends BlockItem {
                 boolean empty = currentState.canBeReplaced();
                 if ((i == 0 || i == sz - 1) && !correctShaft || !correctShaft && !empty)
                     return false;
+                if (escalator && i != 0 && i != sz - 1 && !empty)
+                    return false;
                 if (correctShaft) {
                     if (!(level.getBlockEntity(destPos) instanceof KineticBlockEntity kbe))
                         return false;
@@ -176,7 +177,6 @@ public class WalkwayConnectorItem extends BlockItem {
             }
             return true;
         }
-        boolean escalator = y != 0;
         if (escalator && !second.closerThan(first, this.maxEscalatorLength()) || !escalator && !second.closerThan(first, this.maxWalkwayLength()))
             return false;
 
@@ -211,7 +211,8 @@ public class WalkwayConnectorItem extends BlockItem {
 
             for (BlockPos pos : specialPos) {
                 BlockState blockState = level.getBlockState(pos);
-                if (ShaftBlock.isShaft(blockState) && blockState.getValue(AbstractSimpleShaftBlock.AXIS) == shaftAxis)
+                if (ShaftBlock.isShaft(blockState) && blockState.getValue(AbstractSimpleShaftBlock.AXIS) == shaftAxis
+                    && (pos.equals(lowerPos) || pos.equals(upperPos)))
                     continue;
                 if (!blockState.canBeReplaced())
                     return false;
@@ -222,7 +223,7 @@ public class WalkwayConnectorItem extends BlockItem {
         int LIMIT = 1000;
         for (BlockPos currentPos = first.offset(step); !currentPos.equals(second) && LIMIT-- > 0; currentPos = currentPos.offset(step)) {
             BlockState blockState = level.getBlockState(currentPos);
-            if (ShaftBlock.isShaft(blockState) && blockState.getValue(AbstractSimpleShaftBlock.AXIS) == shaftAxis)
+            if (!escalator && ShaftBlock.isShaft(blockState) && blockState.getValue(AbstractSimpleShaftBlock.AXIS) == shaftAxis)
                 continue;
             if (!blockState.canBeReplaced())
                 return false;
@@ -238,6 +239,7 @@ public class WalkwayConnectorItem extends BlockItem {
         int x = diff.getX();
         int y = diff.getY();
         int z = diff.getZ();
+        boolean escalator = y != 0;
 
         BlockState firstState = level.getBlockState(start);
         Direction.Axis shaftAxis = Direction.Axis.Y;
@@ -306,23 +308,17 @@ public class WalkwayConnectorItem extends BlockItem {
             return;
         }
 
-        BeltSlope slope = getSlopeBetween(start, end);
-        if (slope == BeltSlope.VERTICAL)
-            return;
-        if (slope != BeltSlope.HORIZONTAL)
-            return; // TODO temporary, wait for escalators
         Direction facing = getFacingFromTo(start, end);
 
         KineticBlockEntity.switchToBlockState(level, start, EscalatedBlocks.METAL_WALKWAY_TERMINAL.getDefaultState()
                 .setValue(WalkwayTerminalBlock.HORIZONTAL_FACING, facing));
         KineticBlockEntity.switchToBlockState(level, end, EscalatedBlocks.METAL_WALKWAY_TERMINAL.getDefaultState()
                 .setValue(WalkwayTerminalBlock.HORIZONTAL_FACING, facing.getOpposite()));
-        if (slope != BeltSlope.HORIZONTAL) {
-            // TODO escalator placements
-        }
 
-        List<BlockPos> walkwaysToCreate = getWalkwayChainBetween(start, end, slope, facing);
-        // TODO variant type
+        List<BlockPos> walkwaysToCreate = getWalkwayChainBetween(start, end, escalator, facing);
+
+        if (escalator && end.subtract(start).getY() <= 0)
+            facing = facing.getOpposite();
 
         boolean failed = false;
 
@@ -336,30 +332,49 @@ public class WalkwayConnectorItem extends BlockItem {
             boolean existingShaft = ShaftBlock.isShaft(shaftState);
             if (!existingBlock.canBeReplaced())
                 level.destroyBlock(pos, false);
-            KineticBlockEntity.switchToBlockState(level, pos, this.getPlacedWalkwayBlock(slope, facing, existingShaft));
+            BlockState placeState = this.getPlacedWalkwayBlock(escalator, facing, existingShaft);
+            KineticBlockEntity.switchToBlockState(level, pos, placeState);
         }
 
-        if (failed) {
-            for (BlockPos pos : walkwaysToCreate) {
-                BlockState failedState = level.getBlockState(pos);
-                if (failedState.getBlock() instanceof WalkwayBlock)
-                    level.destroyBlock(pos, false);
+        if (!failed) {
+            if (escalator) {
+                boolean firstLower = end.subtract(start).getY() > 0;
+                BlockPos lowerPos = firstLower ? start : end;
+                BlockPos upperPos = firstLower ? end : start;
+
+                BlockPos horizontalPos = upperPos.relative(facing, -1);
+                BlockState horizontalState = level.getBlockState(horizontalPos);
+                KineticBlockEntity.switchToBlockState(level, horizontalPos, horizontalState.setValue(WalkwayBlock.SLOPE, WalkwaySlope.HORIZONTAL));
+
+                BlockPos topPos = upperPos.relative(facing, -2);
+                BlockState topState = level.getBlockState(topPos);
+                KineticBlockEntity.switchToBlockState(level, topPos, topState.setValue(WalkwayBlock.SLOPE, WalkwaySlope.TOP));
+
+                BlockPos bottomPos = lowerPos.relative(facing);
+                BlockState bottomState = level.getBlockState(bottomPos);
+                KineticBlockEntity.switchToBlockState(level, bottomPos, bottomState.setValue(WalkwayBlock.SLOPE, WalkwaySlope.BOTTOM));
             }
-        } else {
-            for (BlockPos pos : walkwaysToCreate) {
-                BlockEntity blockEntity = level.getBlockEntity(pos);
-                if (!(blockEntity instanceof WalkwayBlockEntity walkway))
-                    continue;
-                // TODO set step type
-            }
+            return;
+        }
+
+        for (BlockPos pos : walkwaysToCreate) {
+            BlockState failedState = level.getBlockState(pos);
+            if (failedState.getBlock() instanceof WalkwayBlock)
+                level.destroyBlock(pos, false);
         }
     }
 
-    protected BlockState getPlacedWalkwayBlock(BeltSlope slope, Direction facing, boolean shaft) {
-        // TODO other blocks
-        return EscalatedBlocks.METAL_NARROW_WALKWAY.getDefaultState()
-                .setValue(NarrowWalkwayBlock.HORIZONTAL_FACING, facing)
-                .setValue(WalkwayBlock.CAPS, shaft ? WalkwayCaps.NONE : WalkwayCaps.NO_SHAFT);
+    protected BlockState getPlacedWalkwayBlock(boolean escalator, Direction facing, boolean shaft) {
+        // TODO wooden step blocks
+        if (escalator) {
+            return EscalatedBlocks.METAL_NARROW_ESCALATOR.getDefaultState()
+                    .setValue(AbstractWalkwayBlock.SLOPE, WalkwaySlope.MIDDLE)
+                    .setValue(AbstractWalkwayBlock.HORIZONTAL_FACING, facing);
+        } else {
+            return EscalatedBlocks.METAL_NARROW_WALKWAY.getDefaultState()
+                    .setValue(AbstractWalkwayBlock.HORIZONTAL_FACING, facing)
+                    .setValue(WalkwayBlock.CAPS, shaft ? WalkwayCaps.NONE : WalkwayCaps.NO_SHAFT);
+        }
     }
 
     protected SoundEvent getPlaceSoundEvent() { return SoundEvents.CHAIN_PLACE; }
@@ -372,36 +387,33 @@ public class WalkwayConnectorItem extends BlockItem {
         return Direction.get(axisDirection, beltAxis);
     }
 
-    private static BeltSlope getSlopeBetween(BlockPos start, BlockPos end) {
-        BlockPos diff = end.subtract(start);
-
-        if (diff.getY() != 0) {
-            if (diff.getZ() != 0 || diff.getX() != 0)
-                return diff.getY() > 0 ? BeltSlope.UPWARD : BeltSlope.DOWNWARD;
-            return BeltSlope.VERTICAL;
-        }
-        return BeltSlope.HORIZONTAL;
-    }
-
-    private static List<BlockPos> getWalkwayChainBetween(BlockPos start, BlockPos end, BeltSlope slope, Direction direction) {
+    private static List<BlockPos> getWalkwayChainBetween(BlockPos start, BlockPos end, boolean escalator, Direction direction) {
         List<BlockPos> positions = new LinkedList<>();
         int limit = 1000;
+
+        if (escalator) {
+            boolean firstLower = end.subtract(start).getY() > 0;
+            BlockPos lowerPos = firstLower ? start : end;
+            BlockPos upperPos = firstLower ? end : start;
+            if (!firstLower)
+                direction = direction.getOpposite();
+
+            positions.add(upperPos.relative(direction, -1));
+            positions.add(upperPos.relative(direction, -2));
+            start = lowerPos.relative(direction);
+            end = upperPos.relative(direction, -2);
+        }
+
         BlockPos current = start;
-
-        // TODO funny escalator handling code
-
         do {
             positions.add(current);
-            if (slope == BeltSlope.VERTICAL) {
-                current = current.above(direction.getAxisDirection() == Direction.AxisDirection.POSITIVE ? 1 : -1);
-                continue;
-            }
             current = current.relative(direction);
-            if (slope != BeltSlope.HORIZONTAL)
-                current = current.above(slope == BeltSlope.UPWARD ? 1 : -1);
+            if (escalator)
+                current = current.above();
         } while (!current.equals(end) && limit-- > 0);
 
-        positions.remove(start);
+        if (!escalator)
+            positions.remove(start);
         return positions;
     }
 

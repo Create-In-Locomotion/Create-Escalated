@@ -4,6 +4,7 @@
   "package": "rbasamoyai.escalated.mixin.fabric",
   "compatibilityLevel": "JAVA_17",
   "client": [
+    "client.NarrowEscalatorBlockMixin"
   ],
   "mixins": [
   ],

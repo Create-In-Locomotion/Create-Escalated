@@ -1,7 +1,5 @@
 package rbasamoyai.escalated.walkways;
 
-import com.simibubi.create.AllBlocks;
-import com.simibubi.create.content.kinetics.belt.BeltSlope;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
@@ -61,7 +59,8 @@ public class WalkwayMovementHandler {
         Level level = walkwayBE.getLevel();
         BlockEntity otherBE = level.getBlockEntity(pos);
 
-        BlockEntity beBelowPassenger = level.getBlockEntity(BlockPos.containing(entity.position().subtract(0, 0.05, 0)));
+        BlockPos belowPos = BlockPos.containing(entity.position().subtract(0, 0.05, 0));
+        BlockEntity beBelowPassenger = level.getBlockEntity(belowPos);
         BlockState blockState = info.lastCollidedState;
         WalkwayBlock walkwayBlock = (WalkwayBlock) blockState.getBlock();
         Direction movementFacing = Direction.fromAxisAndDirection(walkwayBlock.getFacing(blockState).getAxis(),
@@ -75,12 +74,11 @@ public class WalkwayMovementHandler {
             return;
 
         // Too slow or doesn't move (e.g. terminals)
-        boolean notHorizontal = walkwayBlock.getWalkwaySlope(walkwayBE.getBlockState()) != BeltSlope.HORIZONTAL;
         if (Math.abs(walkwayBE.getSpeed()) < 1 || !walkwayBlock.movesEntities(blockState))
             return;
 
         // Not on top
-        if (entity.getY() - .25f < pos.getY())
+        if (entity.getY() + 0.25f < pos.getY())
             return;
 
         // Lock entities in place
@@ -89,7 +87,7 @@ public class WalkwayMovementHandler {
             living.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 10, 1, false, false));
 
         final Direction walkwayFacing = walkwayBlock.getFacing(blockState);
-        final BeltSlope slope = walkwayBlock.getWalkwaySlope(blockState);
+        final WalkwaySlope slope = walkwayBlock.getWalkwaySlope(blockState);
         final Direction.Axis axis = walkwayFacing.getAxis();
         float movementSpeed = walkwayBE.getWalkwayMovementSpeed();
         final Direction movementDirection = Direction.get(axis == Direction.Axis.X ? NEGATIVE : POSITIVE, axis);
@@ -101,17 +99,12 @@ public class WalkwayMovementHandler {
         if (Math.abs(diffCenter) > 48 / 64f)
             return;
 
-        //BeltPart part = blockState.getValue(BeltBlock.PART);
-        float top = 1;
-        boolean onSlope = false;
-        // TODO escalator;
-//        boolean onSlope = notHorizontal && (part == BeltPart.MIDDLE || part == BeltPart.PULLEY
-//                || part == (slope == BeltSlope.UPWARD ? BeltPart.END : BeltPart.START) && entity.getY() - pos.getY() < top
-//                || part == (slope == BeltSlope.UPWARD ? BeltPart.START : BeltPart.END)
-//                && entity.getY() - pos.getY() > top);
+        float top = 15.5f / 16f;
+        boolean onSlope = slope == WalkwaySlope.MIDDLE || slope == WalkwaySlope.TOP && entity.getY() - pos.getY() < top
+                || slope == WalkwaySlope.BOTTOM && entity.getY() - pos.getY() > top;
 
-        boolean movingDown = onSlope && slope == (movementFacing == walkwayFacing ? BeltSlope.DOWNWARD : BeltSlope.UPWARD);
-        boolean movingUp = onSlope && slope == (movementFacing == walkwayFacing ? BeltSlope.UPWARD : BeltSlope.DOWNWARD);
+        boolean movingDown = onSlope && movementFacing != walkwayFacing;
+        boolean movingUp = onSlope && movementFacing == walkwayFacing;
 
         if (walkwayFacing.getAxis() == Direction.Axis.Z) {
             boolean b = movingDown;
@@ -154,8 +147,9 @@ public class WalkwayMovementHandler {
 
         if (movingUp) {
             float minVelocity = .13f;
-            float yMovement = (float) -(Math.max(Math.abs(movement.y), minVelocity));
+            float yMovement = (float) (Math.max(Math.abs(movement.y), minVelocity));
             entity.move(SELF, new Vec3(0, yMovement, 0));
+            entity.move(SELF, new Vec3(0, -yMovement * 2, 0));
             entity.move(SELF, movement.multiply(1, 0, 1));
         } else if (movingDown) {
             entity.move(SELF, movement.multiply(1, 0, 1));
@@ -164,21 +158,11 @@ public class WalkwayMovementHandler {
             entity.move(SELF, movement);
         }
 
+        // Placement on steps
         entity.setOnGround(true);
 
         if (!isPlayer)
             entity.setMaxUpStep(step);
-
-        boolean movedPastEndingSlope = onSlope && (AllBlocks.BELT.has(level.getBlockState(entity.blockPosition()))
-                || AllBlocks.BELT.has(level.getBlockState(entity.blockPosition()
-                .below())));
-
-        if (movedPastEndingSlope && !movingDown && Math.abs(movementSpeed) > 0)
-            entity.setPos(entity.getX(), entity.getY() + movement.y, entity.getZ());
-        if (movedPastEndingSlope) {
-            entity.setDeltaMovement(movement);
-            entity.hurtMarked = true;
-        }
     }
 
     public static boolean shouldIgnoreBlocking(Entity me, Entity other) {

@@ -56,7 +56,7 @@ public class WalkwayRenderer extends KineticBlockEntityRenderer<WalkwayBlockEnti
             if (kinetic.hasShaftTowards(level, pos, state, right))
                 renderRotatingBuffer(be, this.getHalfShaftRotatedModel(be, state, right), ms, cons, light);
 
-            boolean isTerminal = walkway.isTerminal(state);
+            boolean isTerminal = walkway.getWalkwaySlope(state) == WalkwaySlope.TERMINAL;
             boolean flag = facing == Direction.NORTH || facing == Direction.EAST;
             boolean isController = be.isController();
             Direction stepFacing = isTerminal && isController ? facing.getOpposite() : facing;
@@ -89,9 +89,12 @@ public class WalkwayRenderer extends KineticBlockEntityRenderer<WalkwayBlockEnti
     }
 
     public static Vector3f getStepOffset(WalkwayBlockEntity be, Direction facing, BlockPos pos, boolean frontStep) {
-        // TODO escalator
+        Direction originalFacing = facing;
         Direction.AxisDirection axisDir = facing.getAxis() == Direction.Axis.X ? Direction.AxisDirection.NEGATIVE : Direction.AxisDirection.POSITIVE;
         facing = Direction.fromAxisAndDirection(facing.getAxis(), axisDir);
+        BlockState state = be.getBlockState();
+        WalkwayBlock walkway = (WalkwayBlock) state.getBlock();
+        WalkwaySlope slope = walkway.getWalkwaySlope(state);
 
         Vector3f offset = new Vector3f(pos.getX(), pos.getY() + 15.5f / 16f, pos.getZ());
 
@@ -103,6 +106,19 @@ public class WalkwayRenderer extends KineticBlockEntityRenderer<WalkwayBlockEnti
             stepOffset += 0.5f;
         stepOffset -= 0.25f;
         offset.add(facing.step().mul(stepOffset));
+
+        if (slope == WalkwaySlope.TOP || slope == WalkwaySlope.MIDDLE || slope == WalkwaySlope.BOTTOM) {
+            float f = stepOffset - 0.25f;
+            if (originalFacing == Direction.NORTH || originalFacing == Direction.EAST) {
+                f *= -1;
+                f -= 0.5f;
+            }
+            if (slope == WalkwaySlope.TOP)
+                f = Math.min(f, 0);
+            if (slope == WalkwaySlope.BOTTOM)
+                f = Math.max(f, 0);
+            offset.add(0, f, 0);
+        }
         return offset;
     }
 
@@ -112,9 +128,11 @@ public class WalkwayRenderer extends KineticBlockEntityRenderer<WalkwayBlockEnti
         Level level = be.getLevel();
         BlockPos pos = be.getBlockPos();
 
+        boolean terminal = false;
         if (EscalatedBlocks.METAL_WALKWAY_TERMINAL.has(state)) {
             Direction facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
             state = level.getBlockState(pos.relative(facing));
+            terminal = true;
         }
         if (EscalatedBlocks.METAL_NARROW_WALKWAY.has(state))
             return EscalatedBlockPartials.DYED_METAL_WALKWAY_STEPS.getOrDefault(color, EscalatedBlockPartials.METAL_WALKWAY_STEP);
@@ -125,7 +143,13 @@ public class WalkwayRenderer extends KineticBlockEntityRenderer<WalkwayBlockEnti
         }
         if (EscalatedBlocks.METAL_WIDE_WALKWAY_CENTER.has(state))
             return EscalatedBlockPartials.DYED_METAL_WALKWAY_STEPS_CENTER.getOrDefault(color, EscalatedBlockPartials.METAL_WALKWAY_STEP_CENTER);
-        return EscalatedBlockPartials.METAL_WALKWAY_STEP;
+
+        if (EscalatedBlocks.METAL_NARROW_ESCALATOR.has(state))
+            return EscalatedBlockPartials.DYED_METAL_ESCALATOR_STEPS.getOrDefault(color, EscalatedBlockPartials.METAL_ESCALATOR_STEP);
+
+        if (terminal && Backend.canUseInstancing(level))
+            be.lazyResetClientRender = true; // Reset next tick
+        return EscalatedBlockPartials.DYED_METAL_WALKWAY_STEPS.get(DyeColor.RED);
 
         // TODO wide steps
         // TODO escalator steps

@@ -56,7 +56,7 @@ public class WalkwayInstance extends KineticBlockEntityInstance<WalkwayBlockEnti
             this.bottomShaft = null;
         }
 
-        boolean isTerminal = walkway.isTerminal(this.blockState);
+        boolean isTerminal = walkway.getWalkwaySlope(this.blockState) == WalkwaySlope.TERMINAL;
         boolean isController = this.blockEntity.isController();
         Direction facing = this.getFacing();
         BlockPos pos1 = this.getInstancePosition();
@@ -132,8 +132,10 @@ public class WalkwayInstance extends KineticBlockEntityInstance<WalkwayBlockEnti
             return true;
         if (this.blockEntity.getColor() != this.color)
             return true;
-        if (this.blockEntity.resetClientRender)
+        if (this.blockEntity.resetClientRender) {
+            this.blockEntity.resetClientRender = false;
             return true;
+        }
         return false;
     }
 

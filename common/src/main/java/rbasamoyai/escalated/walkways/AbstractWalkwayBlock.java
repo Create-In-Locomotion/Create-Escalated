@@ -52,7 +52,9 @@ public abstract class AbstractWalkwayBlock extends HorizontalKineticBlock implem
 
     @Override
     public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
-        this.transportEntity(level, pos, state, entity);
+        BlockPos actualPos = entity.getOnPos();
+        BlockState actualState = level.getBlockState(actualPos);
+        this.transportEntity(level, actualPos, actualState, entity);
     }
 
     protected void transportEntity(Level level, BlockPos pos, BlockState state, Entity entity) {

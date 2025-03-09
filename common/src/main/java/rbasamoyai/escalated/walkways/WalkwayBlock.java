@@ -1,6 +1,5 @@
 package rbasamoyai.escalated.walkways;
 
-import com.simibubi.create.content.kinetics.belt.BeltSlope;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -14,17 +13,18 @@ import java.util.List;
 
 public interface WalkwayBlock {
 
+    // Common properties
     EnumProperty<WalkwayCaps> CAPS = EnumProperty.create("caps", WalkwayCaps.class);
     EnumProperty<WalkwayCaps> CAPS_SHAFT = EnumProperty.create("caps", WalkwayCaps.class, e -> e != WalkwayCaps.NO_SHAFT);
     EnumProperty<WalkwayCaps> CAPS_SIDED = EnumProperty.create("caps", WalkwayCaps.class, WalkwayCaps.NONE, WalkwayCaps.BOTH, WalkwayCaps.NO_SHAFT);
+    EnumProperty<WalkwaySlope> SLOPE = EnumProperty.create("slope", WalkwaySlope.class, s -> s != WalkwaySlope.TERMINAL);
 
     Direction getFacing(BlockState state);
-    BeltSlope getWalkwaySlope(BlockState state);
+    WalkwaySlope getWalkwaySlope(BlockState state);
     boolean hasWalkwayShaft(BlockState state);
     BlockState transformFromMerge(Level level, BlockState state, BlockPos pos, boolean left, boolean shaft, boolean remove);
     boolean connectedToWalkwayOnSide(Level level, BlockState state, BlockPos pos, Direction face);
 
-    default boolean isTerminal(BlockState state) { return false; }
     default boolean movesEntities(BlockState state) { return true; }
 
     static void initWalkway(Level level, BlockPos pos) {
@@ -57,7 +57,7 @@ public interface WalkwayBlock {
         // Init belts
         List<BlockPos> walkwayChain = getWalkwayChain(level, currentPos);
         int minSize = escalator ? 5 : 3;
-        if (walkwayChain.size() < minSize) { // TODO escalator
+        if (walkwayChain.size() < minSize) {
             level.destroyBlock(currentPos, true);
             return;
         }
@@ -99,21 +99,21 @@ public interface WalkwayBlock {
     }
 
     static BlockPos nextSegmentPosition(BlockState state, BlockPos pos, boolean forward, boolean terminal) {
-        // TODO escalator stuff
-
         WalkwayBlock walkway = (WalkwayBlock) state.getBlock();
         Direction direction = walkway.getFacing(state);
-        BeltSlope slope = walkway.getWalkwaySlope(state);
+        WalkwaySlope slope = walkway.getWalkwaySlope(state);
 
         int offset = forward ? 1 : -1;
 
-        if (walkway.isTerminal(state) && terminal)
+        if (slope == WalkwaySlope.TERMINAL && terminal)
             return null;
-        if (slope == BeltSlope.VERTICAL)
-            return pos.above(direction.getAxisDirection() == Direction.AxisDirection.POSITIVE ? offset : -offset);
         pos = pos.relative(direction, offset);
-        if (slope != BeltSlope.HORIZONTAL && slope != BeltSlope.SIDEWAYS)
-            return pos.above(slope == BeltSlope.UPWARD ? offset : -offset);
+        if (slope == WalkwaySlope.MIDDLE)
+            return pos.above(offset);
+        if (slope == WalkwaySlope.TOP && !forward)
+            return pos.below();
+        if (slope == WalkwaySlope.BOTTOM && forward)
+            return pos.above();
         return pos;
     }
 }

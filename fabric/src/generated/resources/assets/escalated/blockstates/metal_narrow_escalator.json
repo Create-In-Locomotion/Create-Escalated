@@ -1,0 +1,64 @@
+{
+  "variants": {
+    "facing=east,slope=bottom": {
+      "model": "escalated:block/metal_narrow_escalator_bottom",
+      "y": 270
+    },
+    "facing=east,slope=horizontal": {
+      "model": "escalated:block/metal_narrow_escalator_horizontal",
+      "y": 270
+    },
+    "facing=east,slope=middle": {
+      "model": "escalated:block/metal_narrow_escalator_middle",
+      "y": 270
+    },
+    "facing=east,slope=top": {
+      "model": "escalated:block/metal_narrow_escalator_top",
+      "y": 270
+    },
+    "facing=north,slope=bottom": {
+      "model": "escalated:block/metal_narrow_escalator_bottom",
+      "y": 180
+    },
+    "facing=north,slope=horizontal": {
+      "model": "escalated:block/metal_narrow_escalator_horizontal",
+      "y": 180
+    },
+    "facing=north,slope=middle": {
+      "model": "escalated:block/metal_narrow_escalator_middle",
+      "y": 180
+    },
+    "facing=north,slope=top": {
+      "model": "escalated:block/metal_narrow_escalator_top",
+      "y": 180
+    },
+    "facing=south,slope=bottom": {
+      "model": "escalated:block/metal_narrow_escalator_bottom"
+    },
+    "facing=south,slope=horizontal": {
+      "model": "escalated:block/metal_narrow_escalator_horizontal"
+    },
+    "facing=south,slope=middle": {
+      "model": "escalated:block/metal_narrow_escalator_middle"
+    },
+    "facing=south,slope=top": {
+      "model": "escalated:block/metal_narrow_escalator_top"
+    },
+    "facing=west,slope=bottom": {
+      "model": "escalated:block/metal_narrow_escalator_bottom",
+      "y": 90
+    },
+    "facing=west,slope=horizontal": {
+      "model": "escalated:block/metal_narrow_escalator_horizontal",
+      "y": 90
+    },
+    "facing=west,slope=middle": {
+      "model": "escalated:block/metal_narrow_escalator_middle",
+      "y": 90
+    },
+    "facing=west,slope=top": {
+      "model": "escalated:block/metal_narrow_escalator_top",
+      "y": 90
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "escalated:metal_walkway_steps"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "escalated:blocks/metal_narrow_escalator"
+}

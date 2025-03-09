@@ -19,8 +19,6 @@ import rbasamoyai.escalated.walkways.WalkwayMovementHandler.TransportedEntityInf
 import javax.annotation.Nullable;
 import java.util.*;
 
-import static com.simibubi.create.content.kinetics.belt.BeltSlope.HORIZONTAL;
-
 /**
  * Somewhat adapated from {@link com.simibubi.create.content.kinetics.belt.BeltBlockEntity}
  */
@@ -37,6 +35,7 @@ public class WalkwayBlockEntity extends KineticBlockEntity {
     private DyeColor color = null;
 
     public boolean resetClientRender;
+    public boolean lazyResetClientRender;
 
     public WalkwayBlockEntity(BlockEntityType<?> typeIn, BlockPos pos, BlockState state) {
         super(typeIn, pos, state);
@@ -48,6 +47,10 @@ public class WalkwayBlockEntity extends KineticBlockEntity {
     public void tick() {
         if (this.walkwayLength == 0)
             WalkwayBlock.initWalkway(this.level, this.worldPosition);
+        if (this.level.isClientSide && this.lazyResetClientRender) {
+            this.lazyResetClientRender = false;
+            this.resetClientRender = true;
+        }
 
         super.tick();
 
@@ -71,12 +74,11 @@ public class WalkwayBlockEntity extends KineticBlockEntity {
         if (this.getSpeed() == 0)
             return;
 
-        // TODO transport entities on escalator
         // Move Entities
         if (this.passengers == null)
             this.passengers = new HashMap<>();
 
-        boolean beltFlag = walkway.getWalkwaySlope(state) != HORIZONTAL;
+        boolean beltFlag = walkway.getWalkwaySlope(state) != WalkwaySlope.HORIZONTAL;
         for (Iterator<Map.Entry<Entity, TransportedEntityInfo>> iter = this.passengers.entrySet().iterator(); iter.hasNext(); ) {
             Map.Entry<Entity, TransportedEntityInfo> entry = iter.next();
             Entity entity = entry.getKey();
@@ -91,6 +93,18 @@ public class WalkwayBlockEntity extends KineticBlockEntity {
             info.tick();
             WalkwayMovementHandler.transportEntity(this, entity, info);
         }
+    }
+
+    @Override
+    public void attachKinetics() {
+        if (this.remove) // Needed because terminals are funny to prevent crashing
+            return;
+        super.attachKinetics();
+    }
+
+    @Override
+    public void invalidate() {
+        super.invalidate();
     }
 
     public void updateNeighbors() {
@@ -117,12 +131,12 @@ public class WalkwayBlockEntity extends KineticBlockEntity {
                 if (!(currentState.getBlock() instanceof WalkwayBlock otherWalkway))
                     break;
                 currentWalkway = otherWalkway;
-                if (i == 0)
-                    continue;
-                if (!(this.level.getBlockEntity(currentPos) instanceof WalkwayBlockEntity otherWalkwayBE))
-                    break;
-                iteratedBlocks.add(currentPos);
-                updateSecondPass.add(otherWalkwayBE);
+                if (i > 0) {
+                    if (!(this.level.getBlockEntity(currentPos) instanceof WalkwayBlockEntity otherWalkwayBE))
+                        break;
+                    iteratedBlocks.add(currentPos);
+                    updateSecondPass.add(otherWalkwayBE);
+                }
                 if (!currentWalkway.connectedToWalkwayOnSide(this.level, currentState, currentPos, dir))
                     break;
             }
@@ -138,6 +152,11 @@ public class WalkwayBlockEntity extends KineticBlockEntity {
             walkwayBE.widthReferencePos = this.widthReferencePos;
             walkwayBE.updateCount = 1;
         }
+    }
+
+    @Override
+    public void remove() {
+        super.remove();
     }
 
     @Override public float calculateStressApplied() { return this.isController() ? super.calculateStressApplied() : 0; }
@@ -181,7 +200,10 @@ public class WalkwayBlockEntity extends KineticBlockEntity {
     }
 
     public boolean isEscalator() {
-        return false; // TODO escalator code
+        if (!(this.getBlockState().getBlock() instanceof WalkwayBlock walkwayBlock))
+            return false;
+        WalkwaySlope slope = walkwayBlock.getWalkwaySlope(this.getBlockState());
+        return slope != WalkwaySlope.HORIZONTAL && slope != WalkwaySlope.TERMINAL;
     }
 
     public List<BlockPos> getAllBlocks() {
@@ -206,7 +228,7 @@ public class WalkwayBlockEntity extends KineticBlockEntity {
 
     @Override
     protected boolean canPropagateDiagonally(IRotate block, BlockState state) {
-        return super.canPropagateDiagonally(block, state);
+        return super.canPropagateDiagonally(block, state) || this.isEscalator();
     }
 
     @Override
@@ -316,7 +338,9 @@ public class WalkwayBlockEntity extends KineticBlockEntity {
         if (!clientPacket)
             return;
 
-        this.resetClientRender = compound.contains("UpdateRendering");
+        if (this.isController())
+            this.lazyResetClientRender = true;
+        this.resetClientRender |= compound.contains("UpdateRendering"); // Don't interrupt existing update render
     }
 
 }

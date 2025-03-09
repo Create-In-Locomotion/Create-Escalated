@@ -2,7 +2,6 @@ package rbasamoyai.escalated.walkways;
 
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
-import com.simibubi.create.content.kinetics.belt.BeltSlope;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -47,7 +46,7 @@ public class NarrowWalkwayBlock extends AbstractWalkwayBlock  {
         return super.areStatesKineticallyEquivalent(oldState, newState) && oldState.getValue(CAPS) == newState.getValue(CAPS);
     }
 
-    @Override public BeltSlope getWalkwaySlope(BlockState state) { return BeltSlope.HORIZONTAL; }
+    @Override public WalkwaySlope getWalkwaySlope(BlockState state) { return WalkwaySlope.HORIZONTAL; }
 
     @Override public boolean hasWalkwayShaft(BlockState state) { return state.getValue(CAPS) != WalkwayCaps.NO_SHAFT; }
 
