@@ -1,8 +1,4 @@
-feature: Added recipe for walkway belts
-
-- Added recipe generation boilerplate
-
-[feature: Added decorative handrails]
+feature: Added decorative handrails
 TODO:
     - Add handrails item
     - Add walkway handrail block
@@ -14,10 +10,12 @@ TODO:
     - Add handrails={true, false} attribute to walkway terminals and walkway/escalator blocks
       - Add hitboxes for affected blocks
 
-[feature: Added wooden steps]
+[feature: Added wooden walkways and escalators]
 TODO:
     - Textures
 
+[bug: Fixed jumping motion on north and east-facing escalators]
+[bug: Fixed jittery movement on upwards escalators]
 [bug: Fixed Fabric stuff]
 
 [documentation: Added ponders for walkways and escalators]
@@ -35,8 +33,5 @@ TODO:
 
 [bug: Fixed ghost propagation]
 TODO rotation propagation being weird somehow
-
-[bug: Fixed jumping motion on north and east-facing escalators]
-[bug: Fixed jittery movement on upwards escalators]
 
 [documentation: Added CHANGELOG.md]
