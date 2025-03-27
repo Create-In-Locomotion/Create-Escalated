@@ -14,7 +14,6 @@ TODO:
 TODO:
     - Textures
 
-[bug: Fixed jumping motion on north and east-facing escalators]
 [bug: Fixed jittery movement on upwards escalators]
 [bug: Fixed Fabric stuff]
 

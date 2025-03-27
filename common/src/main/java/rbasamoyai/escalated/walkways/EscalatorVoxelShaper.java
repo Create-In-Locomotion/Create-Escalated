@@ -24,6 +24,8 @@ public class EscalatorVoxelShaper {
 
     public VoxelShape getShape(float visualOffset, Direction facing) {
         int sz = this.shapes.size();
+        if (facing == Direction.NORTH || facing == Direction.EAST)
+            visualOffset *= -1;
         int index = Mth.floor(((visualOffset % 0.5f) + 1) % 0.5f / 0.5f * sz) % sz; // Normalize value to [0, sz)
         return this.shapes.get(index).get(facing);
     }
