@@ -7,6 +7,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import rbasamoyai.escalated.CreateEscalated;
+import rbasamoyai.escalated.handrails.EscalatorHandrailBlock;
+import rbasamoyai.escalated.handrails.WalkwayHandrailBlock;
 import rbasamoyai.escalated.walkways.*;
 
 public class EscalatedBuilderTransformersImpl {
@@ -141,6 +143,34 @@ public class EscalatedBuilderTransformersImpl {
             return p.models().withExistingParent(c.getName() + "_" + slope.getSerializedName(), loc)
                     .texture("bottom", "block/" + material + "_walkway_bottom");
         }, 0));
+    }
+
+    public static <T extends Block, P> NonNullUnaryOperator<BlockBuilder<T, P>> walkwayHandrail(String material) {
+        return b -> b.blockstate((c, p) -> p.horizontalBlock(c.get(), state -> {
+            String suffix = state.getValue(WalkwayHandrailBlock.SIDE).getSerializedName() + "_";
+            if (state.getValue(WalkwayHandrailBlock.PART) == WalkwayHandrailBlock.Part.MIDDLE) {
+                suffix += "horizontal";
+            } else {
+                suffix += state.getValue(WalkwayHandrailBlock.PART).getSerializedName();
+            }
+            ResourceLocation loc = CreateEscalated.resource("block/handrail_wall/" + suffix);
+            return p.models().withExistingParent(c.getName() + "_" + suffix, loc)
+                    .texture("side", "block/" + material + "_handrail_side")
+                    .texture("edge", "block/" + material + "_handrail_edge");
+        }));
+    }
+
+    public static <T extends Block, P> NonNullUnaryOperator<BlockBuilder<T, P>> escalatorHandrail(String material) {
+        return b -> b.blockstate((c, p) -> p.horizontalBlock(c.get(), state -> {
+            String suffix = state.getValue(EscalatorHandrailBlock.SIDE).getSerializedName() + "_"
+                    + state.getValue(EscalatorHandrailBlock.PART).getSerializedName();
+            ResourceLocation loc = CreateEscalated.resource("block/handrail_wall/" + suffix);
+            return p.models().withExistingParent(c.getName() + "_" + suffix, loc)
+                    .texture("side", "block/" + material + "_handrail_side")
+                    .texture("edge", "block/" + material + "_handrail_edge")
+                    .texture("escalator_side", "block/" + material + "_handrail_escalator_side")
+                    .texture("escalator_side1", "block/" + material + "_handrail_escalator_side1");
+        }));
     }
 
     public static <T extends Item, P> NonNullUnaryOperator<ItemBuilder<T, P>> existingItemModel() {

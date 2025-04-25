@@ -1,0 +1,30 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "minecraft:block/block",
+	"textures": {
+		"0": "#side",
+		"1": "#edge",
+		"particle": "#side"
+	},
+	"elements": [
+		{
+			"from": [14, 0, 0],
+			"to": [16, 14, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [14, 0, 0]},
+			"faces": {
+				"east": {"uv": [0, 2, 16, 16], "texture": "#0"},
+				"west": {"uv": [0, 2, 16, 16], "texture": "#0"},
+				"up": {"uv": [14, 0, 16, 16], "texture": "#1"}
+			}
+		},
+		{
+			"from": [0, 0, 0],
+			"to": [2, 14, 16],
+			"faces": {
+				"east": {"uv": [0, 2, 16, 16], "texture": "#0"},
+				"west": {"uv": [0, 2, 16, 16], "texture": "#0"},
+				"up": {"uv": [0, 0, 2, 16], "texture": "#1"}
+			}
+		}
+	]
+}

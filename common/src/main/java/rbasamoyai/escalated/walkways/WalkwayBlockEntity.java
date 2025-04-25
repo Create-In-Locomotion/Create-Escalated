@@ -250,7 +250,7 @@ public class WalkwayBlockEntity extends KineticBlockEntity {
         if (this.level.isClientSide)
             return true;
 
-        int WIDTH_LIMIT = 100;
+        int WIDTH_LIMIT = 256;
 
         Direction facing = ((WalkwayBlock) this.getBlockState().getBlock()).getFacing(this.getBlockState());
         Direction left = facing.getCounterClockWise();

@@ -62,14 +62,15 @@ public class WalkwayRenderer extends KineticBlockEntityRenderer<WalkwayBlockEnti
             Direction stepFacing = isTerminal && isController ? facing.getOpposite() : facing;
 
             PartialModel stepModel = this.getStepModel(be);
+            SuperByteBuffer buf = CachedBufferer.partialFacing(stepModel, state, stepFacing);
             if (!isTerminal || flag) { // Render back step
-                CachedBufferer.partialFacing(stepModel, state, stepFacing)
+                buf
                         .light(light)
                         .translate(getStepOffset(be, stepFacing, BlockPos.ZERO, false))
                         .renderInto(ms, cons);
             }
             if (!isTerminal || !flag) { // Render front step
-                CachedBufferer.partialFacing(stepModel, state, stepFacing)
+                buf
                         .light(light)
                         .translate(getStepOffset(be, stepFacing, BlockPos.ZERO, true))
                         .renderInto(ms, cons);

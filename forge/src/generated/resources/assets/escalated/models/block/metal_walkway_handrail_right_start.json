@@ -1,0 +1,7 @@
+{
+  "parent": "escalated:block/handrail_wall/right_start",
+  "textures": {
+    "edge": "escalated:block/metal_handrail_edge",
+    "side": "escalated:block/metal_handrail_side"
+  }
+}

@@ -4,6 +4,7 @@ import com.simibubi.create.content.kinetics.base.KineticBlock;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.simpleRelays.AbstractSimpleShaftBlock;
 import com.simibubi.create.content.kinetics.simpleRelays.ShaftBlock;
+import com.simibubi.create.foundation.block.ProperWaterloggedBlock;
 import com.simibubi.create.foundation.utility.VecHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -20,9 +21,12 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import rbasamoyai.escalated.config.EscalatedConfigs;
+import rbasamoyai.escalated.handrails.AbstractHandrailBlock;
+import rbasamoyai.escalated.handrails.HandrailBlockEntity;
 import rbasamoyai.escalated.index.EscalatedBlocks;
 
 import java.util.*;
@@ -280,6 +284,7 @@ public class WalkwayConnectorItem extends BlockItem {
             Collections.reverse(list);
             int sz = list.size();
             Direction face = Direction.getNearest(actualDiff.getX(), actualDiff.getY(), actualDiff.getZ());
+
             for (int i = 0; i < sz; ++i) {
                 BlockPos srcPos = list.get(i);
                 BlockPos destPos = srcPos.offset(actualDiff);
@@ -296,11 +301,13 @@ public class WalkwayConnectorItem extends BlockItem {
                 if (i == 0)
                     left = !left;
                 boolean srcShaft = walkwaySrc.hasWalkwayShaft(srcState);
+                // Place blocks
                 BlockState replaceSrcState = walkwaySrc.transformFromMerge(level, srcState, srcPos, left, srcShaft, false);
                 BlockState placeState = walkwaySrc.transformFromMerge(level, srcState, srcPos, !left, isShaft, false);
                 KineticBlockEntity.switchToBlockState(level, srcPos, replaceSrcState);
                 KineticBlockEntity.switchToBlockState(level, destPos, placeState);
 
+                // Set block data and prepare for refresh
                 if (level.getBlockEntity(srcPos) instanceof WalkwayBlockEntity newWalkwayBE) {
                     newWalkwayBE.applyColor(color);
                     newWalkwayBE.setVisualProgress(visualProgress);
@@ -314,6 +321,60 @@ public class WalkwayConnectorItem extends BlockItem {
                     destWalkwayBE.widthReferencePos = referencePos;
                     destWalkwayBE.resetClientRender = true;
                     destWalkwayBE.notifyUpdate();
+                }
+            }
+            // Move handrail
+            // Check if handrail can be moved, if not destroy
+            for (int i = 0; i < sz; ++i) {
+                BlockPos srcPos = list.get(i);
+                BlockPos destPos = srcPos.offset(actualDiff);
+                BlockPos aboveSrcPos = srcPos.above();
+                BlockState aboveSrcState = level.getBlockState(aboveSrcPos);
+                if (aboveSrcState.getBlock() instanceof AbstractHandrailBlock) {
+                    BlockPos aboveDestPos = destPos.above();
+                    if (!level.getBlockState(aboveDestPos).canBeReplaced()) {
+                        level.destroyBlock(aboveSrcPos, true);
+                        return;
+                    }
+                }
+            }
+            // Move handrail if valid
+            for (int i = 0; i < sz; ++i) {
+                BlockPos srcPos = list.get(i);
+                BlockPos destPos = srcPos.offset(actualDiff);
+                BlockPos aboveSrcPos = srcPos.above();
+                BlockState aboveSrcState = level.getBlockState(aboveSrcPos);
+                if (aboveSrcState.getBlock() instanceof AbstractHandrailBlock) {
+                    BlockPos aboveDestPos = destPos.above();
+                    int width = 1;
+                    Direction forward = aboveSrcState.getValue(AbstractHandrailBlock.FACING);
+                    Direction handrailLeft = forward.getCounterClockWise();
+                    if (aboveSrcState.getValue(AbstractHandrailBlock.SIDE) == AbstractHandrailBlock.Side.BOTH) { // Narrow
+                        AbstractHandrailBlock.Side destSide = face == handrailLeft ?
+                                AbstractHandrailBlock.Side.LEFT : AbstractHandrailBlock.Side.RIGHT;
+                        AbstractHandrailBlock.Side srcSide = destSide == AbstractHandrailBlock.Side.LEFT ?
+                                AbstractHandrailBlock.Side.RIGHT : AbstractHandrailBlock.Side.LEFT;
+                        level.setBlock(aboveSrcPos, ProperWaterloggedBlock.withWater(level,
+                                aboveSrcState.setValue(AbstractHandrailBlock.SIDE, srcSide), aboveSrcPos), 3);
+                        level.setBlock(aboveDestPos, ProperWaterloggedBlock.withWater(level,
+                                aboveSrcState.setValue(AbstractHandrailBlock.SIDE, destSide), aboveDestPos), 3);
+                        // No setting width since it should be 1
+                    } else { // Wide
+                        level.setBlock(aboveDestPos, ProperWaterloggedBlock.withWater(level, aboveSrcState, aboveDestPos), 3);
+                        if (level.getBlockEntity(aboveSrcPos) instanceof HandrailBlockEntity handrailBE) {
+                            handrailBE.propagateBreak = false;
+                            width = handrailBE.width;
+                        }
+                        level.setBlock(aboveSrcPos, ProperWaterloggedBlock.withWater(level, Blocks.AIR.defaultBlockState(), aboveSrcPos), 3);
+                    }
+                    // Set new width
+                    ++width;
+                    if (level.getBlockEntity(aboveDestPos) instanceof HandrailBlockEntity handrailBE)
+                        handrailBE.width = width;
+                    // Sync new width to other side
+                    BlockPos oppositePos = aboveDestPos.relative(face.getOpposite(), width - 1);
+                    if (level.getBlockEntity(oppositePos) instanceof HandrailBlockEntity handrailBE)
+                        handrailBE.width = width;
                 }
             }
             return;

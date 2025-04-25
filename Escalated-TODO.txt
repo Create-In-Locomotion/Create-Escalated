@@ -1,18 +1,9 @@
-feature: Added decorative handrails
-TODO:
-    - Add handrails item
-    - Add walkway handrail block
-      - part: start, middle, end
-      - side: left, right, both
-    - Add escalator handrail block
-      - part: start, middle, end
-      - side: left, right, both
-    - Add handrails={true, false} attribute to walkway terminals and walkway/escalator blocks
-      - Add hitboxes for affected blocks
-
-[feature: Added wooden walkways and escalators]
+feature: Added wooden walkways and escalators]
 TODO:
     - Textures
+    - Wooden handrail
+    - Recipe
+    - Just set this stuff up in EscalatedBlocks, EscalatedBlockEntities, EscalatedBlockPartials
 
 [bug: Fixed jittery movement on upwards escalators]
 [bug: Fixed Fabric stuff]
@@ -22,7 +13,7 @@ TODO:
     - Creating walkways and escalators
     - Adding extra shafts to walkways and escalators
     - Merging walkways and escalators
-    - Customizing walkways and escalators using handrails and dyes
+    - Customizing walkways and escalators using handrails, dyes, glass handrails, dyed handrails
 
 [feature: Added Escalated-related advancements]
 
@@ -34,3 +25,6 @@ TODO:
 TODO rotation propagation being weird somehow
 
 [documentation: Added CHANGELOG.md]
+
+TODO future update: Copycats escalators
+

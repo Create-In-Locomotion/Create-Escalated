@@ -12,11 +12,12 @@ public interface WalkwaySet {
     BlockState getWideSideBlock(Level level, BlockState state, BlockPos pos);
     BlockState getWideCenterBlock(Level level, BlockState state, BlockPos pos);
     BlockState getTerminalBlock(Level level, BlockState state, BlockPos pos);
+    BlockState getHandrailBlock(Level level, BlockState state, BlockPos pos);
 
     boolean blockInSet(BlockState state);
 
     record Impl(NonNullSupplier<Block> narrow, NonNullSupplier<Block> wideSide, NonNullSupplier<Block> wideCenter,
-                NonNullSupplier<Block> terminal) implements WalkwaySet {
+                NonNullSupplier<Block> terminal, NonNullSupplier<Block> handrail) implements WalkwaySet {
         @Override
         public BlockState getNarrowBlock(Level level, BlockState state, BlockPos pos) {
             return this.narrow.get().defaultBlockState();
@@ -35,6 +36,11 @@ public interface WalkwaySet {
         @Override
         public BlockState getTerminalBlock(Level level, BlockState state, BlockPos pos) {
             return this.terminal.get().defaultBlockState();
+        }
+
+        @Override
+        public BlockState getHandrailBlock(Level level, BlockState state, BlockPos pos) {
+            return this.handrail.get().defaultBlockState();
         }
 
         @Override

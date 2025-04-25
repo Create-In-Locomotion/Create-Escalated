@@ -32,6 +32,16 @@ public class EscalatedBlockPartials {
         DYED_METAL_WALKWAY_STEPS_LEFT = dyedWalkwaySteps("metal", "_left"),
         DYED_METAL_WALKWAY_STEPS_RIGHT = dyedWalkwaySteps("metal", "_right"),
         DYED_METAL_WALKWAY_STEPS_CENTER = dyedWalkwaySteps("metal", "_center");
+    // TODO wooden steps
+
+    //////// Handrails ////////
+    public static final PartialModel
+        HANDRAIL_START = handrail("start"),
+        HANDRAIL_END = handrail("end"),
+        HANDRAIL_HORIZONTAL = handrail("horizontal"),
+        HANDRAIL_BOTTOM = handrail("bottom"),
+        HANDRAIL_MIDDLE = handrail("middle"),
+        HANDRAIL_TOP = handrail("top");
 
     private static PartialModel escalatorSteps(String material) { return escalatorSteps(material, ""); }
 
@@ -71,6 +81,10 @@ public class EscalatedBlockPartials {
         for (DyeColor color : DyeColor.values())
             map.put(color, walkwaySteps(material, suffix + "_" + color.getName()));
         return map;
+    }
+
+    private static PartialModel handrail(String type) {
+        return new PartialModel(CreateEscalated.resource("block/moving_handrail/" + type));
     }
 
     public static void init() {}

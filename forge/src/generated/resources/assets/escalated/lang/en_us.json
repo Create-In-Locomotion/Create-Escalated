@@ -1,6 +1,10 @@
 {
+  "block.escalated.glass_escalator_handrail": "Glass Handrail",
+  "block.escalated.glass_walkway_handrail": "Glass Handrail",
+  "block.escalated.metal_escalator_handrail": "Metal Handrail",
   "block.escalated.metal_narrow_escalator": "Metal Escalator",
   "block.escalated.metal_narrow_walkway": "Metal Walkway",
+  "block.escalated.metal_walkway_handrail": "Metal Handrail",
   "block.escalated.metal_walkway_terminal": "Metal Walkway Terminal",
   "block.escalated.metal_wide_escalator_center": "Metal Escalator",
   "block.escalated.metal_wide_escalator_side": "Metal Escalator",

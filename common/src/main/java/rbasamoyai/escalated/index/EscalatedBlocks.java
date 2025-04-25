@@ -6,10 +6,13 @@ import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 import rbasamoyai.escalated.ModGroup;
 import rbasamoyai.escalated.datagen.EscalatedBuilderTransformers;
+import rbasamoyai.escalated.handrails.EscalatorHandrailBlock;
+import rbasamoyai.escalated.handrails.WalkwayHandrailBlock;
 import rbasamoyai.escalated.walkways.*;
 
 import static rbasamoyai.escalated.CreateEscalated.REGISTRATE;
@@ -111,6 +114,59 @@ public class EscalatedBlocks {
 			.register();
 
 	// TODO wooden walkway/escalator blocks
+
+	//////// Walkway/escalator handrail blocks ////////
+	public static final BlockEntry<WalkwayHandrailBlock> METAL_WALKWAY_HANDRAIL = REGISTRATE
+			.block("metal_walkway_handrail", WalkwayHandrailBlock::new)
+			.lang("Metal Handrail")
+			.addLayer(() -> RenderType::cutoutMipped)
+			.initialProperties(SharedProperties::netheriteMetal)
+			.properties(p -> p.noOcclusion()
+					.strength(3.0f, 6.0f)
+					.mapColor(MapColor.NONE)
+					.isRedstoneConductor(EscalatedBlocks::neverConducts))
+			.transform(EscalatedBuilderTransformers.walkwayHandrail("metal"))
+			.transform(TagGen.pickaxeOnly())
+			.register();
+
+	public static final BlockEntry<EscalatorHandrailBlock> METAL_ESCALATOR_HANDRAIL = REGISTRATE
+			.block("metal_escalator_handrail", EscalatorHandrailBlock::new)
+			.lang("Metal Handrail")
+			.addLayer(() -> RenderType::cutoutMipped)
+			.initialProperties(SharedProperties::netheriteMetal)
+			.properties(p -> p.noOcclusion()
+					.strength(3.0f, 6.0f)
+					.mapColor(MapColor.NONE)
+					.isRedstoneConductor(EscalatedBlocks::neverConducts))
+			.transform(EscalatedBuilderTransformers.escalatorHandrail("metal"))
+			.transform(TagGen.pickaxeOnly())
+			.register();
+
+	public static final BlockEntry<WalkwayHandrailBlock> GLASS_WALKWAY_HANDRAIL = REGISTRATE
+			.block("glass_walkway_handrail", WalkwayHandrailBlock::new)
+			.lang("Glass Handrail")
+			.addLayer(() -> RenderType::cutoutMipped)
+			.initialProperties(() -> Blocks.GLASS)
+			.properties(p -> p.noOcclusion()
+					.strength(0.3f)
+					.mapColor(MapColor.NONE)
+					.isRedstoneConductor(EscalatedBlocks::neverConducts))
+			.transform(EscalatedBuilderTransformers.walkwayHandrail("glass"))
+			.register();
+
+	public static final BlockEntry<EscalatorHandrailBlock> GLASS_ESCALATOR_HANDRAIL = REGISTRATE
+			.block("glass_escalator_handrail", EscalatorHandrailBlock::new)
+			.lang("Glass Handrail")
+			.addLayer(() -> RenderType::cutoutMipped)
+			.initialProperties(() -> Blocks.GLASS)
+			.properties(p -> p.noOcclusion()
+					.strength(0.3f)
+					.mapColor(MapColor.NONE)
+					.isRedstoneConductor(EscalatedBlocks::neverConducts))
+			.transform(EscalatedBuilderTransformers.escalatorHandrail("glass"))
+			.register();
+
+	// TODO wooden walkway/escalator handrail blocks
 
 	public static void register() {}
 

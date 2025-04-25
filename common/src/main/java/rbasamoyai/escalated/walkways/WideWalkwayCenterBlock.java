@@ -9,6 +9,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -46,18 +47,39 @@ public class WideWalkwayCenterBlock extends AbstractWalkwayBlock {
             return InteractionResult.PASS;
         ItemStack heldItem = player.getItemInHand(hand);
         if (AllBlocks.SHAFT.isIn(heldItem)) {
-            if (state.getValue(CAPS_SIDED) != WalkwayCaps.NO_SHAFT)
+            if (state.getValue(SHAFT))
                 return InteractionResult.PASS;
             if (level.isClientSide)
                 return InteractionResult.SUCCESS;
             if (!player.isCreative())
                 heldItem.shrink(1);
-            KineticBlockEntity.switchToBlockState(level, pos, state.setValue(CAPS_SIDED, WalkwayCaps.NONE));
+            KineticBlockEntity.switchToBlockState(level, pos, state.setValue(SHAFT, true));
             AllBlocks.SHAFT.get().playEncaseSound(level, pos);
             return InteractionResult.SUCCESS;
         }
 
         return super.use(state, level, pos, player, hand, hitResult);
+    }
+
+    @Override public InteractionResult onWrenched(BlockState state, UseOnContext context) { return InteractionResult.PASS; }
+
+    @Override
+    public InteractionResult onSneakWrenched(BlockState state, UseOnContext context) {
+        Level level = context.getLevel();
+        BlockPos pos = context.getClickedPos();
+        Player player = context.getPlayer();
+
+        if (state.getValue(SHAFT)) {
+            if (level.isClientSide)
+                return InteractionResult.SUCCESS;
+            if (player != null && !player.isCreative())
+                player.getInventory().placeItemBackInInventory(AllBlocks.SHAFT.asStack());
+            KineticBlockEntity.switchToBlockState(level, pos, state.setValue(SHAFT, false));
+            this.playRemoveSound(level, pos);
+            return InteractionResult.SUCCESS;
+        }
+
+        return super.onSneakWrenched(state, context);
     }
 
     @Override

@@ -7,6 +7,8 @@
     "escalated:metal_wide_walkway_center",
     "escalated:metal_narrow_escalator",
     "escalated:metal_wide_escalator_side",
-    "escalated:metal_wide_escalator_center"
+    "escalated:metal_wide_escalator_center",
+    "escalated:metal_walkway_handrail",
+    "escalated:metal_escalator_handrail"
   ]
 }

@@ -1,5 +1,6 @@
 package rbasamoyai.escalated.walkways;
 
+import com.simibubi.create.AllItems;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.DyeColor;
@@ -29,6 +30,10 @@ public class WalkwayHelper {
     @ExpectPlatform public static boolean isDye(ItemStack itemStack) { throw new AssertionError(); }
     @ExpectPlatform public static boolean hasWater(Level level, ItemStack itemStack) { throw new AssertionError(); }
     @ExpectPlatform public static DyeColor getDyeColorFromItem(ItemStack itemStack) { throw new AssertionError(); }
+
+    public static boolean isHandrail(ItemStack itemStack) {
+        return AllItems.BELT_CONNECTOR.isIn(itemStack);
+    }
 
     private WalkwayHelper() {}
 
