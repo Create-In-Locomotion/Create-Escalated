@@ -31,7 +31,6 @@ public class NarrowEscalatorBlock extends AbstractWalkwayBlock {
     public VoxelShape getShape(BlockState state, BlockGetter blockGetter, BlockPos pos, CollisionContext context) {
         WalkwaySlope slope = state.getValue(SLOPE);
         Direction facing = state.getValue(HORIZONTAL_FACING);
-        // TODO rails
         return switch (slope) {
             case BOTTOM -> EscalatedShapes.NARROW_ESCALATOR_BOTTOM.get(facing);
             case TOP -> EscalatedShapes.NARROW_ESCALATOR_TOP.get(facing);
@@ -51,7 +50,6 @@ public class NarrowEscalatorBlock extends AbstractWalkwayBlock {
             return super.getCollisionShape(state, blockGetter, pos, context);
 
         float visualOffset = be.getVisualProgress();
-        // TODO rails
         return switch (slope) {
             case BOTTOM -> EscalatedShapes.NARROW_ESCALATOR_BOTTOM_STEPPED.getShape(visualOffset, facing);
             case MIDDLE -> EscalatedShapes.NARROW_ESCALATOR_MIDDLE_STEPPED.getShape(visualOffset, facing);

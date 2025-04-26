@@ -1,0 +1,9 @@
+{
+  "parent": "escalated:block/walkway_terminal_right",
+  "textures": {
+    "bottom": "escalated:block/wooden_walkway_terminal_bottom",
+    "hole": "escalated:block/wooden_walkway_hole",
+    "side": "escalated:block/wooden_walkway_side",
+    "top": "escalated:block/wooden_walkway_terminal_top"
+  }
+}

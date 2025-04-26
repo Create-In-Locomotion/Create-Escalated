@@ -10,6 +10,16 @@
   "block.escalated.metal_wide_escalator_side": "Metal Escalator",
   "block.escalated.metal_wide_walkway_center": "Metal Walkway",
   "block.escalated.metal_wide_walkway_side": "Metal Walkway",
+  "block.escalated.wooden_escalator_handrail": "Wooden Handrail",
+  "block.escalated.wooden_narrow_escalator": "Wooden Escalator",
+  "block.escalated.wooden_narrow_walkway": "Wooden Walkway",
+  "block.escalated.wooden_walkway_handrail": "Wooden Handrail",
+  "block.escalated.wooden_walkway_terminal": "Wooden Walkway Terminal",
+  "block.escalated.wooden_wide_escalator_center": "Wooden Escalator",
+  "block.escalated.wooden_wide_escalator_side": "Wooden Escalator",
+  "block.escalated.wooden_wide_walkway_center": "Wooden Walkway",
+  "block.escalated.wooden_wide_walkway_side": "Wooden Walkway",
   "item.escalated.metal_walkway_steps": "Metal Walkway Steps",
+  "item.escalated.wooden_walkway_steps": "Wooden Walkway Steps",
   "itemGroup.escalated": "Create: Escalated"
 }

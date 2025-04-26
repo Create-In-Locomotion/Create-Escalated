@@ -38,7 +38,7 @@ public class NarrowWalkwayBlock extends AbstractWalkwayBlock  {
     public boolean hasShaftTowards(LevelReader world, BlockPos pos, BlockState state, Direction face) {
         Direction leftFace = state.getValue(HORIZONTAL_FACING).getCounterClockWise();
         WalkwayCaps caps = state.getValue(CAPS);
-        return face == leftFace && !caps.hasLeftCap() || face == leftFace.getOpposite() && !caps.hasRightCap() || face == Direction.DOWN;
+        return face == leftFace && !caps.hasLeftCap() || face == leftFace.getOpposite() && !caps.hasRightCap();
     }
 
     @Override

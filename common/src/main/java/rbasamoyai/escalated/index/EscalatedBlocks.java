@@ -7,6 +7,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 import rbasamoyai.escalated.ModGroup;
@@ -113,7 +114,97 @@ public class EscalatedBlocks {
 			.transform(TagGen.pickaxeOnly())
 			.register();
 
-	// TODO wooden walkway/escalator blocks
+	//////// Wooden walkway blocks ////////
+	public static final BlockEntry<WalkwayTerminalBlock> WOODEN_WALKWAY_TERMINAL = REGISTRATE
+			.block("wooden_walkway_terminal", p -> new WalkwayTerminalBlock(p, EscalatedWalkwaySets::woodenWalkwaySet))
+			.addLayer(() -> RenderType::cutoutMipped)
+			.properties(p -> p.noOcclusion()
+					.strength(2.0f)
+					.mapColor(MapColor.PODZOL)
+					.sound(SoundType.WOOD)
+					.isRedstoneConductor(EscalatedBlocks::neverConducts))
+			.transform(EscalatedBuilderTransformers.walkwayTerminal("wooden"))
+			.transform(TagGen.axeOrPickaxe())
+			.register();
+
+	public static final BlockEntry<NarrowWalkwayBlock> WOODEN_NARROW_WALKWAY = REGISTRATE
+			.block("wooden_narrow_walkway", p -> new NarrowWalkwayBlock(p, EscalatedWalkwaySets::woodenWalkwaySet))
+			.lang("Wooden Walkway")
+			.addLayer(() -> RenderType::cutoutMipped)
+			.properties(p -> p.noOcclusion()
+					.strength(2.0f)
+					.mapColor(MapColor.PODZOL)
+					.sound(SoundType.WOOD)
+					.isRedstoneConductor(EscalatedBlocks::neverConducts))
+			.transform(EscalatedBuilderTransformers.narrowWalkway("wooden"))
+			.transform(TagGen.axeOrPickaxe())
+			.register();
+
+	public static final BlockEntry<WideWalkwaySideBlock> WOODEN_WIDE_WALKWAY_SIDE = REGISTRATE
+			.block("wooden_wide_walkway_side", p -> new WideWalkwaySideBlock(p, EscalatedWalkwaySets::woodenWalkwaySet))
+			.lang("Wooden Walkway")
+			.addLayer(() -> RenderType::cutoutMipped)
+			.properties(p -> p.noOcclusion()
+					.strength(2.0f)
+					.mapColor(MapColor.PODZOL)
+					.sound(SoundType.WOOD)
+					.isRedstoneConductor(EscalatedBlocks::neverConducts))
+			.transform(EscalatedBuilderTransformers.wideWalkwaySide("wooden"))
+			.transform(TagGen.axeOrPickaxe())
+			.register();
+
+	public static final BlockEntry<WideWalkwayCenterBlock> WOODEN_WIDE_WALKWAY_CENTER = REGISTRATE
+			.block("wooden_wide_walkway_center", p -> new WideWalkwayCenterBlock(p, EscalatedWalkwaySets::woodenWalkwaySet))
+			.lang("Wooden Walkway")
+			.addLayer(() -> RenderType::cutoutMipped)
+			.properties(p -> p.noOcclusion()
+					.strength(2.0f)
+					.mapColor(MapColor.PODZOL)
+					.sound(SoundType.WOOD)
+					.isRedstoneConductor(EscalatedBlocks::neverConducts))
+			.transform(EscalatedBuilderTransformers.wideWalkwayCenter("wooden"))
+			.transform(TagGen.axeOrPickaxe())
+			.register();
+
+	//////// Wooden escalator blocks ////////
+	public static final BlockEntry<NarrowEscalatorBlock> WOODEN_NARROW_ESCALATOR = REGISTRATE
+			.block("wooden_narrow_escalator", p -> new NarrowEscalatorBlock(p, EscalatedWalkwaySets::woodenEscalatorSet))
+			.lang("Wooden Escalator")
+			.addLayer(() -> RenderType::cutoutMipped)
+			.properties(p -> p.noOcclusion()
+					.strength(2.0f)
+					.mapColor(MapColor.PODZOL)
+					.sound(SoundType.WOOD)
+					.isRedstoneConductor(EscalatedBlocks::neverConducts))
+			.transform(EscalatedBuilderTransformers.narrowEscalator("wooden"))
+			.transform(TagGen.axeOrPickaxe())
+			.register();
+
+	public static final BlockEntry<WideEscalatorSideBlock> WOODEN_WIDE_ESCALATOR_SIDE = REGISTRATE
+			.block("wooden_wide_escalator_side", p -> new WideEscalatorSideBlock(p, EscalatedWalkwaySets::woodenEscalatorSet))
+			.lang("Wooden Escalator")
+			.addLayer(() -> RenderType::cutoutMipped)
+			.properties(p -> p.noOcclusion()
+					.strength(2.0f)
+					.mapColor(MapColor.PODZOL)
+					.sound(SoundType.WOOD)
+					.isRedstoneConductor(EscalatedBlocks::neverConducts))
+			.transform(EscalatedBuilderTransformers.wideEscalatorSide("wooden"))
+			.transform(TagGen.axeOrPickaxe())
+			.register();
+
+	public static final BlockEntry<WideEscalatorCenterBlock> WOODEN_WIDE_ESCALATOR_CENTER = REGISTRATE
+			.block("wooden_wide_escalator_center", p -> new WideEscalatorCenterBlock(p, EscalatedWalkwaySets::woodenEscalatorSet))
+			.lang("Wooden Escalator")
+			.addLayer(() -> RenderType::cutoutMipped)
+			.properties(p -> p.noOcclusion()
+					.strength(2.0f)
+					.mapColor(MapColor.PODZOL)
+					.sound(SoundType.WOOD)
+					.isRedstoneConductor(EscalatedBlocks::neverConducts))
+			.transform(EscalatedBuilderTransformers.wideEscalatorCenter("wooden"))
+			.transform(TagGen.axeOrPickaxe())
+			.register();
 
 	//////// Walkway/escalator handrail blocks ////////
 	public static final BlockEntry<WalkwayHandrailBlock> METAL_WALKWAY_HANDRAIL = REGISTRATE
@@ -142,6 +233,32 @@ public class EscalatedBlocks {
 			.transform(TagGen.pickaxeOnly())
 			.register();
 
+	public static final BlockEntry<WalkwayHandrailBlock> WOODEN_WALKWAY_HANDRAIL = REGISTRATE
+			.block("wooden_walkway_handrail", WalkwayHandrailBlock::new)
+			.lang("Wooden Handrail")
+			.addLayer(() -> RenderType::cutoutMipped)
+			.properties(p -> p.noOcclusion()
+					.strength(2.0f)
+					.mapColor(MapColor.NONE)
+					.sound(SoundType.WOOD)
+					.isRedstoneConductor(EscalatedBlocks::neverConducts))
+			.transform(EscalatedBuilderTransformers.walkwayHandrail("wooden"))
+			.transform(TagGen.axeOrPickaxe())
+			.register();
+
+	public static final BlockEntry<EscalatorHandrailBlock> WOODEN_ESCALATOR_HANDRAIL = REGISTRATE
+			.block("wooden_escalator_handrail", EscalatorHandrailBlock::new)
+			.lang("Wooden Handrail")
+			.addLayer(() -> RenderType::cutoutMipped)
+			.properties(p -> p.noOcclusion()
+					.strength(2.0f)
+					.mapColor(MapColor.NONE)
+					.sound(SoundType.WOOD)
+					.isRedstoneConductor(EscalatedBlocks::neverConducts))
+			.transform(EscalatedBuilderTransformers.escalatorHandrail("wooden"))
+			.transform(TagGen.axeOrPickaxe())
+			.register();
+
 	public static final BlockEntry<WalkwayHandrailBlock> GLASS_WALKWAY_HANDRAIL = REGISTRATE
 			.block("glass_walkway_handrail", WalkwayHandrailBlock::new)
 			.lang("Glass Handrail")
@@ -165,8 +282,6 @@ public class EscalatedBlocks {
 					.isRedstoneConductor(EscalatedBlocks::neverConducts))
 			.transform(EscalatedBuilderTransformers.escalatorHandrail("glass"))
 			.register();
-
-	// TODO wooden walkway/escalator handrail blocks
 
 	public static void register() {}
 

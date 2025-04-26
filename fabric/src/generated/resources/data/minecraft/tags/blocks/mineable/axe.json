@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "escalated:wooden_walkway_terminal",
+    "escalated:wooden_narrow_walkway",
+    "escalated:wooden_wide_walkway_side",
+    "escalated:wooden_wide_walkway_center",
+    "escalated:wooden_narrow_escalator",
+    "escalated:wooden_wide_escalator_side",
+    "escalated:wooden_wide_escalator_center",
+    "escalated:wooden_walkway_handrail",
+    "escalated:wooden_escalator_handrail"
+  ]
+}

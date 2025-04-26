@@ -16,10 +16,11 @@ public class ModGroup {
 
     public static final Supplier<CreativeModeTab> GROUP = wrapGroup("base", () -> createBuilder()
             .title(Component.translatable("itemGroup." + CreateEscalated.MOD_ID))
-            .icon(EscalatedItems.METAL_WALKWAY_STEPS::asStack) // TODO item
+            .icon(EscalatedItems.METAL_WALKWAY_STEPS::asStack)
             .displayItems((param, output) -> {
                 output.acceptAll(Arrays.asList(
-                        EscalatedItems.METAL_WALKWAY_STEPS.asStack()
+                        EscalatedItems.METAL_WALKWAY_STEPS.asStack(),
+                        EscalatedItems.WOODEN_WALKWAY_STEPS.asStack()
                 ));
             })
             .build());

@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=east,shaft=false": {
+      "model": "escalated:block/wooden_wide_walkway_center",
+      "y": 90
+    },
+    "facing=east,shaft=true": {
+      "model": "escalated:block/wooden_wide_walkway_center",
+      "y": 90
+    },
+    "facing=north,shaft=false": {
+      "model": "escalated:block/wooden_wide_walkway_center"
+    },
+    "facing=north,shaft=true": {
+      "model": "escalated:block/wooden_wide_walkway_center"
+    },
+    "facing=south,shaft=false": {
+      "model": "escalated:block/wooden_wide_walkway_center",
+      "y": 180
+    },
+    "facing=south,shaft=true": {
+      "model": "escalated:block/wooden_wide_walkway_center",
+      "y": 180
+    },
+    "facing=west,shaft=false": {
+      "model": "escalated:block/wooden_wide_walkway_center",
+      "y": 270
+    },
+    "facing=west,shaft=true": {
+      "model": "escalated:block/wooden_wide_walkway_center",
+      "y": 270
+    }
+  }
+}

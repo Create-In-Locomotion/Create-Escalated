@@ -32,7 +32,26 @@ public class EscalatedBlockPartials {
         DYED_METAL_WALKWAY_STEPS_LEFT = dyedWalkwaySteps("metal", "_left"),
         DYED_METAL_WALKWAY_STEPS_RIGHT = dyedWalkwaySteps("metal", "_right"),
         DYED_METAL_WALKWAY_STEPS_CENTER = dyedWalkwaySteps("metal", "_center");
-    // TODO wooden steps
+    
+    //////// Wooden steps ////////
+    public static final PartialModel
+        WOODEN_ESCALATOR_STEP = escalatorSteps("wooden"),
+        WOODEN_ESCALATOR_STEP_LEFT = escalatorSteps("wooden", "_left"),
+        WOODEN_ESCALATOR_STEP_RIGHT = escalatorSteps("wooden", "_right"),
+        WOODEN_ESCALATOR_STEP_CENTER = escalatorSteps("wooden", "_center"),
+        WOODEN_WALKWAY_STEP = walkwaySteps("wooden"),
+        WOODEN_WALKWAY_STEP_LEFT = walkwaySteps("wooden", "_left"),
+        WOODEN_WALKWAY_STEP_RIGHT = walkwaySteps("wooden", "_right"),
+        WOODEN_WALKWAY_STEP_CENTER = walkwaySteps("wooden", "_center");
+    public static final Map<DyeColor, PartialModel>
+        DYED_WOODEN_ESCALATOR_STEPS = dyedEscalatorSteps("wooden"),
+        DYED_WOODEN_ESCALATOR_STEPS_LEFT = dyedEscalatorSteps("wooden", "_left"),
+        DYED_WOODEN_ESCALATOR_STEPS_RIGHT = dyedEscalatorSteps("wooden", "_right"),
+        DYED_WOODEN_ESCALATOR_STEPS_CENTER = dyedEscalatorSteps("wooden", "_center"),
+        DYED_WOODEN_WALKWAY_STEPS = dyedWalkwaySteps("wooden"),
+        DYED_WOODEN_WALKWAY_STEPS_LEFT = dyedWalkwaySteps("wooden", "_left"),
+        DYED_WOODEN_WALKWAY_STEPS_RIGHT = dyedWalkwaySteps("wooden", "_right"),
+        DYED_WOODEN_WALKWAY_STEPS_CENTER = dyedWalkwaySteps("wooden", "_center");
 
     //////// Handrails ////////
     public static final PartialModel

@@ -130,6 +130,8 @@ public class WalkwayRenderer extends KineticBlockEntityRenderer<WalkwayBlockEnti
         BlockPos pos = be.getBlockPos();
 
         boolean terminal = false;
+        
+        // Metal
         if (EscalatedBlocks.METAL_WALKWAY_TERMINAL.has(state)) {
             Direction facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
             state = level.getBlockState(pos.relative(facing));
@@ -155,7 +157,32 @@ public class WalkwayRenderer extends KineticBlockEntityRenderer<WalkwayBlockEnti
         if (EscalatedBlocks.METAL_WIDE_ESCALATOR_CENTER.has(state))
             return EscalatedBlockPartials.DYED_METAL_ESCALATOR_STEPS_CENTER.getOrDefault(color, EscalatedBlockPartials.METAL_ESCALATOR_STEP_CENTER);
 
-        // TODO wooden steps
+        // Wooden
+        if (EscalatedBlocks.WOODEN_WALKWAY_TERMINAL.has(state)) {
+            Direction facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
+            state = level.getBlockState(pos.relative(facing));
+            terminal = true;
+        }
+        if (EscalatedBlocks.WOODEN_NARROW_WALKWAY.has(state))
+            return EscalatedBlockPartials.DYED_WOODEN_WALKWAY_STEPS.getOrDefault(color, EscalatedBlockPartials.WOODEN_WALKWAY_STEP);
+        if (EscalatedBlocks.WOODEN_WIDE_WALKWAY_SIDE.has(state)) {
+            boolean left = state.getValue(WideWalkwaySideBlock.LEFT);
+            return left ? EscalatedBlockPartials.DYED_WOODEN_WALKWAY_STEPS_RIGHT.getOrDefault(color, EscalatedBlockPartials.WOODEN_WALKWAY_STEP_RIGHT)
+                    : EscalatedBlockPartials.DYED_WOODEN_WALKWAY_STEPS_LEFT.getOrDefault(color, EscalatedBlockPartials.WOODEN_WALKWAY_STEP_LEFT);
+        }
+        if (EscalatedBlocks.WOODEN_WIDE_WALKWAY_CENTER.has(state))
+            return EscalatedBlockPartials.DYED_WOODEN_WALKWAY_STEPS_CENTER.getOrDefault(color, EscalatedBlockPartials.WOODEN_WALKWAY_STEP_CENTER);
+
+        if (EscalatedBlocks.WOODEN_NARROW_ESCALATOR.has(state))
+            return EscalatedBlockPartials.DYED_WOODEN_ESCALATOR_STEPS.getOrDefault(color, EscalatedBlockPartials.WOODEN_ESCALATOR_STEP);
+        if (EscalatedBlocks.WOODEN_WIDE_ESCALATOR_SIDE.has(state)) {
+            boolean left = state.getValue(WideEscalatorSideBlock.LEFT);
+            return left ? EscalatedBlockPartials.DYED_WOODEN_ESCALATOR_STEPS_RIGHT.getOrDefault(color, EscalatedBlockPartials.WOODEN_ESCALATOR_STEP_RIGHT)
+                    : EscalatedBlockPartials.DYED_WOODEN_ESCALATOR_STEPS_LEFT.getOrDefault(color, EscalatedBlockPartials.WOODEN_ESCALATOR_STEP_LEFT);
+        }
+        if (EscalatedBlocks.WOODEN_WIDE_ESCALATOR_CENTER.has(state))
+            return EscalatedBlockPartials.DYED_WOODEN_ESCALATOR_STEPS_CENTER.getOrDefault(color, EscalatedBlockPartials.WOODEN_ESCALATOR_STEP_CENTER);
+
         if (terminal && Backend.canUseInstancing(level))
             be.lazyResetClientRender = true; // Reset next tick
         return EscalatedBlockPartials.DYED_METAL_WALKWAY_STEPS.get(DyeColor.RED); // Troubleshooting

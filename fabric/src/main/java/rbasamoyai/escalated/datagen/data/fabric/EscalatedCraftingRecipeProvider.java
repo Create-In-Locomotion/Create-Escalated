@@ -6,6 +6,7 @@ import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -27,6 +28,14 @@ public class EscalatedCraftingRecipeProvider {
     public static void buildCraftingRecipes(Consumer<FinishedRecipe> cons) {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, EscalatedItems.METAL_WALKWAY_STEPS.get())
                 .define('C', Items.CHAIN).define('P', getMetalPlateTag())
+                .pattern("CPC")
+                .pattern("CPC")
+                .pattern("CPC")
+                .unlockedBy(getHasName(Items.CHAIN), has(Items.CHAIN))
+                .save(cons);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, EscalatedItems.WOODEN_WALKWAY_STEPS.get())
+                .define('C', Items.CHAIN).define('P', ItemTags.WOODEN_SLABS)
                 .pattern("CPC")
                 .pattern("CPC")
                 .pattern("CPC")

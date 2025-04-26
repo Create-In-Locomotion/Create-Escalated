@@ -1,0 +1,6 @@
+{
+  "parent": "escalated:block/walkway_step_left",
+  "textures": {
+    "steps": "escalated:block/walkway_steps/wooden_walkway_step_pink"
+  }
+}

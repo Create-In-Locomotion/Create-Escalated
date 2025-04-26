@@ -32,7 +32,6 @@ public class WideEscalatorSideBlock extends NarrowEscalatorBlock {
         WalkwaySlope slope = state.getValue(SLOPE);
         Direction facing = state.getValue(HORIZONTAL_FACING);
 
-        // TODO rails
         if (state.getValue(LEFT)) {
             return switch (slope) {
                 case BOTTOM -> EscalatedShapes.WIDE_ESCALATOR_SIDE_BOTTOM_LEFT.get(facing);
@@ -61,7 +60,6 @@ public class WideEscalatorSideBlock extends NarrowEscalatorBlock {
             return super.getCollisionShape(state, blockGetter, pos, context);
 
         float visualOffset = be.getVisualProgress();
-        // TODO rails
         if (state.getValue(LEFT)) {
             return switch (slope) {
                 case BOTTOM -> EscalatedShapes.WIDE_ESCALATOR_SIDE_BOTTOM_LEFT_STEPPED.getShape(visualOffset, facing);

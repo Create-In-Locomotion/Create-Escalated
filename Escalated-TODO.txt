@@ -1,10 +1,3 @@
-feature: Added wooden walkways and escalators]
-TODO:
-    - Textures
-    - Wooden handrail
-    - Recipe
-    - Just set this stuff up in EscalatedBlocks, EscalatedBlockEntities, EscalatedBlockPartials
-
 [bug: Fixed jittery movement on upwards escalators]
 [bug: Fixed Fabric stuff]
 
@@ -17,6 +10,7 @@ TODO:
 
 [feature: Added Escalated-related advancements]
 
+- [The Fast and Fashionable]: Place down a walkway/escalator
 - [Stairway to Heaven]: Ascend 100 blocks only on moving escalators
 - [No Stairway, denied!]: Ascend 100 blocks only on moving escalators in the Nether
 - [Please hold handrail]: Stylize your walkways and escalators with handrails

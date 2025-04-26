@@ -1,0 +1,9 @@
+{
+  "parent": "escalated:block/handrail_wall/right_end",
+  "textures": {
+    "edge": "escalated:block/wooden_handrail_edge",
+    "escalator_side": "escalated:block/wooden_handrail_escalator_side",
+    "escalator_side1": "escalated:block/wooden_handrail_escalator_side1",
+    "side": "escalated:block/wooden_handrail_side"
+  }
+}

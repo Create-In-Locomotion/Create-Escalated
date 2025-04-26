@@ -27,8 +27,6 @@ import static net.minecraft.world.entity.MoverType.SELF;
  */
 public class WalkwayMovementHandler {
 
-    // TODO add escalator support
-
     public static class TransportedEntityInfo {
         int ticksSinceLastCollision;
         BlockPos lastCollidedPos;

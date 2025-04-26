@@ -10,6 +10,16 @@
   "block.escalated.metal_wide_escalator_side": "ɹoʇɐןɐɔsƎ ןɐʇǝW",
   "block.escalated.metal_wide_walkway_center": "ʎɐʍʞןɐM ןɐʇǝW",
   "block.escalated.metal_wide_walkway_side": "ʎɐʍʞןɐM ןɐʇǝW",
+  "block.escalated.wooden_escalator_handrail": "ןıɐɹpuɐH uǝpooM",
+  "block.escalated.wooden_narrow_escalator": "ɹoʇɐןɐɔsƎ uǝpooM",
+  "block.escalated.wooden_narrow_walkway": "ʎɐʍʞןɐM uǝpooM",
+  "block.escalated.wooden_walkway_handrail": "ןıɐɹpuɐH uǝpooM",
+  "block.escalated.wooden_walkway_terminal": "ןɐuıɯɹǝ⟘ ʎɐʍʞןɐM uǝpooM",
+  "block.escalated.wooden_wide_escalator_center": "ɹoʇɐןɐɔsƎ uǝpooM",
+  "block.escalated.wooden_wide_escalator_side": "ɹoʇɐןɐɔsƎ uǝpooM",
+  "block.escalated.wooden_wide_walkway_center": "ʎɐʍʞןɐM uǝpooM",
+  "block.escalated.wooden_wide_walkway_side": "ʎɐʍʞןɐM uǝpooM",
   "item.escalated.metal_walkway_steps": "sdǝʇS ʎɐʍʞןɐM ןɐʇǝW",
+  "item.escalated.wooden_walkway_steps": "sdǝʇS ʎɐʍʞןɐM uǝpooM",
   "itemGroup.escalated": "pǝʇɐןɐɔsƎ :ǝʇɐǝɹƆ"
 }

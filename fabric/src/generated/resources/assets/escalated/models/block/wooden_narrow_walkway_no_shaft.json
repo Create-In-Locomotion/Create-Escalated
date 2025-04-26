@@ -1,0 +1,9 @@
+{
+  "parent": "escalated:block/narrow_walkway_both",
+  "textures": {
+    "bottom": "escalated:block/wooden_walkway_bottom",
+    "hole": "escalated:block/wooden_walkway_hole",
+    "side": "escalated:block/wooden_walkway_side",
+    "top": "escalated:block/wooden_walkway_top"
+  }
+}

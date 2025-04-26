@@ -16,6 +16,7 @@ public class EscalatedPartialsGen extends BlockModelProvider {
     @Override
     protected void registerModels() {
         walkwayAndEscalatorSteps("metal", "walkway_steps/metal");
+        walkwayAndEscalatorSteps("wooden", "walkway_steps/wooden");
     }
 
     protected void walkwayAndEscalatorSteps(String material) { walkwayAndEscalatorSteps(material, material); }

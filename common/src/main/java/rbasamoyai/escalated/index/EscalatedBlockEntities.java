@@ -18,8 +18,10 @@ public class EscalatedBlockEntities {
             .renderer(() -> WalkwayRenderer::new)
             .validBlocks(EscalatedBlocks.METAL_WALKWAY_TERMINAL, EscalatedBlocks.METAL_NARROW_WALKWAY,
                     EscalatedBlocks.METAL_WIDE_WALKWAY_SIDE, EscalatedBlocks.METAL_WIDE_WALKWAY_CENTER,
-                    EscalatedBlocks.METAL_NARROW_ESCALATOR, EscalatedBlocks.METAL_WIDE_ESCALATOR_SIDE, EscalatedBlocks.METAL_WIDE_ESCALATOR_CENTER)
-            // TODO wooden walkway/escalator blocks
+                    EscalatedBlocks.METAL_NARROW_ESCALATOR, EscalatedBlocks.METAL_WIDE_ESCALATOR_SIDE, EscalatedBlocks.METAL_WIDE_ESCALATOR_CENTER,
+                    EscalatedBlocks.WOODEN_WALKWAY_TERMINAL, EscalatedBlocks.WOODEN_NARROW_WALKWAY,
+                    EscalatedBlocks.WOODEN_WIDE_WALKWAY_SIDE, EscalatedBlocks.WOODEN_WIDE_WALKWAY_CENTER,
+                    EscalatedBlocks.WOODEN_NARROW_ESCALATOR, EscalatedBlocks.WOODEN_WIDE_ESCALATOR_SIDE, EscalatedBlocks.WOODEN_WIDE_ESCALATOR_CENTER)
             .register();
 
     public static final BlockEntityEntry<HandrailBlockEntity> HANDRAIL = REGISTRATE
@@ -27,8 +29,8 @@ public class EscalatedBlockEntities {
             .instance(() -> HandrailInstance::new)
             .renderer(() -> HandrailRenderer::new)
             .validBlocks(EscalatedBlocks.METAL_WALKWAY_HANDRAIL, EscalatedBlocks.METAL_ESCALATOR_HANDRAIL,
+                    EscalatedBlocks.WOODEN_WALKWAY_HANDRAIL, EscalatedBlocks.WOODEN_ESCALATOR_HANDRAIL,
                     EscalatedBlocks.GLASS_WALKWAY_HANDRAIL, EscalatedBlocks.GLASS_ESCALATOR_HANDRAIL)
-            // TODO wooden walkway/escalator handrail
             .register();
 
     public static void register() {}

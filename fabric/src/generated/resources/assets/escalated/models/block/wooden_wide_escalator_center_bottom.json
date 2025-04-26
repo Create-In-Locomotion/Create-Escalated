@@ -1,0 +1,6 @@
+{
+  "parent": "escalated:block/wide_escalator_center_bottom",
+  "textures": {
+    "bottom": "escalated:block/wooden_walkway_bottom"
+  }
+}

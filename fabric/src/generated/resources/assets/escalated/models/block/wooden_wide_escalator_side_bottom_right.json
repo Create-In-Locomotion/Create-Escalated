@@ -1,0 +1,12 @@
+{
+  "parent": "escalated:block/wide_escalator_side_bottom_right",
+  "textures": {
+    "bottom": "escalated:block/wooden_walkway_bottom",
+    "escalator_bottom_side": "escalated:block/wooden_escalator_bottom_side",
+    "escalator_side": "escalated:block/wooden_escalator_side",
+    "escalator_top_side": "escalated:block/wooden_escalator_top_side",
+    "escalator_top_side_1": "escalated:block/wooden_escalator_top_side_1",
+    "top": "escalated:block/wooden_walkway_top",
+    "walkway_side": "escalated:block/wooden_walkway_side"
+  }
+}

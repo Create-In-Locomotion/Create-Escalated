@@ -1,0 +1,274 @@
+{
+  "variants": {
+    "facing=east,part=end,side=both,waterlogged=false": {
+      "model": "escalated:block/wooden_walkway_handrail_both_end",
+      "y": 90
+    },
+    "facing=east,part=end,side=both,waterlogged=true": {
+      "model": "escalated:block/wooden_walkway_handrail_both_end",
+      "y": 90
+    },
+    "facing=east,part=end,side=left,waterlogged=false": {
+      "model": "escalated:block/wooden_walkway_handrail_left_end",
+      "y": 90
+    },
+    "facing=east,part=end,side=left,waterlogged=true": {
+      "model": "escalated:block/wooden_walkway_handrail_left_end",
+      "y": 90
+    },
+    "facing=east,part=end,side=right,waterlogged=false": {
+      "model": "escalated:block/wooden_walkway_handrail_right_end",
+      "y": 90
+    },
+    "facing=east,part=end,side=right,waterlogged=true": {
+      "model": "escalated:block/wooden_walkway_handrail_right_end",
+      "y": 90
+    },
+    "facing=east,part=middle,side=both,waterlogged=false": {
+      "model": "escalated:block/wooden_walkway_handrail_both_horizontal",
+      "y": 90
+    },
+    "facing=east,part=middle,side=both,waterlogged=true": {
+      "model": "escalated:block/wooden_walkway_handrail_both_horizontal",
+      "y": 90
+    },
+    "facing=east,part=middle,side=left,waterlogged=false": {
+      "model": "escalated:block/wooden_walkway_handrail_left_horizontal",
+      "y": 90
+    },
+    "facing=east,part=middle,side=left,waterlogged=true": {
+      "model": "escalated:block/wooden_walkway_handrail_left_horizontal",
+      "y": 90
+    },
+    "facing=east,part=middle,side=right,waterlogged=false": {
+      "model": "escalated:block/wooden_walkway_handrail_right_horizontal",
+      "y": 90
+    },
+    "facing=east,part=middle,side=right,waterlogged=true": {
+      "model": "escalated:block/wooden_walkway_handrail_right_horizontal",
+      "y": 90
+    },
+    "facing=east,part=start,side=both,waterlogged=false": {
+      "model": "escalated:block/wooden_walkway_handrail_both_start",
+      "y": 90
+    },
+    "facing=east,part=start,side=both,waterlogged=true": {
+      "model": "escalated:block/wooden_walkway_handrail_both_start",
+      "y": 90
+    },
+    "facing=east,part=start,side=left,waterlogged=false": {
+      "model": "escalated:block/wooden_walkway_handrail_left_start",
+      "y": 90
+    },
+    "facing=east,part=start,side=left,waterlogged=true": {
+      "model": "escalated:block/wooden_walkway_handrail_left_start",
+      "y": 90
+    },
+    "facing=east,part=start,side=right,waterlogged=false": {
+      "model": "escalated:block/wooden_walkway_handrail_right_start",
+      "y": 90
+    },
+    "facing=east,part=start,side=right,waterlogged=true": {
+      "model": "escalated:block/wooden_walkway_handrail_right_start",
+      "y": 90
+    },
+    "facing=north,part=end,side=both,waterlogged=false": {
+      "model": "escalated:block/wooden_walkway_handrail_both_end"
+    },
+    "facing=north,part=end,side=both,waterlogged=true": {
+      "model": "escalated:block/wooden_walkway_handrail_both_end"
+    },
+    "facing=north,part=end,side=left,waterlogged=false": {
+      "model": "escalated:block/wooden_walkway_handrail_left_end"
+    },
+    "facing=north,part=end,side=left,waterlogged=true": {
+      "model": "escalated:block/wooden_walkway_handrail_left_end"
+    },
+    "facing=north,part=end,side=right,waterlogged=false": {
+      "model": "escalated:block/wooden_walkway_handrail_right_end"
+    },
+    "facing=north,part=end,side=right,waterlogged=true": {
+      "model": "escalated:block/wooden_walkway_handrail_right_end"
+    },
+    "facing=north,part=middle,side=both,waterlogged=false": {
+      "model": "escalated:block/wooden_walkway_handrail_both_horizontal"
+    },
+    "facing=north,part=middle,side=both,waterlogged=true": {
+      "model": "escalated:block/wooden_walkway_handrail_both_horizontal"
+    },
+    "facing=north,part=middle,side=left,waterlogged=false": {
+      "model": "escalated:block/wooden_walkway_handrail_left_horizontal"
+    },
+    "facing=north,part=middle,side=left,waterlogged=true": {
+      "model": "escalated:block/wooden_walkway_handrail_left_horizontal"
+    },
+    "facing=north,part=middle,side=right,waterlogged=false": {
+      "model": "escalated:block/wooden_walkway_handrail_right_horizontal"
+    },
+    "facing=north,part=middle,side=right,waterlogged=true": {
+      "model": "escalated:block/wooden_walkway_handrail_right_horizontal"
+    },
+    "facing=north,part=start,side=both,waterlogged=false": {
+      "model": "escalated:block/wooden_walkway_handrail_both_start"
+    },
+    "facing=north,part=start,side=both,waterlogged=true": {
+      "model": "escalated:block/wooden_walkway_handrail_both_start"
+    },
+    "facing=north,part=start,side=left,waterlogged=false": {
+      "model": "escalated:block/wooden_walkway_handrail_left_start"
+    },
+    "facing=north,part=start,side=left,waterlogged=true": {
+      "model": "escalated:block/wooden_walkway_handrail_left_start"
+    },
+    "facing=north,part=start,side=right,waterlogged=false": {
+      "model": "escalated:block/wooden_walkway_handrail_right_start"
+    },
+    "facing=north,part=start,side=right,waterlogged=true": {
+      "model": "escalated:block/wooden_walkway_handrail_right_start"
+    },
+    "facing=south,part=end,side=both,waterlogged=false": {
+      "model": "escalated:block/wooden_walkway_handrail_both_end",
+      "y": 180
+    },
+    "facing=south,part=end,side=both,waterlogged=true": {
+      "model": "escalated:block/wooden_walkway_handrail_both_end",
+      "y": 180
+    },
+    "facing=south,part=end,side=left,waterlogged=false": {
+      "model": "escalated:block/wooden_walkway_handrail_left_end",
+      "y": 180
+    },
+    "facing=south,part=end,side=left,waterlogged=true": {
+      "model": "escalated:block/wooden_walkway_handrail_left_end",
+      "y": 180
+    },
+    "facing=south,part=end,side=right,waterlogged=false": {
+      "model": "escalated:block/wooden_walkway_handrail_right_end",
+      "y": 180
+    },
+    "facing=south,part=end,side=right,waterlogged=true": {
+      "model": "escalated:block/wooden_walkway_handrail_right_end",
+      "y": 180
+    },
+    "facing=south,part=middle,side=both,waterlogged=false": {
+      "model": "escalated:block/wooden_walkway_handrail_both_horizontal",
+      "y": 180
+    },
+    "facing=south,part=middle,side=both,waterlogged=true": {
+      "model": "escalated:block/wooden_walkway_handrail_both_horizontal",
+      "y": 180
+    },
+    "facing=south,part=middle,side=left,waterlogged=false": {
+      "model": "escalated:block/wooden_walkway_handrail_left_horizontal",
+      "y": 180
+    },
+    "facing=south,part=middle,side=left,waterlogged=true": {
+      "model": "escalated:block/wooden_walkway_handrail_left_horizontal",
+      "y": 180
+    },
+    "facing=south,part=middle,side=right,waterlogged=false": {
+      "model": "escalated:block/wooden_walkway_handrail_right_horizontal",
+      "y": 180
+    },
+    "facing=south,part=middle,side=right,waterlogged=true": {
+      "model": "escalated:block/wooden_walkway_handrail_right_horizontal",
+      "y": 180
+    },
+    "facing=south,part=start,side=both,waterlogged=false": {
+      "model": "escalated:block/wooden_walkway_handrail_both_start",
+      "y": 180
+    },
+    "facing=south,part=start,side=both,waterlogged=true": {
+      "model": "escalated:block/wooden_walkway_handrail_both_start",
+      "y": 180
+    },
+    "facing=south,part=start,side=left,waterlogged=false": {
+      "model": "escalated:block/wooden_walkway_handrail_left_start",
+      "y": 180
+    },
+    "facing=south,part=start,side=left,waterlogged=true": {
+      "model": "escalated:block/wooden_walkway_handrail_left_start",
+      "y": 180
+    },
+    "facing=south,part=start,side=right,waterlogged=false": {
+      "model": "escalated:block/wooden_walkway_handrail_right_start",
+      "y": 180
+    },
+    "facing=south,part=start,side=right,waterlogged=true": {
+      "model": "escalated:block/wooden_walkway_handrail_right_start",
+      "y": 180
+    },
+    "facing=west,part=end,side=both,waterlogged=false": {
+      "model": "escalated:block/wooden_walkway_handrail_both_end",
+      "y": 270
+    },
+    "facing=west,part=end,side=both,waterlogged=true": {
+      "model": "escalated:block/wooden_walkway_handrail_both_end",
+      "y": 270
+    },
+    "facing=west,part=end,side=left,waterlogged=false": {
+      "model": "escalated:block/wooden_walkway_handrail_left_end",
+      "y": 270
+    },
+    "facing=west,part=end,side=left,waterlogged=true": {
+      "model": "escalated:block/wooden_walkway_handrail_left_end",
+      "y": 270
+    },
+    "facing=west,part=end,side=right,waterlogged=false": {
+      "model": "escalated:block/wooden_walkway_handrail_right_end",
+      "y": 270
+    },
+    "facing=west,part=end,side=right,waterlogged=true": {
+      "model": "escalated:block/wooden_walkway_handrail_right_end",
+      "y": 270
+    },
+    "facing=west,part=middle,side=both,waterlogged=false": {
+      "model": "escalated:block/wooden_walkway_handrail_both_horizontal",
+      "y": 270
+    },
+    "facing=west,part=middle,side=both,waterlogged=true": {
+      "model": "escalated:block/wooden_walkway_handrail_both_horizontal",
+      "y": 270
+    },
+    "facing=west,part=middle,side=left,waterlogged=false": {
+      "model": "escalated:block/wooden_walkway_handrail_left_horizontal",
+      "y": 270
+    },
+    "facing=west,part=middle,side=left,waterlogged=true": {
+      "model": "escalated:block/wooden_walkway_handrail_left_horizontal",
+      "y": 270
+    },
+    "facing=west,part=middle,side=right,waterlogged=false": {
+      "model": "escalated:block/wooden_walkway_handrail_right_horizontal",
+      "y": 270
+    },
+    "facing=west,part=middle,side=right,waterlogged=true": {
+      "model": "escalated:block/wooden_walkway_handrail_right_horizontal",
+      "y": 270
+    },
+    "facing=west,part=start,side=both,waterlogged=false": {
+      "model": "escalated:block/wooden_walkway_handrail_both_start",
+      "y": 270
+    },
+    "facing=west,part=start,side=both,waterlogged=true": {
+      "model": "escalated:block/wooden_walkway_handrail_both_start",
+      "y": 270
+    },
+    "facing=west,part=start,side=left,waterlogged=false": {
+      "model": "escalated:block/wooden_walkway_handrail_left_start",
+      "y": 270
+    },
+    "facing=west,part=start,side=left,waterlogged=true": {
+      "model": "escalated:block/wooden_walkway_handrail_left_start",
+      "y": 270
+    },
+    "facing=west,part=start,side=right,waterlogged=false": {
+      "model": "escalated:block/wooden_walkway_handrail_right_start",
+      "y": 270
+    },
+    "facing=west,part=start,side=right,waterlogged=true": {
+      "model": "escalated:block/wooden_walkway_handrail_right_start",
+      "y": 270
+    }
+  }
+}

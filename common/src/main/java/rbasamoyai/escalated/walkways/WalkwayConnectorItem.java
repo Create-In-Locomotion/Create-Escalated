@@ -27,7 +27,6 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import rbasamoyai.escalated.config.EscalatedConfigs;
 import rbasamoyai.escalated.handrails.AbstractHandrailBlock;
 import rbasamoyai.escalated.handrails.HandrailBlockEntity;
-import rbasamoyai.escalated.index.EscalatedBlocks;
 
 import java.util.*;
 
@@ -37,10 +36,15 @@ import java.util.*;
  */
 public class WalkwayConnectorItem extends BlockItem {
 
+    private final AbstractWalkwayBlock walkwayBlock;
+    private final AbstractWalkwayBlock escalatorBlock;
     private final Set<Block> otherBlocks = new HashSet<>();
 
-    public WalkwayConnectorItem(Block primaryBlock, Properties properties, Block... otherBlocks) {
+    public WalkwayConnectorItem(WalkwayTerminalBlock primaryBlock, Properties properties, NarrowWalkwayBlock walkway,
+                                NarrowEscalatorBlock escalator, Block... otherBlocks) {
         super(primaryBlock, properties);
+        this.otherBlocks.add(this.walkwayBlock = walkway);
+        this.otherBlocks.add(this.escalatorBlock = escalator);
         this.otherBlocks.addAll(Arrays.asList(otherBlocks));
     }
 
@@ -131,10 +135,10 @@ public class WalkwayConnectorItem extends BlockItem {
         boolean escalator = y != 0;
 
         // Walkway extension
-        if (Math.abs(shaftAxis.choose(x, y, z)) == 1) {
+        if (Math.abs(shaftAxis.choose(x, y, z)) == 1 && y == 0) {
             BlockPos actualDiff = new BlockPos(shaftAxis.choose(x, 0, 0), 0, shaftAxis.choose(0, 0, z));
-            if (!(ShaftBlock.isShaft(firstState) && secondState.getBlock() instanceof WalkwayBlock
-                    || firstState.getBlock() instanceof WalkwayBlock && ShaftBlock.isShaft(secondState)))
+            if (!(ShaftBlock.isShaft(firstState) && this.canExtendWalkwayBlock(secondState)
+                    || this.canExtendWalkwayBlock(firstState) && ShaftBlock.isShaft(secondState)))
                 return false;
             Direction.Axis secondAxis = Direction.Axis.Y;
             if (ShaftBlock.isShaft(secondState)) {
@@ -382,9 +386,9 @@ public class WalkwayConnectorItem extends BlockItem {
 
         Direction facing = getFacingFromTo(start, end);
 
-        KineticBlockEntity.switchToBlockState(level, start, EscalatedBlocks.METAL_WALKWAY_TERMINAL.getDefaultState()
+        KineticBlockEntity.switchToBlockState(level, start, this.getBlock().defaultBlockState()
                 .setValue(WalkwayTerminalBlock.HORIZONTAL_FACING, facing));
-        KineticBlockEntity.switchToBlockState(level, end, EscalatedBlocks.METAL_WALKWAY_TERMINAL.getDefaultState()
+        KineticBlockEntity.switchToBlockState(level, end, this.getBlock().defaultBlockState()
                 .setValue(WalkwayTerminalBlock.HORIZONTAL_FACING, facing.getOpposite()));
 
         List<BlockPos> walkwaysToCreate = getWalkwayChainBetween(start, end, escalator, facing);
@@ -437,13 +441,12 @@ public class WalkwayConnectorItem extends BlockItem {
     }
 
     protected BlockState getPlacedWalkwayBlock(boolean escalator, Direction facing, boolean shaft) {
-        // TODO wooden step blocks
         if (escalator) {
-            return EscalatedBlocks.METAL_NARROW_ESCALATOR.getDefaultState()
+            return this.escalatorBlock.defaultBlockState()
                     .setValue(AbstractWalkwayBlock.SLOPE, WalkwaySlope.MIDDLE)
                     .setValue(AbstractWalkwayBlock.HORIZONTAL_FACING, facing);
         } else {
-            return EscalatedBlocks.METAL_NARROW_WALKWAY.getDefaultState()
+            return this.walkwayBlock.defaultBlockState()
                     .setValue(AbstractWalkwayBlock.HORIZONTAL_FACING, facing)
                     .setValue(WalkwayBlock.CAPS, shaft ? WalkwayCaps.NONE : WalkwayCaps.NO_SHAFT);
         }
@@ -494,6 +497,10 @@ public class WalkwayConnectorItem extends BlockItem {
         super.registerBlocks(map, item);
         for (Block b : this.otherBlocks)
             map.put(b, item);
+    }
+
+    protected boolean canExtendWalkwayBlock(BlockState state) {
+        return state.is(this.getBlock()) || this.otherBlocks.contains(state.getBlock());
     }
 
 }
