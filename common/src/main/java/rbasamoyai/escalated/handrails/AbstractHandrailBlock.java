@@ -9,6 +9,7 @@ import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -119,6 +120,8 @@ public abstract class AbstractHandrailBlock extends HorizontalDirectionalBlock i
     }
 
     protected void convertToGlass(BlockState state, Level level, BlockPos pos) {
+        if (level.isClientSide)
+            return;
         int MAX_ITER = 1100;
 
         Direction facing = state.getValue(AbstractHandrailBlock.FACING);
@@ -126,8 +129,10 @@ public abstract class AbstractHandrailBlock extends HorizontalDirectionalBlock i
         Side side = state.getValue(AbstractHandrailBlock.SIDE);
 
         int width = 1;
+        DyeColor color = null;
         if (level.getBlockEntity(pos) instanceof HandrailBlockEntity handrailBE) {
             width = handrailBE.width;
+            color = handrailBE.getHandrailColor();
             handrailBE.propagateBreak = false; // Prepare for replacement
         }
         level.setBlock(pos, this.getGlassHandrail(state), 3);
@@ -173,6 +178,9 @@ public abstract class AbstractHandrailBlock extends HorizontalDirectionalBlock i
                 }
             }
         }
+
+        if (level.getBlockEntity(pos) instanceof HandrailBlockEntity handrailBE)
+            handrailBE.setHandrailColor(color);
     }
 
     protected abstract boolean canConvertToGlassHandrail();
