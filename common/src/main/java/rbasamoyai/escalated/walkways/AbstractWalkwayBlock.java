@@ -354,7 +354,7 @@ public abstract class AbstractWalkwayBlock extends HorizontalKineticBlock implem
         }
         WalkwayBlock walkway = (WalkwayBlock) referenceState.getBlock();
         Direction dir = walkway.getFacing(referenceState);
-        AbstractHandrailBlock handrail = (AbstractHandrailBlock) this.getWalkwaySet().getHandrailBlock(level, referenceState, centralPos).getBlock();
+        AbstractHandrailBlock handrail = (AbstractHandrailBlock) walkway.getWalkwaySet().getHandrailBlock(level, referenceState, centralPos).getBlock();
         int MAX_ITER = 1100;
 
         if (!walkway.connectedToWalkwayOnSide(level, referenceState, pos, dir.getClockWise())
@@ -472,7 +472,8 @@ public abstract class AbstractWalkwayBlock extends HorizontalKineticBlock implem
         }
     }
 
-    protected WalkwaySet getWalkwaySet() {
+    @Override
+    public WalkwaySet getWalkwaySet() {
         if (this.walkwaySet == null)
             this.walkwaySet = this.walkwaySetSupplier.get();
         return this.walkwaySet;
