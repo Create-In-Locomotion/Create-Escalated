@@ -1,19 +1,17 @@
-documentation: Added ponders for walkways and escalators
-TODO:
-    - Ponder registry [20 mins]
-    - Creating walkways and escalators [30 mins]
-    - Adding extra shafts to walkways and escalators [30 mins]
-    - Customizing walkways and escalators using handrails, dyes, glass handrails, dyed handrails [30 mins]
-    - Widening walkways and escalators [30 mins]
-
-[feature: Added Escalated-related advancements]
+feature: Added Escalated-related advancements
 
 - [The Fast and Fashionable]: Place down a walkway/escalator
 - [Stairway to Heaven]: Ascend 100 blocks only on moving escalators
 - [No Stairway, denied!]: Ascend 100 blocks only on moving escalators in the Nether
 - [Please hold handrail]: Stylize your walkways and escalators with handrails
 
-[bug: Fixed jittery movement on upwards escalators]
+[assets: Tweaked wooden walkway and escalator textures]
+- Changed steps to have texture closer to oak
+- Added metal baseplate to terminals
+
+TODO steps
+TODO baseplate
+
 [bug: Fixed ghost propagation]
 TODO rotation propagation being weird somehow
 

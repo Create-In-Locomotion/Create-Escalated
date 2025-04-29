@@ -8,6 +8,8 @@ import rbasamoyai.escalated.CreateEscalated;
 import rbasamoyai.escalated.datagen.EscalatedLangGen;
 import rbasamoyai.escalated.datagen.assets.fabric.EscalatedPartialsGen;
 import rbasamoyai.escalated.datagen.data.fabric.EscalatedCraftingRecipeProvider;
+import rbasamoyai.escalated.index.EscalatedPonderIndex;
+import rbasamoyai.escalated.index.EscalatedPonderTags;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -31,6 +33,9 @@ public class EscalatedDataGeneration implements DataGeneratorEntrypoint {
 
 		EscalatedLangGen.prepare();
 		EscalatedCraftingRecipeProvider.register();
+		EscalatedPonderTags.register();
+		EscalatedPonderIndex.register();
+		EscalatedPonderIndex.registerLang();
 	}
 
 	public static boolean isForge() { return "forge".equals(PLATFORM); }
