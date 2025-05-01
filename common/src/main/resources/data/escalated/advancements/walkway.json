@@ -1,0 +1,30 @@
+{
+  "parent": "escalated:root",
+  "criteria": {
+    "0": {
+      "conditions": {},
+      "trigger": "escalated:walkway_builtin"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "color": "#DBA213",
+      "translate": "advancement.escalated.walkway.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "escalated:wooden_walkway_steps"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.escalated.walkway"
+    }
+  },
+  "requirements": [
+    [
+      "0"
+    ]
+  ]
+}

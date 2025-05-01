@@ -10,10 +10,12 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import rbasamoyai.escalated.advancements.WalkwayTravelTracker;
 import rbasamoyai.escalated.walkways.WalkwayMovementHandler.TransportedEntityInfo;
 
 import javax.annotation.Nullable;
@@ -86,6 +88,8 @@ public class WalkwayBlockEntity extends KineticBlockEntity {
             boolean canBeTransported = WalkwayMovementHandler.canBeTransported(entity);
             boolean leftTheBelt = info.getTicksSinceLastCollision() > (beltFlag ? 3 : 1);
             if (!canBeTransported || leftTheBelt) {
+                if (entity instanceof Player player && !this.level.isClientSide)
+                    WalkwayTravelTracker.stopTrackingPlayerOnWalkway(player);
                 iter.remove();
                 continue;
             }

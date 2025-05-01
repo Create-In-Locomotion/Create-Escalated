@@ -1,16 +1,16 @@
-feature: Added Escalated-related advancements
-
-- [The Fast and Fashionable]: Place down a walkway/escalator
-- [Stairway to Heaven]: Ascend 100 blocks only on moving escalators
-- [No Stairway, denied!]: Ascend 100 blocks only on moving escalators in the Nether
-- [Please hold handrail]: Stylize your walkways and escalators with handrails
-
-[assets: Tweaked wooden walkway and escalator textures]
+assets: Tweaked wooden walkway and escalator textures
 - Changed steps to have texture closer to oak
 - Added metal baseplate to terminals
 
 TODO steps
 TODO baseplate
+
+[bug: Fixed widening input constraints]
+TODO
+    - Different way of distinguishing escalator from walkway [15 mins]
+    - Prevent walkway from widening if dy != 0 [5 min]
+
+[bug: Fixed jittery motion on escalators]
 
 [bug: Fixed ghost propagation]
 TODO rotation propagation being weird somehow

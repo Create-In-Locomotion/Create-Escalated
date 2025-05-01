@@ -15,6 +15,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import rbasamoyai.escalated.advancements.WalkwayTravelTracker;
 
 import java.util.List;
 
@@ -159,8 +160,11 @@ public class WalkwayMovementHandler {
         // Placement on steps
         entity.setOnGround(true);
 
-        if (!isPlayer)
+        if (isPlayer && !entity.level().isClientSide) {
+            WalkwayTravelTracker.trackPlayerOnWalkway((Player) entity, 300); // 15 seconds
+        } else {
             entity.setMaxUpStep(step);
+        }
     }
 
     public static boolean shouldIgnoreBlocking(Entity me, Entity other) {

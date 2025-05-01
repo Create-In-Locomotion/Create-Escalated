@@ -29,6 +29,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import rbasamoyai.escalated.handrails.AbstractHandrailBlock;
 import rbasamoyai.escalated.handrails.HandrailBlockEntity;
 import rbasamoyai.escalated.index.EscalatedBlockEntities;
+import rbasamoyai.escalated.index.EscalatedTriggers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -389,6 +390,7 @@ public abstract class AbstractWalkwayBlock extends HorizontalKineticBlock implem
                 level.setBlock(abovePos, placeState, 3);
             }
             level.playSound(null, pos.above(), SoundEvents.WOOL_PLACE, SoundSource.BLOCKS, 0.5F, 1F);
+            EscalatedTriggers.HANDRAIL.tryAwardingTo(player);
             return true;
         } else {
             // Place wide
@@ -468,6 +470,7 @@ public abstract class AbstractWalkwayBlock extends HorizontalKineticBlock implem
                     handrailBE.width = width;
             }
             level.playSound(null, pos.above(), SoundEvents.WOOL_PLACE, SoundSource.BLOCKS, 0.5F, 1F);
+            EscalatedTriggers.HANDRAIL.tryAwardingTo(player);
             return true;
         }
     }

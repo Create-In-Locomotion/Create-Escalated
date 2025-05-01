@@ -27,6 +27,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import rbasamoyai.escalated.config.EscalatedConfigs;
 import rbasamoyai.escalated.handrails.AbstractHandrailBlock;
 import rbasamoyai.escalated.handrails.HandrailBlockEntity;
+import rbasamoyai.escalated.index.EscalatedTriggers;
 
 import java.util.*;
 
@@ -86,7 +87,7 @@ public class WalkwayConnectorItem extends BlockItem {
                 return InteractionResult.FAIL;
             if (firstTerminal != null && !firstTerminal.equals(pos)) {
                 this.createSteps(level, firstTerminal, pos);
-//                AllAdvancements.BELT.awardTo(playerEntity); // TODO: advancements?
+                EscalatedTriggers.WALKWAY.tryAwardingTo(playerEntity);
                 if (!playerEntity.isCreative())
                     context.getItemInHand().shrink(1);
             }

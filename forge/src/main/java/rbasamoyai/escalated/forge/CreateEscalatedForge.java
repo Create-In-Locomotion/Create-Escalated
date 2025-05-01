@@ -2,6 +2,8 @@ package rbasamoyai.escalated.forge;
 
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.server.ServerStoppingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -29,11 +31,22 @@ public class CreateEscalatedForge {
         modBus.addListener(this::onLoadConfig);
         modBus.addListener(this::onReloadConfig);
 
+        forgeBus.addListener(this::onServerTick);
+        forgeBus.addListener(this::onServerStopping);
+
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> EscalatedClientForge.prepareClient(modBus, forgeBus));
     }
 
     private void onLoadConfig(ModConfigEvent.Loading evt) { EscalatedConfigs.onLoad(evt.getConfig()); }
 
     private void onReloadConfig(ModConfigEvent.Reloading evt) { EscalatedConfigs.onReload(evt.getConfig()); }
+
+    private void onServerTick(final TickEvent.ServerTickEvent evt) {
+        if (evt.phase == TickEvent.Phase.END) {
+            CreateEscalated.onServerTick(evt.getServer());
+        }
+    }
+
+    private void onServerStopping(final ServerStoppingEvent evt) { CreateEscalated.onServerStopping(); }
 
 }
