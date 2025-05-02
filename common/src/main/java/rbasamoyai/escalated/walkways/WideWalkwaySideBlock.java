@@ -161,6 +161,8 @@ public class WideWalkwaySideBlock extends AbstractWalkwayBlock {
         return face == openFace;
     }
 
+    @Override public boolean isEscalator(Level level, BlockState state, BlockPos pos) { return false; }
+
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter blockGetter, BlockPos pos, CollisionContext context) {
         Direction facing = state.getValue(HORIZONTAL_FACING);

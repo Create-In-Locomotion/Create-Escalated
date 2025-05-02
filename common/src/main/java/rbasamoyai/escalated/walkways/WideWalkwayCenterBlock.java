@@ -100,6 +100,8 @@ public class WideWalkwayCenterBlock extends AbstractWalkwayBlock {
         return face.getAxis().isHorizontal();
     }
 
+    @Override public boolean isEscalator(Level level, BlockState state, BlockPos pos) { return false; }
+
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter blockGetter, BlockPos pos, CollisionContext context) {
         return EscalatedShapes.WIDE_WALKWAY_CENTER;

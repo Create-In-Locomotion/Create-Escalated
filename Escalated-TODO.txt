@@ -1,9 +1,4 @@
-bug: Fixed walkway widening input constraints
-TODO
-    - Different way of distinguishing escalator from walkway [15 mins]
-    - Prevent walkway from widening if dy != 0 [5 min]
-
-[bug: Fixed jittery motion on escalators]
+bug: Fixed jittery motion on escalators
 
 [bug: Fixed ghost propagation]
 TODO rotation propagation being weird somehow

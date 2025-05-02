@@ -144,4 +144,6 @@ public class NarrowWalkwayBlock extends AbstractWalkwayBlock  {
         return face.getAxis() == state.getValue(HORIZONTAL_FACING).getAxis();
     }
 
+    @Override public boolean isEscalator(Level level, BlockState state, BlockPos pos) { return false; }
+
 }

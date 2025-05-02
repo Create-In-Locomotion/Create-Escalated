@@ -136,11 +136,20 @@ public class WalkwayConnectorItem extends BlockItem {
         boolean escalator = y != 0;
 
         // Walkway extension
-        if (Math.abs(shaftAxis.choose(x, y, z)) == 1 && y == 0) {
+        if (Math.abs(shaftAxis.choose(x, y, z)) == 1) {
             BlockPos actualDiff = new BlockPos(shaftAxis.choose(x, 0, 0), 0, shaftAxis.choose(0, 0, z));
             if (!(ShaftBlock.isShaft(firstState) && this.canExtendWalkwayBlock(secondState)
                     || this.canExtendWalkwayBlock(firstState) && ShaftBlock.isShaft(secondState)))
                 return false;
+            boolean extendingEscalator;
+            if (ShaftBlock.isShaft(firstState)) {
+                extendingEscalator = ((WalkwayBlock) secondState.getBlock()).isEscalator(level, secondState, second);
+            } else { // ShaftBlock.isShaft(secondState)
+                extendingEscalator = ((WalkwayBlock) firstState.getBlock()).isEscalator(level, firstState, first);
+            }
+            if (!extendingEscalator && y != 0)
+                return false;
+
             Direction.Axis secondAxis = Direction.Axis.Y;
             if (ShaftBlock.isShaft(secondState)) {
                 secondAxis = secondState.getValue(BlockStateProperties.AXIS);

@@ -25,6 +25,7 @@ public interface WalkwayBlock {
     BlockState transformFromMerge(Level level, BlockState state, BlockPos pos, boolean left, boolean shaft, boolean remove);
     boolean connectedToWalkwayOnSide(Level level, BlockState state, BlockPos pos, Direction face);
     WalkwaySet getWalkwaySet();
+    boolean isEscalator(Level level, BlockState state, BlockPos pos);
 
     default boolean movesEntities(BlockState state) { return true; }
 

@@ -91,4 +91,16 @@ public class WalkwayTerminalBlock extends AbstractWalkwayBlock {
         return false;
     }
 
+    @Override
+    public boolean isEscalator(Level level, BlockState state, BlockPos pos) {
+        Direction facing = state.getValue(HORIZONTAL_FACING);
+        BlockPos otherPos = pos.relative(facing);
+        BlockState otherState = level.getBlockState(otherPos);
+        if (!(otherState.getBlock() instanceof WalkwayBlock walkway))
+            return false;
+        if (walkway.getWalkwaySlope(otherState) == WalkwaySlope.TERMINAL)
+            return false;
+        return walkway.isEscalator(level, state, pos);
+    }
+
 }
