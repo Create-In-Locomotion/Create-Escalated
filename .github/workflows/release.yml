@@ -1,10 +1,10 @@
-name: Nightly Build
+name: Release
 
 on:
-    workflow_dispatch:
     push:
-        branches:
-            - "**"
+        tags:
+            - 'v**'
+            - '!v*-dev**'
 
 permissions:
     contents: read
@@ -50,10 +50,13 @@ jobs:
                         loom-cache
 
             -   name: Build jar
+                env:
+                    RELEASE: true
                 run: ./gradlew buildAndCollect
 
             -   name: Publish to Maven Repository
                 env:
+                    RELEASE: true
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                     MAVEN_USER: ${{ secrets.MAVEN_USER }}
                     MAVEN_ACCESS_TOKEN: ${{ secrets.MAVEN_ACCESS_TOKEN }}
@@ -71,11 +74,9 @@ jobs:
             -   name: Send building message to discord
                 env:
                     DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-                if: env.DISCORD_WEBHOOK != '' && github.event_name == 'push'
-                uses: realRobotix/action-discord-notifier@master
-                with:
-                    webhook: ${{ secrets.DISCORD_WEBHOOK }}
-                    message-title: Building mod from branch ${{ steps.get_branch.outputs.branch }}
+                if: env.DISCORD_WEBHOOK != ''
+                run: |
+                    curl -H "Content-Type: application/json" -X POST -d '{"content": null, "embeds": [{"title": "Building new release: ${{ steps.read_properties.outputs.mod-version }}", "color": null}], "attachments": []}' $DISCORD_WEBHOOK
 
             -   name: Send built file to discord
                 env:
