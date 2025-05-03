@@ -4,6 +4,7 @@ import com.jozufozu.flywheel.backend.instancing.InstancedRenderDispatcher;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.utility.Iterate;
+import com.simibubi.create.foundation.utility.NBTHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -97,7 +98,7 @@ public class HandrailBlockEntity extends SmartBlockEntity {
     protected void read(CompoundTag tag, boolean clientPacket) {
         super.read(tag, clientPacket);
         this.width = tag.getInt("Width");
-        this.handrailColor = tag.contains("Color", Tag.TAG_INT) ? DyeColor.byId(tag.getInt("Color")) : null;
+        this.handrailColor = tag.contains("Dye", Tag.TAG_STRING) ? NBTHelper.readEnum(tag, "Dye", DyeColor.class) : null;
 
         if (clientPacket)
             EnvExecute.executeOnClient(() -> () -> InstancedRenderDispatcher.enqueueUpdate(this));
@@ -108,7 +109,7 @@ public class HandrailBlockEntity extends SmartBlockEntity {
         super.write(tag, clientPacket);
         tag.putInt("Width", this.width);
         if (this.handrailColor != null)
-            tag.putInt("Color", this.handrailColor.getId());
+            NBTHelper.writeEnum(tag, "Dye", this.handrailColor);
     }
 
 }

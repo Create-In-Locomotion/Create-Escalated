@@ -55,18 +55,18 @@ public class EscalatedShapes {
     public static final VoxelShape WIDE_WALKWAY_CENTER = box(0, 0, 0, 16, 15.5, 16);
 
     public static final EscalatorVoxelShaper
-            NARROW_ESCALATOR_BOTTOM_STEPPED = createEscalatorStepShapes(NARROW_ESCALATOR_BOTTOM.get(Direction.NORTH), Direction.NORTH, WalkwaySlope.BOTTOM),
-            NARROW_ESCALATOR_MIDDLE_STEPPED = createEscalatorStepShapes(NARROW_ESCALATOR_MIDDLE.get(Direction.NORTH), Direction.NORTH, WalkwaySlope.MIDDLE),
-            NARROW_ESCALATOR_TOP_STEPPED = createEscalatorStepShapes(NARROW_ESCALATOR_TOP.get(Direction.NORTH), Direction.NORTH, WalkwaySlope.TOP),
-            WIDE_ESCALATOR_SIDE_BOTTOM_LEFT_STEPPED = createEscalatorStepShapes(WIDE_ESCALATOR_SIDE_BOTTOM_LEFT.get(Direction.NORTH), Direction.NORTH, WalkwaySlope.BOTTOM),
-            WIDE_ESCALATOR_SIDE_MIDDLE_LEFT_STEPPED = createEscalatorStepShapes(WIDE_ESCALATOR_SIDE_MIDDLE_LEFT.get(Direction.NORTH), Direction.NORTH, WalkwaySlope.MIDDLE),
-            WIDE_ESCALATOR_SIDE_TOP_LEFT_STEPPED = createEscalatorStepShapes(WIDE_ESCALATOR_SIDE_TOP_LEFT.get(Direction.NORTH), Direction.NORTH, WalkwaySlope.TOP),
-            WIDE_ESCALATOR_SIDE_BOTTOM_RIGHT_STEPPED = createEscalatorStepShapes(WIDE_ESCALATOR_SIDE_BOTTOM_RIGHT.get(Direction.NORTH), Direction.NORTH, WalkwaySlope.BOTTOM),
-            WIDE_ESCALATOR_SIDE_MIDDLE_RIGHT_STEPPED = createEscalatorStepShapes(WIDE_ESCALATOR_SIDE_MIDDLE_RIGHT.get(Direction.NORTH), Direction.NORTH, WalkwaySlope.MIDDLE),
-            WIDE_ESCALATOR_SIDE_TOP_RIGHT_STEPPED = createEscalatorStepShapes(WIDE_ESCALATOR_SIDE_TOP_RIGHT.get(Direction.NORTH), Direction.NORTH, WalkwaySlope.TOP),
-            WIDE_ESCALATOR_CENTER_BOTTOM_STEPPED = createEscalatorStepShapes(WIDE_ESCALATOR_CENTER_BOTTOM.get(Direction.NORTH), Direction.NORTH, WalkwaySlope.BOTTOM),
-            WIDE_ESCALATOR_CENTER_MIDDLE_STEPPED = createEscalatorStepShapes(WIDE_ESCALATOR_CENTER_MIDDLE.get(Direction.NORTH), Direction.NORTH, WalkwaySlope.MIDDLE),
-            WIDE_ESCALATOR_CENTER_TOP_STEPPED = createEscalatorStepShapes(WIDE_ESCALATOR_CENTER_TOP.get(Direction.NORTH), Direction.NORTH, WalkwaySlope.TOP);
+            NARROW_ESCALATOR_BOTTOM_STEPPED = createEscalatorStepShapes(NARROW_ESCALATOR_BOTTOM.get(Direction.SOUTH), Direction.SOUTH, WalkwaySlope.BOTTOM),
+            NARROW_ESCALATOR_MIDDLE_STEPPED = createEscalatorStepShapes(NARROW_ESCALATOR_MIDDLE.get(Direction.SOUTH), Direction.SOUTH, WalkwaySlope.MIDDLE),
+            NARROW_ESCALATOR_TOP_STEPPED = createEscalatorStepShapes(NARROW_ESCALATOR_TOP.get(Direction.SOUTH), Direction.SOUTH, WalkwaySlope.TOP),
+            WIDE_ESCALATOR_SIDE_BOTTOM_LEFT_STEPPED = createEscalatorStepShapes(WIDE_ESCALATOR_SIDE_BOTTOM_LEFT.get(Direction.SOUTH), Direction.SOUTH, WalkwaySlope.BOTTOM),
+            WIDE_ESCALATOR_SIDE_MIDDLE_LEFT_STEPPED = createEscalatorStepShapes(WIDE_ESCALATOR_SIDE_MIDDLE_LEFT.get(Direction.SOUTH), Direction.SOUTH, WalkwaySlope.MIDDLE),
+            WIDE_ESCALATOR_SIDE_TOP_LEFT_STEPPED = createEscalatorStepShapes(WIDE_ESCALATOR_SIDE_TOP_LEFT.get(Direction.SOUTH), Direction.SOUTH, WalkwaySlope.TOP),
+            WIDE_ESCALATOR_SIDE_BOTTOM_RIGHT_STEPPED = createEscalatorStepShapes(WIDE_ESCALATOR_SIDE_BOTTOM_RIGHT.get(Direction.SOUTH), Direction.SOUTH, WalkwaySlope.BOTTOM),
+            WIDE_ESCALATOR_SIDE_MIDDLE_RIGHT_STEPPED = createEscalatorStepShapes(WIDE_ESCALATOR_SIDE_MIDDLE_RIGHT.get(Direction.SOUTH), Direction.SOUTH, WalkwaySlope.MIDDLE),
+            WIDE_ESCALATOR_SIDE_TOP_RIGHT_STEPPED = createEscalatorStepShapes(WIDE_ESCALATOR_SIDE_TOP_RIGHT.get(Direction.SOUTH), Direction.SOUTH, WalkwaySlope.TOP),
+            WIDE_ESCALATOR_CENTER_BOTTOM_STEPPED = createEscalatorStepShapes(WIDE_ESCALATOR_CENTER_BOTTOM.get(Direction.SOUTH), Direction.SOUTH, WalkwaySlope.BOTTOM),
+            WIDE_ESCALATOR_CENTER_MIDDLE_STEPPED = createEscalatorStepShapes(WIDE_ESCALATOR_CENTER_MIDDLE.get(Direction.SOUTH), Direction.SOUTH, WalkwaySlope.MIDDLE),
+            WIDE_ESCALATOR_CENTER_TOP_STEPPED = createEscalatorStepShapes(WIDE_ESCALATOR_CENTER_TOP.get(Direction.SOUTH), Direction.SOUTH, WalkwaySlope.TOP);
 
     private static VoxelShape createBottomEscalatorShape(boolean left, boolean right) {
         VoxelShape shape = box(0, 0, 0, 16, 15.5, 16);

@@ -22,8 +22,10 @@ public interface WalkwayBlock {
     Direction getFacing(BlockState state);
     WalkwaySlope getWalkwaySlope(BlockState state);
     boolean hasWalkwayShaft(BlockState state);
-    BlockState transformFromMerge(Level level, BlockState state, BlockPos pos, boolean left, boolean shaft, boolean remove);
+    BlockState transformFromMerge(Level level, BlockState state, BlockPos pos, boolean left, boolean shaft, boolean remove, boolean replace);
     boolean connectedToWalkwayOnSide(Level level, BlockState state, BlockPos pos, Direction face);
+    WalkwaySet getWalkwaySet();
+    boolean isEscalator(Level level, BlockState state, BlockPos pos);
 
     default boolean movesEntities(BlockState state) { return true; }
 
@@ -34,17 +36,19 @@ public interface WalkwayBlock {
         if (!(state.getBlock() instanceof WalkwayBlock))
             return;
         // Find controller
-        int limit = 1000;
+        int limit = 1100;
         boolean escalator = false;
         BlockPos currentPos = pos;
 
         boolean terminal = false;
         while (limit-- > 0) {
             BlockState currentState = level.getBlockState(currentPos);
-            if (!(currentState.getBlock() instanceof WalkwayBlock)) {
+            if (!(currentState.getBlock() instanceof WalkwayBlock walkwayBlock)) {
                 level.destroyBlock(pos, true);
                 return;
             }
+            WalkwaySlope slope = walkwayBlock.getWalkwaySlope(currentState);
+            escalator |= slope == WalkwaySlope.TOP || slope == WalkwaySlope.MIDDLE || slope == WalkwaySlope.BOTTOM;
             BlockPos nextSegmentPosition = nextSegmentPosition(currentState, currentPos, true, terminal);
             terminal = true;
             if (nextSegmentPosition == null)

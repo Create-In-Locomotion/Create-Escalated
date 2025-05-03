@@ -1,0 +1,30 @@
+{
+  "criteria": {
+    "0": {
+      "conditions": {},
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "background": "escalated:textures/gui/advancements.png",
+    "description": {
+      "color": "#DBA213",
+      "translate": "advancement.escalated.root.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "escalated:metal_walkway_steps"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancement.escalated.root"
+    }
+  },
+  "requirements": [
+    [
+      "0"
+    ]
+  ]
+}

@@ -72,8 +72,24 @@ public class WalkwayTerminalBlock extends AbstractWalkwayBlock {
     }
 
     @Override
-    public BlockState transformFromMerge(Level level, BlockState state, BlockPos pos, boolean left, boolean shaft, boolean remove) {
-        return state;
+    public BlockState transformFromMerge(Level level, BlockState state, BlockPos pos, boolean left, boolean shaft, boolean remove, boolean replace) {
+        if (remove)
+            return state;
+        WalkwayCaps caps = state.getValue(CAPS_SHAFT);
+        if (replace) {
+            if (left && caps.hasRightCap()) {
+                caps = caps.toggleRight();
+            } else if (!left && caps.hasLeftCap()) {
+                caps = caps.toggleLeft();
+            }
+        } else {
+            if (left && caps.hasRightCap()) {
+                caps = caps.toggleRight();
+            } else if (!left && caps.hasLeftCap()) {
+                caps = caps.toggleLeft();
+            }
+        }
+        return state.setValue(CAPS_SHAFT, caps);
     }
 
     @Override
@@ -89,6 +105,18 @@ public class WalkwayTerminalBlock extends AbstractWalkwayBlock {
             && walkway.connectedToWalkwayOnSide(level, otherState, otherPos, face))
             return true;
         return false;
+    }
+
+    @Override
+    public boolean isEscalator(Level level, BlockState state, BlockPos pos) {
+        Direction facing = state.getValue(HORIZONTAL_FACING);
+        BlockPos otherPos = pos.relative(facing);
+        BlockState otherState = level.getBlockState(otherPos);
+        if (!(otherState.getBlock() instanceof WalkwayBlock walkway))
+            return false;
+        if (walkway.getWalkwaySlope(otherState) == WalkwaySlope.TERMINAL)
+            return false;
+        return walkway.isEscalator(level, state, pos);
     }
 
 }

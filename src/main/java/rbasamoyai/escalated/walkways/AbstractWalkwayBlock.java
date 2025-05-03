@@ -29,6 +29,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import rbasamoyai.escalated.handrails.AbstractHandrailBlock;
 import rbasamoyai.escalated.handrails.HandrailBlockEntity;
 import rbasamoyai.escalated.index.EscalatedBlockEntities;
+import rbasamoyai.escalated.index.EscalatedTriggers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -107,7 +108,7 @@ public abstract class AbstractWalkwayBlock extends HorizontalKineticBlock implem
                     || !sideWalkway.connectedToWalkwayOnSide(level, sideState, sidePos, dir.getOpposite()))
                 continue;
             boolean sideShaft = sideWalkway.hasWalkwayShaft(sideState);
-            BlockState transformState = sideWalkway.transformFromMerge(level, sideState, sidePos, dir != left, sideShaft, true);
+            BlockState transformState = sideWalkway.transformFromMerge(level, sideState, sidePos, dir != left, sideShaft, true, false);
 
             DyeColor color = null;
             float visualProgress = 0;
@@ -127,8 +128,9 @@ public abstract class AbstractWalkwayBlock extends HorizontalKineticBlock implem
         }
 
         // Destroy chain
+        boolean terminal = this.getWalkwaySlope(state) == WalkwaySlope.TERMINAL;
         for (boolean forward : Iterate.trueAndFalse) {
-            BlockPos currentPos = WalkwayBlock.nextSegmentPosition(state, pos, forward, false);
+            BlockPos currentPos = WalkwayBlock.nextSegmentPosition(state, pos, forward, terminal && !forward);
             if (currentPos == null)
                 continue;
             currentState = level.getBlockState(currentPos);
@@ -354,7 +356,7 @@ public abstract class AbstractWalkwayBlock extends HorizontalKineticBlock implem
         }
         WalkwayBlock walkway = (WalkwayBlock) referenceState.getBlock();
         Direction dir = walkway.getFacing(referenceState);
-        AbstractHandrailBlock handrail = (AbstractHandrailBlock) this.getWalkwaySet().getHandrailBlock(level, referenceState, centralPos).getBlock();
+        AbstractHandrailBlock handrail = (AbstractHandrailBlock) walkway.getWalkwaySet().getHandrailBlock(level, referenceState, centralPos).getBlock();
         int MAX_ITER = 1100;
 
         if (!walkway.connectedToWalkwayOnSide(level, referenceState, pos, dir.getClockWise())
@@ -389,6 +391,7 @@ public abstract class AbstractWalkwayBlock extends HorizontalKineticBlock implem
                 level.setBlock(abovePos, placeState, 3);
             }
             level.playSound(null, pos.above(), SoundEvents.WOOL_PLACE, SoundSource.BLOCKS, 0.5F, 1F);
+            EscalatedTriggers.HANDRAIL.tryAwardingTo(player);
             return true;
         } else {
             // Place wide
@@ -468,11 +471,13 @@ public abstract class AbstractWalkwayBlock extends HorizontalKineticBlock implem
                     handrailBE.width = width;
             }
             level.playSound(null, pos.above(), SoundEvents.WOOL_PLACE, SoundSource.BLOCKS, 0.5F, 1F);
+            EscalatedTriggers.HANDRAIL.tryAwardingTo(player);
             return true;
         }
     }
 
-    protected WalkwaySet getWalkwaySet() {
+    @Override
+    public WalkwaySet getWalkwaySet() {
         if (this.walkwaySet == null)
             this.walkwaySet = this.walkwaySetSupplier.get();
         return this.walkwaySet;

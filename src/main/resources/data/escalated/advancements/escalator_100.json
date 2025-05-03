@@ -1,0 +1,30 @@
+{
+  "parent": "escalated:walkway",
+  "criteria": {
+    "0": {
+      "conditions": {},
+      "trigger": "escalated:escalator_100_builtin"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "color": "#DBA213",
+      "translate": "advancement.escalated.escalator_100.desc"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "escalated:metal_walkway_steps"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.escalated.escalator_100"
+    }
+  },
+  "requirements": [
+    [
+      "0"
+    ]
+  ]
+}

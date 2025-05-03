@@ -126,7 +126,7 @@ public class NarrowWalkwayBlock extends AbstractWalkwayBlock  {
     }
 
     @Override
-    public BlockState transformFromMerge(Level level, BlockState state, BlockPos pos, boolean left, boolean shaft, boolean remove) {
+    public BlockState transformFromMerge(Level level, BlockState state, BlockPos pos, boolean left, boolean shaft, boolean remove, boolean replace) {
         if (remove)
             return state;
         WalkwayCaps caps = shaft ? WalkwayCaps.NONE : WalkwayCaps.NO_SHAFT;
@@ -143,5 +143,7 @@ public class NarrowWalkwayBlock extends AbstractWalkwayBlock  {
     public boolean connectedToWalkwayOnSide(Level level, BlockState state, BlockPos pos, Direction face) {
         return face.getAxis() == state.getValue(HORIZONTAL_FACING).getAxis();
     }
+
+    @Override public boolean isEscalator(Level level, BlockState state, BlockPos pos) { return false; }
 
 }

@@ -3,6 +3,7 @@ package rbasamoyai.escalated.walkways;
 import com.simibubi.create.foundation.utility.VoxelShaper;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
+import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.joml.Vector3f;
@@ -43,7 +44,8 @@ public class EscalatorVoxelShaper {
         List<VoxelShaper> shapes = new ArrayList<>();
 
         VoxelShape stepShape = box(0, 0, 0, 16, 8, 8);
-        Vector3f dirVec = Direction.NORTH.step();
+        Vector3f dirVec = Direction.SOUTH.step();
+        VoxelShape mask = box(0, -16, 0, 16, 32, 16); // 3-tall box, centered
 
         for (int offset = 0; offset < stepCount; ++offset) {
             float visualOffset = 0.5f * (float) offset / (float) stepCount;
@@ -53,13 +55,15 @@ public class EscalatorVoxelShaper {
                 Vector3f horizOffset = new Vector3f(dirVec).mul(f);
                 float vertOffset = f;
                 if (slope == WalkwaySlope.TOP)
-                    vertOffset = Math.min(vertOffset, 0);
+                    vertOffset = Math.min(vertOffset, 0.5f);
                 if (slope == WalkwaySlope.BOTTOM)
-                    vertOffset = Math.max(vertOffset, 0);
-                Vector3f offsetVec = new Vector3f().add(horizOffset).add(0, vertOffset + 7.5f / 16f, 0);
-                finalShape = Shapes.or(finalShape, stepShape.move(offsetVec.x, offsetVec.y, offsetVec.z));
+                    vertOffset = Math.max(vertOffset, 0.5f);
+                Vector3f offsetVec = new Vector3f().add(horizOffset).add(0, vertOffset - 0.5f / 16f, 0);
+                VoxelShape copyStep = stepShape.move(offsetVec.x, offsetVec.y, offsetVec.z);
+                copyStep = Shapes.join(copyStep, mask, BooleanOp.AND);
+                finalShape = Shapes.or(finalShape, copyStep);
             }
-            shapes.add(VoxelShaper.forHorizontal(finalShape, Direction.NORTH));
+            shapes.add(VoxelShaper.forHorizontal(finalShape, Direction.SOUTH));
         }
         return new EscalatorVoxelShaper(shapes);
     }

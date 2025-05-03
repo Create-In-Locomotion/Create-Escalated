@@ -1,24 +1,7 @@
-[bug: Fixed jittery movement on upwards escalators]
-[bug: Fixed Fabric stuff]
-
-[documentation: Added ponders for walkways and escalators]
-TODO:
-    - Creating walkways and escalators
-    - Adding extra shafts to walkways and escalators
-    - Merging walkways and escalators
-    - Customizing walkways and escalators using handrails, dyes, glass handrails, dyed handrails
-
-[feature: Added Escalated-related advancements]
-
-- [The Fast and Fashionable]: Place down a walkway/escalator
-- [Stairway to Heaven]: Ascend 100 blocks only on moving escalators
-- [No Stairway, denied!]: Ascend 100 blocks only on moving escalators in the Nether
-- [Please hold handrail]: Stylize your walkways and escalators with handrails
+Post-release:
 
 [bug: Fixed ghost propagation]
 TODO rotation propagation being weird somehow
-
-[documentation: Added CHANGELOG.md]
 
 TODO future update: Copycats escalators
 

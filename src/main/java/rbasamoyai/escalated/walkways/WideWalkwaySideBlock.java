@@ -126,7 +126,7 @@ public class WideWalkwaySideBlock extends AbstractWalkwayBlock {
     }
 
     @Override
-    public BlockState transformFromMerge(Level level, BlockState state, BlockPos pos, boolean left, boolean shaft, boolean remove) {
+    public BlockState transformFromMerge(Level level, BlockState state, BlockPos pos, boolean left, boolean shaft, boolean remove, boolean replace) {
         WalkwayCaps caps = state.getValue(CAPS_SIDED);
         if (shaft && caps == WalkwayCaps.NO_SHAFT) {
             caps = WalkwayCaps.NONE;
@@ -160,6 +160,8 @@ public class WideWalkwaySideBlock extends AbstractWalkwayBlock {
         Direction openFace = state.getValue(LEFT) ? facing.getClockWise() : facing.getCounterClockWise();
         return face == openFace;
     }
+
+    @Override public boolean isEscalator(Level level, BlockState state, BlockPos pos) { return false; }
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter blockGetter, BlockPos pos, CollisionContext context) {

@@ -1,10 +1,7 @@
 package rbasamoyai.escalated;
 
 import net.minecraft.client.Minecraft;
-import rbasamoyai.escalated.index.EscalatedBlockPartials;
-import rbasamoyai.escalated.index.EscalatedInstanceFormats;
-import rbasamoyai.escalated.index.EscalatedMaterialSpecs;
-import rbasamoyai.escalated.index.EscalatedSpriteShiftEntries;
+import rbasamoyai.escalated.index.*;
 import rbasamoyai.escalated.walkways.WalkwayConnectorHandler;
 
 public class EscalatedClientCommon {
@@ -14,6 +11,8 @@ public class EscalatedClientCommon {
         EscalatedInstanceFormats.init();
         EscalatedSpriteShiftEntries.init();
         EscalatedBlockPartials.resolveDeferredModels();
+        EscalatedPonderIndex.register();
+        EscalatedPonderIndex.registerTags();
     }
 
     public static void onClientGameTick(Minecraft minecraft) {

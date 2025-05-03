@@ -27,6 +27,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import rbasamoyai.escalated.config.EscalatedConfigs;
 import rbasamoyai.escalated.handrails.AbstractHandrailBlock;
 import rbasamoyai.escalated.handrails.HandrailBlockEntity;
+import rbasamoyai.escalated.index.EscalatedTriggers;
 
 import java.util.*;
 
@@ -69,7 +70,7 @@ public class WalkwayConnectorItem extends BlockItem {
         CompoundTag tag = context.getItemInHand().getOrCreateTag();
         BlockPos firstTerminal = null;
 
-        // Remove first if no longer existant or valid
+        // Remove first if no longer existent or valid
         if (tag.contains("FirstTerminal")) {
             firstTerminal = NbtUtils.readBlockPos(tag.getCompound("FirstTerminal"));
             if (!validateAxis(level, firstTerminal) || !firstTerminal.closerThan(pos, maxWalkwayLength() * 2)) {
@@ -86,7 +87,7 @@ public class WalkwayConnectorItem extends BlockItem {
                 return InteractionResult.FAIL;
             if (firstTerminal != null && !firstTerminal.equals(pos)) {
                 this.createSteps(level, firstTerminal, pos);
-//                AllAdvancements.BELT.awardTo(playerEntity); // TODO: advancements?
+                EscalatedTriggers.WALKWAY.tryAwardingTo(playerEntity);
                 if (!playerEntity.isCreative())
                     context.getItemInHand().shrink(1);
             }
@@ -135,11 +136,20 @@ public class WalkwayConnectorItem extends BlockItem {
         boolean escalator = y != 0;
 
         // Walkway extension
-        if (Math.abs(shaftAxis.choose(x, y, z)) == 1 && y == 0) {
+        if (Math.abs(shaftAxis.choose(x, y, z)) == 1) {
             BlockPos actualDiff = new BlockPos(shaftAxis.choose(x, 0, 0), 0, shaftAxis.choose(0, 0, z));
             if (!(ShaftBlock.isShaft(firstState) && this.canExtendWalkwayBlock(secondState)
                     || this.canExtendWalkwayBlock(firstState) && ShaftBlock.isShaft(secondState)))
                 return false;
+            boolean extendingEscalator;
+            if (ShaftBlock.isShaft(firstState)) {
+                extendingEscalator = ((WalkwayBlock) secondState.getBlock()).isEscalator(level, secondState, second);
+            } else { // ShaftBlock.isShaft(secondState)
+                extendingEscalator = ((WalkwayBlock) firstState.getBlock()).isEscalator(level, firstState, first);
+            }
+            if (!extendingEscalator && y != 0)
+                return false;
+
             Direction.Axis secondAxis = Direction.Axis.Y;
             if (ShaftBlock.isShaft(secondState)) {
                 secondAxis = secondState.getValue(BlockStateProperties.AXIS);
@@ -203,8 +213,10 @@ public class WalkwayConnectorItem extends BlockItem {
             return false;
         if (escalator && Math.abs(x) != Math.abs(y) + 3 && Math.abs(z) != Math.abs(y) + 3) // Escalator checking
             return false;
+        if (!escalator && (Math.abs(x) == 1 || Math.abs(z) == 1)) // Short walkway checking
+            return false;
 
-        if (!ShaftBlock.isShaft(secondState) || shaftAxis != secondState.getValue(BlockStateProperties.AXIS))
+        if (!ShaftBlock.isShaft(firstState) || !ShaftBlock.isShaft(secondState) || shaftAxis != secondState.getValue(BlockStateProperties.AXIS))
             return false;
 
         if (!(level.getBlockEntity(first) instanceof KineticBlockEntity kbe) || !(level.getBlockEntity(second) instanceof KineticBlockEntity kbe1))
@@ -302,12 +314,12 @@ public class WalkwayConnectorItem extends BlockItem {
 
                 Direction walkwayFacing = walkwaySrc.getFacing(srcState);
                 boolean left = walkwayFacing.getCounterClockWise() == face;
-                if (i == 0)
+                if (i == 0 || i == sz - 1)
                     left = !left;
                 boolean srcShaft = walkwaySrc.hasWalkwayShaft(srcState);
                 // Place blocks
-                BlockState replaceSrcState = walkwaySrc.transformFromMerge(level, srcState, srcPos, left, srcShaft, false);
-                BlockState placeState = walkwaySrc.transformFromMerge(level, srcState, srcPos, !left, isShaft, false);
+                BlockState replaceSrcState = walkwaySrc.transformFromMerge(level, srcState, srcPos, left, srcShaft, false, true);
+                BlockState placeState = walkwaySrc.transformFromMerge(level, srcState, srcPos, !left, isShaft, false, false);
                 KineticBlockEntity.switchToBlockState(level, srcPos, replaceSrcState);
                 KineticBlockEntity.switchToBlockState(level, destPos, placeState);
 

@@ -83,7 +83,7 @@ public class WideWalkwayCenterBlock extends AbstractWalkwayBlock {
     }
 
     @Override
-    public BlockState transformFromMerge(Level level, BlockState state, BlockPos pos, boolean left, boolean shaft, boolean remove) {
+    public BlockState transformFromMerge(Level level, BlockState state, BlockPos pos, boolean left, boolean shaft, boolean remove, boolean replace) {
         Direction facing = state.getValue(HORIZONTAL_FACING);
         if (remove) {
             return this.getWalkwaySet().getWideSideBlock(level, state, pos)
@@ -99,6 +99,8 @@ public class WideWalkwayCenterBlock extends AbstractWalkwayBlock {
     public boolean connectedToWalkwayOnSide(Level level, BlockState state, BlockPos pos, Direction face) {
         return face.getAxis().isHorizontal();
     }
+
+    @Override public boolean isEscalator(Level level, BlockState state, BlockPos pos) { return false; }
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter blockGetter, BlockPos pos, CollisionContext context) {

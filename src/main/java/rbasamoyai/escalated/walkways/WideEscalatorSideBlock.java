@@ -78,7 +78,7 @@ public class WideEscalatorSideBlock extends NarrowEscalatorBlock {
     }
 
     @Override
-    public BlockState transformFromMerge(Level level, BlockState state, BlockPos pos, boolean left, boolean shaft, boolean remove) {
+    public BlockState transformFromMerge(Level level, BlockState state, BlockPos pos, boolean left, boolean shaft, boolean remove, boolean replace) {
         boolean srcLeft = state.getValue(LEFT);
         Direction facing = state.getValue(HORIZONTAL_FACING);
         if (remove) {
