@@ -1,4 +1,4 @@
-bug: Fixed jittery motion on escalators
+bug, assets: Removed some faces in handrails
 
 [bug: Fixed ghost propagation]
 TODO rotation propagation being weird somehow

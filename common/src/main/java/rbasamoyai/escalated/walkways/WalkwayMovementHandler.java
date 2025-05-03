@@ -147,8 +147,9 @@ public class WalkwayMovementHandler {
         if (movingUp) {
             float minVelocity = .13f;
             float yMovement = (float) (Math.max(Math.abs(movement.y), minVelocity));
-            entity.move(SELF, new Vec3(0, yMovement, 0));
-            entity.move(SELF, new Vec3(0, -yMovement * 2, 0));
+            if (entity.isColliding(pos, blockState))
+                entity.move(SELF, new Vec3(0, yMovement, 0));
+            entity.move(SELF, new Vec3(0, -yMovement, 0));
             entity.move(SELF, movement.multiply(1, 0, 1));
         } else if (movingDown) {
             entity.move(SELF, movement.multiply(1, 0, 1));
