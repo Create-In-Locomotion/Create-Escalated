@@ -1,7 +1,7 @@
+Post-release:
+
 [bug: Fixed ghost propagation]
 TODO rotation propagation being weird somehow
-
-[documentation: Added CHANGELOG.md]
 
 TODO future update: Copycats escalators
 
