@@ -61,7 +61,7 @@ public class NarrowEscalatorBlock extends AbstractWalkwayBlock {
     @Override public boolean hasWalkwayShaft(BlockState state) { return false; }
 
     @Override
-    public BlockState transformFromMerge(Level level, BlockState state, BlockPos pos, boolean left, boolean shaft, boolean remove) {
+    public BlockState transformFromMerge(Level level, BlockState state, BlockPos pos, boolean left, boolean shaft, boolean remove, boolean replace) {
         if (remove)
             return state;
         return this.getWalkwaySet().getWideSideBlock(level, state, pos)

@@ -108,7 +108,7 @@ public abstract class AbstractWalkwayBlock extends HorizontalKineticBlock implem
                     || !sideWalkway.connectedToWalkwayOnSide(level, sideState, sidePos, dir.getOpposite()))
                 continue;
             boolean sideShaft = sideWalkway.hasWalkwayShaft(sideState);
-            BlockState transformState = sideWalkway.transformFromMerge(level, sideState, sidePos, dir != left, sideShaft, true);
+            BlockState transformState = sideWalkway.transformFromMerge(level, sideState, sidePos, dir != left, sideShaft, true, false);
 
             DyeColor color = null;
             float visualProgress = 0;

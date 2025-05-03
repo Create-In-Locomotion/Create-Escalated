@@ -70,7 +70,7 @@ public class WalkwayConnectorItem extends BlockItem {
         CompoundTag tag = context.getItemInHand().getOrCreateTag();
         BlockPos firstTerminal = null;
 
-        // Remove first if no longer existant or valid
+        // Remove first if no longer existent or valid
         if (tag.contains("FirstTerminal")) {
             firstTerminal = NbtUtils.readBlockPos(tag.getCompound("FirstTerminal"));
             if (!validateAxis(level, firstTerminal) || !firstTerminal.closerThan(pos, maxWalkwayLength() * 2)) {
@@ -213,6 +213,8 @@ public class WalkwayConnectorItem extends BlockItem {
             return false;
         if (escalator && Math.abs(x) != Math.abs(y) + 3 && Math.abs(z) != Math.abs(y) + 3) // Escalator checking
             return false;
+        if (!escalator && (Math.abs(x) == 1 || Math.abs(z) == 1)) // Short walkway checking
+            return false;
 
         if (!ShaftBlock.isShaft(firstState) || !ShaftBlock.isShaft(secondState) || shaftAxis != secondState.getValue(BlockStateProperties.AXIS))
             return false;
@@ -312,12 +314,12 @@ public class WalkwayConnectorItem extends BlockItem {
 
                 Direction walkwayFacing = walkwaySrc.getFacing(srcState);
                 boolean left = walkwayFacing.getCounterClockWise() == face;
-                if (i == 0)
+                if (i == 0 || i == sz - 1)
                     left = !left;
                 boolean srcShaft = walkwaySrc.hasWalkwayShaft(srcState);
                 // Place blocks
-                BlockState replaceSrcState = walkwaySrc.transformFromMerge(level, srcState, srcPos, left, srcShaft, false);
-                BlockState placeState = walkwaySrc.transformFromMerge(level, srcState, srcPos, !left, isShaft, false);
+                BlockState replaceSrcState = walkwaySrc.transformFromMerge(level, srcState, srcPos, left, srcShaft, false, true);
+                BlockState placeState = walkwaySrc.transformFromMerge(level, srcState, srcPos, !left, isShaft, false, false);
                 KineticBlockEntity.switchToBlockState(level, srcPos, replaceSrcState);
                 KineticBlockEntity.switchToBlockState(level, destPos, placeState);
 

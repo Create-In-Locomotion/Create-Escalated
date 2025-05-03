@@ -72,8 +72,24 @@ public class WalkwayTerminalBlock extends AbstractWalkwayBlock {
     }
 
     @Override
-    public BlockState transformFromMerge(Level level, BlockState state, BlockPos pos, boolean left, boolean shaft, boolean remove) {
-        return state;
+    public BlockState transformFromMerge(Level level, BlockState state, BlockPos pos, boolean left, boolean shaft, boolean remove, boolean replace) {
+        if (remove)
+            return state;
+        WalkwayCaps caps = state.getValue(CAPS_SHAFT);
+        if (replace) {
+            if (left && caps.hasRightCap()) {
+                caps = caps.toggleRight();
+            } else if (!left && caps.hasLeftCap()) {
+                caps = caps.toggleLeft();
+            }
+        } else {
+            if (left && caps.hasRightCap()) {
+                caps = caps.toggleRight();
+            } else if (!left && caps.hasLeftCap()) {
+                caps = caps.toggleLeft();
+            }
+        }
+        return state.setValue(CAPS_SHAFT, caps);
     }
 
     @Override
