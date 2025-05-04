@@ -1,14 +1,10 @@
-name: Nightly Build
+name: Pull Request
 
 on:
-    workflow_dispatch:
-    push:
-        branches:
-            - "**"
+    pull_request:
 
 permissions:
     contents: read
-    packages: write
 
 jobs:
     build:
@@ -45,20 +41,10 @@ jobs:
             -   name: Set up Gradle
                 uses: gradle/actions/setup-gradle@v3
                 with:
-                    gradle-home-cache-includes: |
-                        caches
-                        loom-cache
+                    cache-read-only: true
 
             -   name: Build jar
                 run: ./gradlew buildAndCollect
-
-            -   name: Publish to Maven Repository
-                env:
-                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                    MAVEN_USER: ${{ secrets.MAVEN_USER }}
-                    MAVEN_ACCESS_TOKEN: ${{ secrets.MAVEN_ACCESS_TOKEN }}
-                if: env.MAVEN_USER != '' && env.MAVEN_ACCESS_TOKEN != '' && env.GITHUB_TOKEN != ''
-                run: ./gradlew publish -PrealRobotixMavenUsername=${{ secrets.MAVEN_USER }} -PrealRobotixMavenPassword=${{ secrets.MAVEN_ACCESS_TOKEN }}
 
             -   name: Find jars
                 id: find_jars
@@ -67,24 +53,6 @@ jobs:
                     echo "jars<<$EOF" >> $GITHUB_OUTPUT
                     find ./build/libs/ -type f -name "*.jar" ! -name "*-sources.jar" >> $GITHUB_OUTPUT
                     echo "$EOF" >> $GITHUB_OUTPUT
-
-            -   name: Send building message to discord
-                env:
-                    DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-                if: env.DISCORD_WEBHOOK != '' && github.event_name == 'push'
-                uses: realRobotix/action-discord-notifier@master
-                with:
-                    webhook: ${{ secrets.DISCORD_WEBHOOK }}
-                    message-title: Building mod from branch ${{ steps.get_branch.outputs.branch }}
-
-            -   name: Send built file to discord
-                env:
-                    DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-                if: env.DISCORD_WEBHOOK != ''
-                run: |
-                    while IFS= read -r f
-                      do curl -F "file=@\"$f\";filename=\"$(echo ${f##*/} | sed 's/+/-/g')\"" $DISCORD_WEBHOOK
-                    done <<< "${{ steps.find_jars.outputs.jars }}"
 
             -   name: Archive Artifacts
                 uses: actions/upload-artifact@v4

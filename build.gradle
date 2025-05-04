@@ -9,6 +9,34 @@ architectury {
 
 subprojects {
     apply plugin: "dev.architectury.loom"
+    apply plugin: "maven-publish"
+
+    publishing {
+        repositories {
+            maven {
+                name = "GitHubPackages"
+                url = uri("https://maven.pkg.github.com/create-in-locomotion/create-escalated")
+                credentials {
+                    username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_ACTOR")
+                    password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
+                }
+            }
+            maven {
+                name = "realRobotixMaven"
+                url = uri("https://maven.realrobotix.me/escalated")
+                credentials(PasswordCredentials)
+            }
+            mavenLocal()
+        }
+        publications {
+            mavenJava(MavenPublication) {
+                artifact remapJar
+                artifact remapSourcesJar
+                group = maven_group
+                artifactId = property('mod.id')
+            }
+        }
+    }
 
     loom {
         silentMojangMappingsLicense()
@@ -29,6 +57,13 @@ subprojects {
 
         // see each subproject for more dependencies.
     }
+
+    tasks.register("buildAndCollect", Copy) {
+        group = "build"
+        from tasks.remapJar.archiveFile, tasks.remapSourcesJar.archiveFile
+        into rootProject.layout.buildDirectory.file("libs/${rootProject.property('mod.version')}/${project.name}")
+        dependsOn "build"
+    }
 }
 
 allprojects {
@@ -36,13 +71,16 @@ allprojects {
     apply plugin: "architectury-plugin"
     apply plugin: "maven-publish"
 
-    base.archivesName = archives_base_name
+    base.archivesName = property('mod.id')
     group = maven_group
 
     // Formats the mod version to include the loader, Minecraft version, and build number (if present)
     // example: 1.0.0+fabric-1.18.2-build.100
-    String buildNumber = System.getenv("GITHUB_RUN_NUMBER")
-    version = "$mod_version+$project.name-$minecraft_version" + (buildNumber != null ? "-build.$buildNumber" : "")
+    def ci = System.getenv("CI")?.toBoolean() ?: false
+    def release = System.getenv("RELEASE")?.toBoolean() ?: false
+    def nightly = ci && !release
+    def buildNumber = System.getenv("GITHUB_RUN_NUMBER") ? System.getenv("GITHUB_RUN_NUMBER").toInteger() : null
+    version = "${property('mod.version')}${!ci ? "" : "-dev"}+mc.${minecraft_version}-${project.name}${nightly ? "-build.${buildNumber}" : ""}"
 
     tasks.withType(JavaCompile).configureEach {
         options.encoding = "UTF-8"
