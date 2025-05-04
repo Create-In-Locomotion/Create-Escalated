@@ -5,3 +5,4 @@ TODO rotation propagation being weird somehow
 
 TODO future update: Copycats escalators
 
+TODO: Fix jittering and unable to move on escalator
