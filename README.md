@@ -6,7 +6,7 @@ A mod that adds functional, aesthetic, and rotation-powered escalators to Create
 
 # <span style="color: rgb(224, 62, 45);"><strong>NOTE: This mod was originally developed for Create v0.5.1.j! It does not yet support Create v6, but it will in the future! Please join the Discord server for more information.<br></strong></span>
 
-<iframe title="YouTube video player" src="https://www.youtube.com/embed/OPUgmTPTLYM?si=RYh36ggepZ2P6YRm" width="560" height="315" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="allowfullscreen"></iframe>
+[![Video](https://img.youtube.com/vi/OPUgmTPTLYM/0.jpg)](https://www.youtube.com/watch?v=OPUgmTPTLYM)
 
 This mod adds a few things:
 
