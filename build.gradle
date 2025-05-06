@@ -80,7 +80,7 @@ allprojects {
     def release = System.getenv("RELEASE")?.toBoolean() ?: false
     def nightly = ci && !release
     def buildNumber = System.getenv("GITHUB_RUN_NUMBER") ? System.getenv("GITHUB_RUN_NUMBER").toInteger() : null
-    version = "${property('mod.version')}${!ci ? "" : "-dev"}+mc.${minecraft_version}-${project.name}${nightly ? "-build.${buildNumber}" : ""}"
+    version = "${property('mod.version')}+mc.${minecraft_version}-${project.name}${nightly ? "-build.${buildNumber}" : ""}${!ci ? "-dev" : ""}"
 
     tasks.withType(JavaCompile).configureEach {
         options.encoding = "UTF-8"
