@@ -8,7 +8,11 @@ modId = "escalated"
 version = "${version}"
 displayName = "Create: Escalated"
 authors = "rbasmoyai"
-description = "Bringing you to higher places in your Create mod builds"
+description = """Bringing you to higher places in your Create mod builds
+Attributions:
+Logo by LopyLuna
+Textures and models by rbasamoyai
+"""
 logoFile = "icon.png"
 
 [[dependencies.escalated]]
