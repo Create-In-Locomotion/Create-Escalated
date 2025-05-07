@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.0.0] - Unreleased
+## [1.0.0] - 2025-05-07
 
 > _There's a lady who's sure all that glitters is gold_ \
 > _And she's buying a stairway to Heaven_
