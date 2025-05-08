@@ -15,7 +15,7 @@
   "block.escalated.metal_narrow_escalator": "Металлический эскалатор",
   "block.escalated.metal_narrow_walkway": "Металлический траволатор",
   "block.escalated.metal_walkway_handrail": "Металлический поручень",
-  "block.escalated.metal_walkway_terminal": "Терминал металлического траволатора",
+  "block.escalated.metal_walkway_terminal": "Входная площадка металлического траволатора",
   "block.escalated.metal_wide_escalator_center": "Металлический эскалатор",
   "block.escalated.metal_wide_escalator_side": "Металлический эскалатор",
   "block.escalated.metal_wide_walkway_center": "Металлический траволатор",
@@ -24,7 +24,7 @@
   "block.escalated.wooden_narrow_escalator": "Деревянный эксалатор",
   "block.escalated.wooden_narrow_walkway": "Деревянный траволатор",
   "block.escalated.wooden_walkway_handrail": "Деревянный поручень",
-  "block.escalated.wooden_walkway_terminal": "Терминал деревянного траволатора",
+  "block.escalated.wooden_walkway_terminal": "Входная площадка деревянного траволатора",
   "block.escalated.wooden_wide_escalator_center": "Деревянный эскалатор",
   "block.escalated.wooden_wide_escalator_side": "Деревянный эскалатор",
   "block.escalated.wooden_wide_walkway_center": "Деревянный траволатор",
@@ -57,7 +57,7 @@
   "escalated.ponder.walkways/widening_walkways.text_1": "Walkways can be widened by connecting a walkway with an adjacent shaft.",
   "escalated.ponder.walkways/widening_walkways.text_2": "The widening also widens handrails on top.",
   "escalated.ponder.walkways/widening_walkways.text_3": "However, if the handrail is obstructed by something, the handrail will break.",
-  "item.escalated.metal_walkway_steps": "Metal Walkway Steps",
-  "item.escalated.wooden_walkway_steps": "Wooden Walkway Steps",
+  "item.escalated.metal_walkway_steps": "Металлические траволаторные ступеньки",
+  "item.escalated.wooden_walkway_steps": "Деревянные траволаторные ступеньки",
   "itemGroup.escalated": "Create: Escalated"
 }
