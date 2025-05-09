@@ -1,6 +1,13 @@
 # Changelog
 
-## [1.0.0] - Unreleased
+## [1.0.1] - Unreleased
+
+Hotfix for Create: Escalated to fix some issues.
+
+### Fixed:
+- Fixed invalid breaking of escalator when right-clicked with Wrench
+
+## [1.0.0] - 2025-05-07
 
 > _There's a lady who's sure all that glitters is gold_ \
 > _And she's buying a stairway to Heaven_
