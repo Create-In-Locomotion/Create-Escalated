@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.1] - Unreleased
+
+Hotfix for Create: Escalated to fix some issues.
+
+### Fixed:
+
 ## [1.0.0] - 2025-05-07
 
 > _There's a lady who's sure all that glitters is gold_ \

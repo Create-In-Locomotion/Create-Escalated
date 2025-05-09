@@ -1,5 +1,7 @@
 Post-release:
 
+bug: Fixed invalid breaking of escalator when right-clicked with Wrench
+
 [bug: Fixed ghost propagation]
 TODO rotation propagation being weird somehow
 
