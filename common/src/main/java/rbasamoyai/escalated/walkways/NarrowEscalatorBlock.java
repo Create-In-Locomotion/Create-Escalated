@@ -3,6 +3,8 @@ package rbasamoyai.escalated.walkways;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -76,5 +78,10 @@ public class NarrowEscalatorBlock extends AbstractWalkwayBlock {
     }
 
     @Override public boolean isEscalator(Level level, BlockState state, BlockPos pos) { return true; }
+
+    @Override
+    public InteractionResult onWrenched(BlockState state, UseOnContext context) {
+        return InteractionResult.PASS;
+    }
 
 }

@@ -5,6 +5,7 @@
 Hotfix for Create: Escalated to fix some issues.
 
 ### Fixed:
+- Fixed invalid breaking of escalator when right-clicked with Wrench
 
 ## [1.0.0] - 2025-05-07
 
