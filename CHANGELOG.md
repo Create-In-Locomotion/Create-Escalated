@@ -1,6 +1,12 @@
 # Changelog
 
-## [1.0.1] - Unreleased
+## [1.0.2] - Unreleased
+
+### Added:
+
+### Fixed:
+
+## [1.0.1] - 2025-05-09
 
 Hotfix for Create: Escalated to fix some issues.
 
