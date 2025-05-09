@@ -1,6 +1,7 @@
 package rbasamoyai.escalated.walkways;
 
 import com.simibubi.create.AllBlocks;
+import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import net.minecraft.core.BlockPos;
@@ -75,7 +76,7 @@ public class WideWalkwayCenterBlock extends AbstractWalkwayBlock {
             if (player != null && !player.isCreative())
                 player.getInventory().placeItemBackInInventory(AllBlocks.SHAFT.asStack());
             KineticBlockEntity.switchToBlockState(level, pos, state.setValue(SHAFT, false));
-            this.playRemoveSound(level, pos);
+            AllSoundEvents.WRENCH_REMOVE.playOnServer(level, pos, 1, level.random.nextFloat() * .5f + .5f);
             return InteractionResult.SUCCESS;
         }
 

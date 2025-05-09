@@ -100,7 +100,7 @@ public class HandrailBlockEntity extends SmartBlockEntity {
         this.handrailColor = tag.contains("Dye", Tag.TAG_STRING) ? NBTHelper.readEnum(tag, "Dye", DyeColor.class) : null;
 
         if (clientPacket)
-            EnvExecute.executeOnClient(() -> () -> InstancedRenderDispatcher.enqueueUpdate(this));
+            EnvExecute.executeOnClient(() -> () -> requestModelDataUpdate());
     }
 
     @Override

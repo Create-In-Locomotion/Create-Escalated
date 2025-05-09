@@ -56,5 +56,4 @@ public class EscalatedConfigs {
                     .getSpec())
                 config.onReload();
     }
-
 }

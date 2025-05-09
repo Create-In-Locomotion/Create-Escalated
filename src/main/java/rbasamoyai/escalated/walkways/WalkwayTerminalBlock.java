@@ -1,5 +1,6 @@
 package rbasamoyai.escalated.walkways;
 
+import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import net.minecraft.core.BlockPos;
@@ -64,7 +65,7 @@ public class WalkwayTerminalBlock extends AbstractWalkwayBlock {
 
         BlockState setState = level.getBlockState(context.getClickedPos());
         if (setState != state) {
-            this.playRotateSound(level, context.getClickedPos());
+            AllSoundEvents.WRENCH_REMOVE.playOnServer(level, context.getClickedPos(), 1, level.random.nextFloat() * .5f + .5f);
             return InteractionResult.SUCCESS;
         } else {
             return InteractionResult.PASS;

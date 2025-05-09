@@ -1,16 +1,16 @@
 package rbasamoyai.escalated.walkways;
 
-import com.jozufozu.flywheel.backend.Backend;
-import com.jozufozu.flywheel.core.PartialModel;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.content.kinetics.base.KineticBlock;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
-import com.simibubi.create.foundation.render.CachedBufferer;
-import com.simibubi.create.foundation.render.SuperByteBuffer;
-import com.simibubi.create.foundation.utility.AnimationTickHolder;
+import dev.engine_room.flywheel.api.visualization.VisualizationManager;
+import dev.engine_room.flywheel.lib.model.baked.PartialModel;
+import net.createmod.catnip.animation.AnimationTickHolder;
+import net.createmod.catnip.render.CachedBuffers;
+import net.createmod.catnip.render.SuperByteBuffer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -32,8 +32,7 @@ public class WalkwayRenderer extends KineticBlockEntityRenderer<WalkwayBlockEnti
 
     @Override
     protected void renderSafe(WalkwayBlockEntity be, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay) {
-        if (Backend.canUseInstancing(be.getLevel()))
-            return;
+        if (VisualizationManager.supportsVisualization(be.getLevel())) return;
         BlockState state = this.getRenderedBlockState(be);
         KineticBlock kinetic = (KineticBlock) state.getBlock();
         WalkwayBlock walkway = (WalkwayBlock) state.getBlock();
@@ -47,7 +46,7 @@ public class WalkwayRenderer extends KineticBlockEntityRenderer<WalkwayBlockEnti
             VertexConsumer cons = buffer.getBuffer(type);
             if (kinetic.hasShaftTowards(level, pos, state, Direction.DOWN))
                 kineticRotationTransform(this.getHalfShaftRotatedModel(be, state, Direction.DOWN), be, Direction.Axis.Y,
-                        getAngleForTe(be, be.getBlockPos(), Direction.Axis.Y), light).renderInto(ms, cons);
+                        getAngleForBe(be, be.getBlockPos(), Direction.Axis.Y), light).renderInto(ms, cons);
 
             Direction left = Direction.fromAxisAndDirection(kinetic.getRotationAxis(state), Direction.AxisDirection.POSITIVE);
             Direction right = left.getOpposite();
@@ -62,7 +61,7 @@ public class WalkwayRenderer extends KineticBlockEntityRenderer<WalkwayBlockEnti
             Direction stepFacing = isTerminal && isController ? facing.getOpposite() : facing;
 
             PartialModel stepModel = this.getStepModel(be);
-            SuperByteBuffer buf = CachedBufferer.partialFacing(stepModel, state, stepFacing);
+            SuperByteBuffer buf = CachedBuffers.partialFacing(stepModel, state, stepFacing);
             if (!isTerminal || flag) { // Render back step
                 buf
                         .light(light)
@@ -79,7 +78,7 @@ public class WalkwayRenderer extends KineticBlockEntityRenderer<WalkwayBlockEnti
     }
 
     protected SuperByteBuffer getHalfShaftRotatedModel(KineticBlockEntity be, BlockState state, Direction dir) {
-        return CachedBufferer.partialFacing(AllPartialModels.SHAFT_HALF, state, dir);
+        return CachedBuffers.partialFacing(AllPartialModels.SHAFT_HALF, state, dir);
     }
 
     /**
