@@ -1,13 +1,13 @@
 package rbasamoyai.escalated.handrails;
 
-import com.jozufozu.flywheel.backend.Backend;
-import com.jozufozu.flywheel.core.PartialModel;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.simibubi.create.foundation.block.render.SpriteShiftEntry;
 import com.simibubi.create.foundation.blockEntity.renderer.SafeBlockEntityRenderer;
-import com.simibubi.create.foundation.render.CachedBufferer;
-import com.simibubi.create.foundation.render.SuperByteBuffer;
+import dev.engine_room.flywheel.api.visualization.VisualizationManager;
+import dev.engine_room.flywheel.lib.model.baked.PartialModel;
+import net.createmod.catnip.render.CachedBuffers;
+import net.createmod.catnip.render.SpriteShiftEntry;
+import net.createmod.catnip.render.SuperByteBuffer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -26,8 +26,7 @@ public class HandrailRenderer extends SafeBlockEntityRenderer<HandrailBlockEntit
 
     @Override
     protected void renderSafe(HandrailBlockEntity be, float partialTicks, PoseStack ms, MultiBufferSource bufferSource, int light, int overlay) {
-        if (Backend.canUseInstancing(be.getLevel()))
-            return;
+        if (VisualizationManager.supportsVisualization(be.getLevel())) return;
         BlockState state = be.getBlockState();
         if (!(state.getBlock() instanceof AbstractHandrailBlock handrailBlock))
             return;
@@ -40,7 +39,7 @@ public class HandrailRenderer extends SafeBlockEntityRenderer<HandrailBlockEntit
         DyeColor handrailColor = be.getHandrailColor();
 
         PartialModel model = getHandrailModel(slope, end);
-        SuperByteBuffer buf = CachedBufferer.partialFacing(model, state, facing.getOpposite());
+        SuperByteBuffer buf = CachedBuffers.partialFacing(model, state, facing.getOpposite());
         SpriteShiftEntry spriteShift = getSpriteShift(handrailColor);
 
         float scroll = getScrollOffset(be, partialTicks, facing, spriteShift.getTarget().getV0(), spriteShift.getTarget().getV1());

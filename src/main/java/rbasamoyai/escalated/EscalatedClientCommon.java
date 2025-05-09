@@ -1,5 +1,6 @@
 package rbasamoyai.escalated;
 
+import net.createmod.ponder.foundation.PonderIndex;
 import net.minecraft.client.Minecraft;
 import rbasamoyai.escalated.index.*;
 import rbasamoyai.escalated.walkways.WalkwayConnectorHandler;
@@ -11,8 +12,7 @@ public class EscalatedClientCommon {
         EscalatedInstanceFormats.init();
         EscalatedSpriteShiftEntries.init();
         EscalatedBlockPartials.resolveDeferredModels();
-        EscalatedPonderIndex.register();
-        EscalatedPonderIndex.registerTags();
+        PonderIndex.addPlugin(new EscalatedPonderPlugin());
     }
 
     public static void onClientGameTick(Minecraft minecraft) {

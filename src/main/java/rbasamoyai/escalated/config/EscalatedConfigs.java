@@ -1,12 +1,9 @@
 package rbasamoyai.escalated.config;
 
-import com.simibubi.create.foundation.config.ConfigBase;
-import com.simibubi.create.foundation.config.ui.BaseConfigScreen;
-import net.minecraft.client.gui.screens.Screen;
+import net.createmod.catnip.config.ConfigBase;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.config.ModConfig;
 import org.apache.commons.lang3.tuple.Pair;
-import rbasamoyai.escalated.CreateEscalated;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -58,14 +55,6 @@ public class EscalatedConfigs {
             if (config.specification == modConfig
                     .getSpec())
                 config.onReload();
-    }
-
-    public static BaseConfigScreen createConfigScreen(Screen parent) {
-        BaseConfigScreen.setDefaultActionFor(CreateEscalated.MOD_ID, (base) ->
-                base.withSpecs(null, null, SERVER.specification) // not including common since there's nothing there
-                        .withTitles("", "", "Server Settings")
-        );
-        return new BaseConfigScreen(parent, CreateEscalated.MOD_ID);
     }
 
 }

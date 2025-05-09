@@ -1,6 +1,6 @@
 package rbasamoyai.escalated.index;
 
-import com.jozufozu.flywheel.core.PartialModel;
+import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import net.minecraft.world.item.DyeColor;
 import rbasamoyai.escalated.CreateEscalated;
 
@@ -65,13 +65,13 @@ public class EscalatedBlockPartials {
     private static PartialModel escalatorSteps(String material) { return escalatorSteps(material, ""); }
 
     private static PartialModel escalatorSteps(String material, String suffix) {
-        return new PartialModel(CreateEscalated.resource("block/" + material + "_escalator_step" + suffix));
+        return PartialModel.of(CreateEscalated.resource("block/" + material + "_escalator_step" + suffix));
     }
 
     private static PartialModel walkwaySteps(String material) { return walkwaySteps(material, ""); }
 
     private static PartialModel walkwaySteps(String material, String suffix) {
-        return new PartialModel(CreateEscalated.resource("block/" + material + "_walkway_step" + suffix));
+        return PartialModel.of(CreateEscalated.resource("block/" + material + "_walkway_step" + suffix));
     }
 
     private static Map<DyeColor, PartialModel> dyedEscalatorSteps(String material) {
@@ -103,7 +103,7 @@ public class EscalatedBlockPartials {
     }
 
     private static PartialModel handrail(String type) {
-        return new PartialModel(CreateEscalated.resource("block/moving_handrail/" + type));
+        return PartialModel.of(CreateEscalated.resource("block/moving_handrail/" + type));
     }
 
     public static void init() {}
