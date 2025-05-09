@@ -3,7 +3,7 @@
   "id": "escalated",
   "version": "${version}",
   "name": "Create: Escalated",
-  "description": "Bringing you to higher places in your Create mod builds",
+  "description": "Bringing you to higher places in your Create mod builds\n\nAttributions:\nLogo by LopyLuna\nTextures and models by rbasamoyai",
   "authors": [
     "rbasamoyai"
   ],

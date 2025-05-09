@@ -80,13 +80,22 @@ public class WalkwayBlockEntity extends KineticBlockEntity {
         if (this.passengers == null)
             this.passengers = new HashMap<>();
 
-        boolean beltFlag = walkway.getWalkwaySlope(state) != WalkwaySlope.HORIZONTAL;
         for (Iterator<Map.Entry<Entity, TransportedEntityInfo>> iter = this.passengers.entrySet().iterator(); iter.hasNext(); ) {
             Map.Entry<Entity, TransportedEntityInfo> entry = iter.next();
             Entity entity = entry.getKey();
             TransportedEntityInfo info = entry.getValue();
             boolean canBeTransported = WalkwayMovementHandler.canBeTransported(entity);
-            boolean leftTheBelt = info.getTicksSinceLastCollision() > (beltFlag ? 3 : 1);
+            boolean leftTheBelt = info.getTicksSinceLastCollision() > 3;
+            BlockPos lastCollidedPos = info.lastCollidedPos;
+            BlockState lastCollidedState = info.lastCollidedState;
+            WalkwaySlope slope = lastCollidedState.getBlock() instanceof WalkwayBlock other ? other.getWalkwaySlope(lastCollidedState) : WalkwaySlope.TERMINAL;
+            if (leftTheBelt && slope != WalkwaySlope.TERMINAL && slope != WalkwaySlope.HORIZONTAL) {
+                if (this.level.getBlockEntity(lastCollidedPos) instanceof WalkwayBlockEntity
+                    && entity.getBoundingBox().intersects(new AABB(lastCollidedPos).inflate(0, 0.5, 0))) {
+                    info.refresh(lastCollidedPos, info.lastCollidedState);
+                    leftTheBelt = false;
+                }
+            }
             if (!canBeTransported || leftTheBelt) {
                 if (entity instanceof Player player && !this.level.isClientSide)
                     WalkwayTravelTracker.stopTrackingPlayerOnWalkway(player);
