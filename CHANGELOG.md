@@ -3,6 +3,7 @@
 ## [1.0.2] - Unreleased
 
 ### Added:
+- Added ru_ru.json translation courtesy of VladisCrafter and mpustovoi
 
 ### Fixed:
 
