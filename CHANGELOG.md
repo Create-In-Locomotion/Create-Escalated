@@ -1,6 +1,14 @@
 # Changelog
 
-## [1.0.1] - Unreleased
+## [1.0.2] - Unreleased
+
+### Added:
+- Added ru_ru.json translation courtesy of VladisCrafter and mpustovoi
+- Added ja_jp.json translation courtesy of twister716
+
+### Fixed:
+
+## [1.0.1] - 2025-05-09
 
 Hotfix for Create: Escalated to fix some issues.
 
