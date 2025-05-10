@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "escalated:metal_walkway_handrail",
+    "escalated:metal_escalator_handrail",
+    "escalated:wooden_walkway_handrail",
+    "escalated:wooden_escalator_handrail",
+    "escalated:glass_walkway_handrail",
+    "escalated:glass_escalator_handrail"
+  ]
+}

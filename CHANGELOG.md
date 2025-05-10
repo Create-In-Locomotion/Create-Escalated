@@ -7,6 +7,7 @@
 - Added ja_jp.json translation courtesy of twister716
 
 ### Fixed:
+- Fixed safe nbt for handrails and escalators
 
 ## [1.0.1] - 2025-05-09
 

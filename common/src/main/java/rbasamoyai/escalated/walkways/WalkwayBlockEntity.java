@@ -317,8 +317,6 @@ public class WalkwayBlockEntity extends KineticBlockEntity {
 
     @Override
     protected void read(CompoundTag compound, boolean clientPacket) {
-        int prevWalkwayLength = this.walkwayLength;
-
         super.read(compound, clientPacket);
 
         if (compound.getBoolean("IsController")) {
@@ -335,14 +333,6 @@ public class WalkwayBlockEntity extends KineticBlockEntity {
             if (!this.isController())
                 this.controller = NbtUtils.readBlockPos(compound.getCompound("Controller"));
             this.walkwayLength = compound.getInt("Length");
-            if (prevWalkwayLength != this.walkwayLength) {
-                // TODO relight?
-//                DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
-//                    if (lighter != null) {
-//                        lighter.initializeLight();
-//                    }
-//                });
-            }
         }
 
         if (!clientPacket)
@@ -351,6 +341,13 @@ public class WalkwayBlockEntity extends KineticBlockEntity {
         if (this.isController())
             this.lazyResetClientRender = true;
         this.resetClientRender |= compound.contains("UpdateRendering"); // Don't interrupt existing update render
+    }
+
+    @Override
+    public void writeSafe(CompoundTag tag) {
+        super.writeSafe(tag);
+        if (this.color != null)
+            NBTHelper.writeEnum(tag, "Dye", this.color);
     }
 
 }

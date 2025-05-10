@@ -1,5 +1,6 @@
 package rbasamoyai.escalated.index;
 
+import com.simibubi.create.AllTags.AllBlockTags;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.data.TagGen;
 import com.tterrag.registrate.util.entry.BlockEntry;
@@ -218,6 +219,7 @@ public class EscalatedBlocks {
 					.isRedstoneConductor(EscalatedBlocks::neverConducts))
 			.transform(EscalatedBuilderTransformers.walkwayHandrail("metal"))
 			.transform(TagGen.pickaxeOnly())
+			.tag(AllBlockTags.SAFE_NBT.tag)
 			.register();
 
 	public static final BlockEntry<EscalatorHandrailBlock> METAL_ESCALATOR_HANDRAIL = REGISTRATE
@@ -231,6 +233,7 @@ public class EscalatedBlocks {
 					.isRedstoneConductor(EscalatedBlocks::neverConducts))
 			.transform(EscalatedBuilderTransformers.escalatorHandrail("metal"))
 			.transform(TagGen.pickaxeOnly())
+			.tag(AllBlockTags.SAFE_NBT.tag)
 			.register();
 
 	public static final BlockEntry<WalkwayHandrailBlock> WOODEN_WALKWAY_HANDRAIL = REGISTRATE
@@ -244,6 +247,7 @@ public class EscalatedBlocks {
 					.isRedstoneConductor(EscalatedBlocks::neverConducts))
 			.transform(EscalatedBuilderTransformers.walkwayHandrail("wooden"))
 			.transform(TagGen.axeOrPickaxe())
+			.tag(AllBlockTags.SAFE_NBT.tag)
 			.register();
 
 	public static final BlockEntry<EscalatorHandrailBlock> WOODEN_ESCALATOR_HANDRAIL = REGISTRATE
@@ -257,6 +261,7 @@ public class EscalatedBlocks {
 					.isRedstoneConductor(EscalatedBlocks::neverConducts))
 			.transform(EscalatedBuilderTransformers.escalatorHandrail("wooden"))
 			.transform(TagGen.axeOrPickaxe())
+			.tag(AllBlockTags.SAFE_NBT.tag)
 			.register();
 
 	public static final BlockEntry<WalkwayHandrailBlock> GLASS_WALKWAY_HANDRAIL = REGISTRATE
@@ -269,6 +274,7 @@ public class EscalatedBlocks {
 					.mapColor(MapColor.NONE)
 					.isRedstoneConductor(EscalatedBlocks::neverConducts))
 			.transform(EscalatedBuilderTransformers.walkwayHandrail("glass"))
+			.tag(AllBlockTags.SAFE_NBT.tag)
 			.register();
 
 	public static final BlockEntry<EscalatorHandrailBlock> GLASS_ESCALATOR_HANDRAIL = REGISTRATE
@@ -281,6 +287,7 @@ public class EscalatedBlocks {
 					.mapColor(MapColor.NONE)
 					.isRedstoneConductor(EscalatedBlocks::neverConducts))
 			.transform(EscalatedBuilderTransformers.escalatorHandrail("glass"))
+			.tag(AllBlockTags.SAFE_NBT.tag)
 			.register();
 
 	public static void register() {}
