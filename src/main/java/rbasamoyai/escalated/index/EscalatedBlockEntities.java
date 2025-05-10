@@ -5,7 +5,7 @@ import rbasamoyai.escalated.handrails.HandrailBlockEntity;
 import rbasamoyai.escalated.handrails.HandrailInstance;
 import rbasamoyai.escalated.handrails.HandrailRenderer;
 import rbasamoyai.escalated.walkways.WalkwayBlockEntity;
-import rbasamoyai.escalated.walkways.WalkwayInstance;
+import rbasamoyai.escalated.walkways.WalkwayVisual;
 import rbasamoyai.escalated.walkways.WalkwayRenderer;
 
 import static rbasamoyai.escalated.CreateEscalated.REGISTRATE;
@@ -14,7 +14,7 @@ public class EscalatedBlockEntities {
 
     public static final BlockEntityEntry<WalkwayBlockEntity> WALKWAY = REGISTRATE
             .blockEntity("walkway", WalkwayBlockEntity::new)
-            .instance(() -> WalkwayInstance::new)
+            .instance(() -> WalkwayVisual::new)
             .renderer(() -> WalkwayRenderer::new)
             .validBlocks(EscalatedBlocks.METAL_WALKWAY_TERMINAL, EscalatedBlocks.METAL_NARROW_WALKWAY,
                     EscalatedBlocks.METAL_WIDE_WALKWAY_SIDE, EscalatedBlocks.METAL_WIDE_WALKWAY_CENTER,
