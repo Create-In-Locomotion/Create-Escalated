@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.0.3] - Unreleased
+## [1.0.3] - 2025-05-12
 
 Hotfix for Create: Escalated for the v1.0.2 Create v6 release.
 
