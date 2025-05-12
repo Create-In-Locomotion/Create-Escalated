@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.0.2] - Unreleased
+## [1.0.2] - 2025-05-12
 
 ### Added:
 - Added ru_ru.json translation courtesy of VladisCrafter and mpustovoi
