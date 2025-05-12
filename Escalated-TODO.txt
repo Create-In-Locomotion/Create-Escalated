@@ -1,7 +1,5 @@
 Post-release:
 
-improvement: Improved performance
-
 [bug: Fixed ghost propagation]
 TODO rotation propagation being weird somehow
 

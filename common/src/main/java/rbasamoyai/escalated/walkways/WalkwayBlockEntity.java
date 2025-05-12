@@ -56,7 +56,7 @@ public class WalkwayBlockEntity extends KineticBlockEntity {
 
         super.tick();
 
-        if (!(this.level.getBlockState(this.worldPosition).getBlock() instanceof WalkwayBlock walkway))
+        if (!(this.level.getBlockState(this.worldPosition).getBlock() instanceof WalkwayBlock))
             return;
 
         if (!this.isController())
