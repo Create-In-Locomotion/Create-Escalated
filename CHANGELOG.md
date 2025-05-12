@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.3] - Unreleased
+
+Hotfix for Create: Escalated for the v1.0.2 Create v6 release.
+
+### Fixed:
+- Fixed broken handrail orientation
+
 ## [1.0.2] - 2025-05-12
 
 ### Added:

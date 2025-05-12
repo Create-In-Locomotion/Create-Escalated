@@ -1,6 +1,5 @@
 package rbasamoyai.escalated.handrails;
 
-import com.mojang.math.Axis;
 import dev.engine_room.flywheel.api.instance.Instance;
 import dev.engine_room.flywheel.api.instance.Instancer;
 import dev.engine_room.flywheel.api.visual.DynamicVisual;
@@ -57,7 +56,7 @@ public class HandrailVisual extends AbstractBlockEntityVisual<HandrailBlockEntit
         WalkwaySlope slope = handrail.getHandrailSlope(this.blockState);
         boolean end = handrail.isEndHandrail(this.blockState);
         return this.instancerProvider().instancer(EscalatedInstanceTypes.HANDRAIL,
-                Models.partial(HandrailRenderer.getHandrailModel(slope, end), this.facing));
+                Models.partial(HandrailRenderer.getHandrailModel(slope, end), this.facing.getOpposite()));
     }
 
     private Instancer<HandrailInstance> getEmptyHandrailInstancer() {
@@ -81,7 +80,6 @@ public class HandrailVisual extends AbstractBlockEntityVisual<HandrailBlockEntit
         Direction offset = left ? this.facing.getCounterClockWise() : this.facing.getClockWise();
         data.setScrollTexture(spriteShift)
                 .setScrollOffset(0)
-                .rotate(Axis.YN.rotationDegrees(this.facing.getOpposite().toYRot()))
                 .position(this.getVisualPosition())
                 .translatePosition(offset.getStepX() * 7 / 16f, 0, offset.getStepZ() * 7 / 16f);
         return data;
