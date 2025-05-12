@@ -24,6 +24,8 @@ public class WalkwayTravelTracker {
             }
             if (info.onWalkway) {
                 info.lastY = player.getBlockY();
+                if (info.lastY < info.startY)
+                    info.startY = info.lastY;
                 if (info.lastY - info.startY >= 100) {
                     EscalatedTriggers.ESCALATOR_100.tryAwardingTo(player);
                     if (player.level().dimension() == Level.NETHER)

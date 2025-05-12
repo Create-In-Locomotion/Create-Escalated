@@ -9,6 +9,7 @@
 ### Fixed:
 - Fixed safe nbt for handrails and escalators
 - Fixed jittering, slipping, and inability to move on ascending escalator
+- Improved detection for [Stairway To Heaven] advancement when starting from descent
 
 ## [1.0.1] - 2025-05-09
 
