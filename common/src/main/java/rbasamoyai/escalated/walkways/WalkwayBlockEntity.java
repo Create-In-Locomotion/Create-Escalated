@@ -62,8 +62,6 @@ public class WalkwayBlockEntity extends KineticBlockEntity {
         if (!this.isController())
             return;
 
-        BlockState state = this.getBlockState();
-
         if (this.updateCount <= 0) {
             this.visualProgress += this.getWalkwayMovementSpeed();
             if (Math.abs(this.visualProgress) > 0.5f) // reset offset
@@ -75,6 +73,9 @@ public class WalkwayBlockEntity extends KineticBlockEntity {
 
         if (this.getSpeed() == 0)
             return;
+
+        if (this.level.getGameTime() % 40 == 0)
+            this.sendData();
 
         // Move Entities
         if (this.passengers == null)
@@ -160,11 +161,6 @@ public class WalkwayBlockEntity extends KineticBlockEntity {
             walkwayBE.widthReferencePos = this.widthReferencePos;
             walkwayBE.updateCount = 1;
         }
-    }
-
-    @Override
-    public void remove() {
-        super.remove();
     }
 
     @Override public float calculateStressApplied() { return this.isController() ? super.calculateStressApplied() : 0; }
@@ -338,8 +334,13 @@ public class WalkwayBlockEntity extends KineticBlockEntity {
         if (!clientPacket)
             return;
 
-        if (this.isController())
+        if (this.isController()) {
             this.lazyResetClientRender = true;
+            float speed = this.getWalkwayMovementSpeed();
+            this.visualProgress += speed * 1f;
+            if (Math.abs(this.visualProgress) > 0.5f) // reset offset
+                this.visualProgress = Math.signum(this.visualProgress) * (Math.abs(this.visualProgress) % 0.5f);
+        }
         this.resetClientRender |= compound.contains("UpdateRendering"); // Don't interrupt existing update render
     }
 

@@ -8,6 +8,7 @@
 
 ### Fixed:
 - Fixed safe nbt for handrails and escalators
+- Fixed jittering, slipping, and inability to move on ascending escalator
 
 ## [1.0.1] - 2025-05-09
 

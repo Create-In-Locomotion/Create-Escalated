@@ -1,6 +1,6 @@
 Post-release:
 
-bug: Fixed jittering and unable to move on escalator
+improvement: Improved performance
 
 [bug: Fixed ghost propagation]
 TODO rotation propagation being weird somehow

@@ -145,11 +145,13 @@ public class WalkwayMovementHandler {
         entity.fallDistance = 0;
 
         if (movingUp) {
-            float minVelocity = .13f;
-            float yMovement = (float) (Math.max(Math.abs(movement.y), minVelocity));
-            entity.move(SELF, new Vec3(0, yMovement, 0));
-            entity.move(SELF, new Vec3(0, -yMovement * 2, 0));
-            entity.move(SELF, movement.multiply(1, 0, 1));
+            Vec3 prevPos = entity.position();
+            entity.move(SELF, movement);
+            if (entity.horizontalCollision) {
+                entity.setPos(prevPos); // Restore position and try again, but with adjusted starting condition
+                entity.move(SELF, new Vec3(0, movement.y * 0.1, 0)); // adjusted
+                entity.move(SELF, movement);
+            }
         } else if (movingDown) {
             entity.move(SELF, movement.multiply(1, 0, 1));
             entity.move(SELF, movement.multiply(0, 1, 0));

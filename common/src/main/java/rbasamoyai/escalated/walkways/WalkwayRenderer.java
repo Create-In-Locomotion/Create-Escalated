@@ -100,7 +100,7 @@ public class WalkwayRenderer extends KineticBlockEntityRenderer<WalkwayBlockEnti
         Vector3f offset = new Vector3f(pos.getX(), pos.getY() + 15.5f / 16f, pos.getZ());
 
         float partialTick = be.getSpeed() == 0 ? 0 : AnimationTickHolder.getPartialTicks(be.getLevel());
-        float stepOffset = be.getVisualProgress() + partialTick * be.getWalkwayMovementSpeed();
+        float stepOffset = be.getVisualProgress() + (partialTick - 1) * be.getWalkwayMovementSpeed();
         if (Math.abs(stepOffset) > 0.5f)
             stepOffset = Math.signum(stepOffset) * (Math.abs(stepOffset) - 0.5f);
         if (frontStep)
