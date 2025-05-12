@@ -5,6 +5,7 @@
 ### Added:
 - Added ru_ru.json translation courtesy of VladisCrafter and mpustovoi
 - Added ja_jp.json translation courtesy of twister716
+- Added zh_cn.json translation courtesy of MulatramAwA
 
 ### Fixed:
 - Fixed safe nbt for handrails and escalators
