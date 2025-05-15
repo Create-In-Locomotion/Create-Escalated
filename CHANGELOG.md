@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.4] - Unreleased
+
+Create: Escalated now supports Create v6 on 1.21.1.
+
+### Fixed:
+- Fixed Walkways ponder tag not being registered on Create v6 mod version
+
 ## [1.0.3] - 2025-05-12
 
 Hotfix for Create: Escalated for the v1.0.2 Create v6 release.
