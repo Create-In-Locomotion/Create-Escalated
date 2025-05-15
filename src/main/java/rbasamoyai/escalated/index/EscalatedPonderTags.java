@@ -16,7 +16,8 @@ public class EscalatedPonderTags {
             .item(EscalatedItems.METAL_WALKWAY_STEPS.get(), true, true)
             .title("Walkways and Escalators")
             .description("How to build walkways and escalators to move around efficiently")
-            .addToIndex();
+            .addToIndex()
+            .register();
 
         HELPER.addToTag(EscalatedPonderTags.WALKWAYS)
                 .add(EscalatedItems.METAL_WALKWAY_STEPS)
