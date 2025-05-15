@@ -4,6 +4,9 @@
 
 Create: Escalated now supports Create v6 on 1.21.1.
 
+### Added:
+- Added es_es.json translation courtesy of albertosaurio65
+
 ### Fixed:
 - Fixed Walkways ponder tag not being registered on Create v6 mod version
 
