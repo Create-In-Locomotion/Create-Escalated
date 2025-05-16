@@ -59,5 +59,5 @@
   "escalated.ponder.walkways/widening_walkways.text_3": "Однако они сломаются, если что-то будет мешать",
   "item.escalated.metal_walkway_steps": "Металлические траволаторные ступеньки",
   "item.escalated.wooden_walkway_steps": "Деревянные траволаторные ступеньки",
-  "itemGroup.escalated": "Create: Escalated"
+  "itemGroup.escalated.base": "Create: Escalated"
 }

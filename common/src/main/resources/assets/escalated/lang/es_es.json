@@ -59,5 +59,5 @@
   "escalated.ponder.walkways/widening_walkways.text_3": "Pero si el pasamanos está obstruido, se romperá.",
   "item.escalated.metal_walkway_steps": "Pasos de pasarela de metal",
   "item.escalated.wooden_walkway_steps": "Pasos de pasarela de madera",
-  "itemGroup.escalated": "Create: Escalated"
+  "itemGroup.escalated.base": "Create: Escalated"
 }
