@@ -7,7 +7,7 @@ license = "MIT"
 modId = "escalated"
 version = "${version}"
 displayName = "Create: Escalated"
-authors = "rbasmoyai"
+authors = "rbasamoyai"
 description = """Bringing you to higher places in your Create mod builds
 Attributions:
 Logo by LopyLuna

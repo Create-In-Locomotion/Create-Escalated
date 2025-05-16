@@ -9,6 +9,7 @@ Create: Escalated now supports Create v6 on 1.21.1.
 
 ### Fixed:
 - Fixed Walkways ponder tag not being registered on Create v6 mod version
+- Fixed author name typo on Forge/NeoForge mod details
 
 ## [1.0.3] - 2025-05-12
 
