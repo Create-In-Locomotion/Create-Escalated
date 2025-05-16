@@ -78,7 +78,7 @@ dependencies {
     modImplementation("com.simibubi.create:create-fabric-$minecraft_version:$create_fabric_version")
 
     // Development QOL
-    modLocalRuntime("com.terraformersmc:modmenu:$modmenu_version")
+    modImplementation("com.terraformersmc:modmenu:$modmenu_version")
     modLocalRuntime("curse.maven:spark-361579:$spark_fabric_file")
 
     // Recipe Viewers - Create Fabric supports JEI, REI, and EMI.

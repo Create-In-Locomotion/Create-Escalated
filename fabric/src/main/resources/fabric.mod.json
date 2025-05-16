@@ -23,6 +23,9 @@
     ],
     "fabric-datagen": [
       "rbasamoyai.escalated.fabric.EscalatedDataGeneration"
+    ],
+    "modmenu": [
+      "rbasamoyai.escalated.compat.modmenu.EscalatedModMenuCompat"
     ]
   },
   "mixins": [
