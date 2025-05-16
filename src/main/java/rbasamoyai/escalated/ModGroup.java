@@ -15,7 +15,7 @@ public class ModGroup {
     public static final ResourceKey<CreativeModeTab> MAIN_TAB_KEY = makeKey("base");
 
     public static final Supplier<CreativeModeTab> GROUP = wrapGroup("base", () -> createBuilder()
-            .title(Component.translatable("itemGroup." + CreateEscalated.MOD_ID))
+            .title(Component.translatable("itemGroup." + CreateEscalated.MOD_ID + ".base"))
             .icon(EscalatedItems.METAL_WALKWAY_STEPS::asStack)
             .displayItems((param, output) -> {
                 output.acceptAll(Arrays.asList(
@@ -35,7 +35,7 @@ public class ModGroup {
     }
 
     public static void register() {
-        CreateEscalated.REGISTRATE.addRawLang("itemGroup." + CreateEscalated.MOD_ID, "Create: Escalated");
+        CreateEscalated.REGISTRATE.addRawLang("itemGroup." + CreateEscalated.MOD_ID + ".base", "Create: Escalated");
     }
 
 }
