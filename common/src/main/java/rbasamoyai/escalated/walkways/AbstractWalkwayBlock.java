@@ -26,6 +26,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.BlockHitResult;
+import rbasamoyai.escalated.config.EscalatedConfigs;
 import rbasamoyai.escalated.handrails.AbstractHandrailBlock;
 import rbasamoyai.escalated.handrails.HandrailBlockEntity;
 import rbasamoyai.escalated.index.EscalatedBlockEntities;
@@ -66,7 +67,7 @@ public abstract class AbstractWalkwayBlock extends HorizontalKineticBlock implem
     protected void transportEntity(Level level, BlockPos pos, BlockState state, Entity entity) {
         if (entity instanceof Player player && (player.isShiftKeyDown() || player.getAbilities().flying))
             return;
-        if (DivingBootsItem.isWornBy(entity))
+        if (EscalatedConfigs.SERVER.divingBootsPreventWalkwayMotion.get() && DivingBootsItem.isWornBy(entity))
             return;
         WalkwayBlockEntity walkway = WalkwayHelper.getSegmentBE(level, pos);
         if (walkway == null)

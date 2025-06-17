@@ -4,6 +4,9 @@
 
 Create: Escalated now supports Create v6.0.6 on 1.21.1.
 
+### Added:
+- Added config option for diving boots check (disabled by default)
+
 ## [1.0.4] - 2025-05-16
 
 Create: Escalated now supports Create v6 on 1.21.1.
