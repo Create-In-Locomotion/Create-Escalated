@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.1.0] - Unreleased
+
+Create: Escalated now supports Create v6.0.6 on 1.21.1.
+
 ## [1.0.4] - 2025-05-16
 
 Create: Escalated now supports Create v6 on 1.21.1.
