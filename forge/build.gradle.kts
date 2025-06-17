@@ -18,7 +18,7 @@ val ci = System.getenv("CI")?.toBoolean() ?: false
 val release = System.getenv("RELEASE")?.toBoolean() ?: false
 val nightly = ci && !release
 val buildNumber = System.getenv("GITHUB_RUN_NUMBER")?.toIntOrNull()
-version = "${mod.version}+create.6.0.4-mc.${minecraftVersion}-forge${if (nightly) "-build.${buildNumber}" else ""}${if (ci) "" else "-dev"}"
+version = "${mod.version}+create.6.0.6-mc.${minecraftVersion}-forge${if (nightly) "-build.${buildNumber}" else ""}${if (ci) "" else "-dev"}"
 group = "${mod.group}.$loader"
 base.archivesName.set(mod.id)
 
