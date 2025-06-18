@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.1.1] - Unreleased
+
+### Changed:
+- Updated Russian (ru_ru.json) translation courtesy of VladisCrafter
+
 ## [1.1.0] - 2025-06-17
 
 Create: Escalated now supports Create v6.0.6 on 1.21.1.
