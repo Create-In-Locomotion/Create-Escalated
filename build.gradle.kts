@@ -25,6 +25,7 @@ architectury{
 }
 
 repositories {
+    maven("https://maven.createmod.net/") // Create
 	maven("https://mvn.devos.one/snapshots/") // Create Fabric
 	maven("https://mvn.devos.one/releases/") // Porting Lib
 	maven("https://raw.githubusercontent.com/Fuzss/modresources/main/maven/") // Forge Config API Port
