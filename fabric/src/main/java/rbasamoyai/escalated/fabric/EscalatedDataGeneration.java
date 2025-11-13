@@ -1,6 +1,8 @@
 package rbasamoyai.escalated.fabric;
 
+import com.tterrag.registrate.providers.ProviderType;
 import io.github.fabricators_of_create.porting_lib.data.ExistingFileHelper;
+import net.createmod.ponder.foundation.PonderIndex;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator.Pack.Factory;
@@ -8,8 +10,7 @@ import rbasamoyai.escalated.CreateEscalated;
 import rbasamoyai.escalated.datagen.EscalatedLangGen;
 import rbasamoyai.escalated.datagen.assets.fabric.EscalatedPartialsGen;
 import rbasamoyai.escalated.datagen.data.fabric.EscalatedCraftingRecipeProvider;
-import rbasamoyai.escalated.index.EscalatedPonderIndex;
-import rbasamoyai.escalated.index.EscalatedPonderTags;
+import rbasamoyai.escalated.index.EscalatedPonderPlugin;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -33,9 +34,10 @@ public class EscalatedDataGeneration implements DataGeneratorEntrypoint {
 
 		EscalatedLangGen.prepare();
 		EscalatedCraftingRecipeProvider.register();
-		EscalatedPonderTags.register();
-		EscalatedPonderIndex.register();
-		EscalatedPonderIndex.registerLang();
+		PonderIndex.addPlugin(new EscalatedPonderPlugin());
+		CreateEscalated.REGISTRATE.addDataGenerator(ProviderType.LANG, provider -> {
+			PonderIndex.getLangAccess().provideLang(CreateEscalated.MOD_ID, provider::add);
+		});
 	}
 
 	public static boolean isForge() { return "forge".equals(PLATFORM); }

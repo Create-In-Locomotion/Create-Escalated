@@ -47,10 +47,12 @@ loom {
 	silentMojangMappingsLicense()
 	accessWidenerPath = common.loom.accessWidenerPath
 	forge.convertAccessWideners = true
+	forge.convertAccessWideners = true
 	forge.mixinConfigs(
 		"escalated-common.mixins.json",
 		"escalated.mixins.json",
 	)
+	forge.useCustomMixin = false
 
 	runConfigs.all {
 		isIdeConfigGenerated = true

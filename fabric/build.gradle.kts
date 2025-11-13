@@ -21,7 +21,7 @@ val ci = System.getenv("CI")?.toBoolean() ?: false
 val release = System.getenv("RELEASE")?.toBoolean() ?: false
 val nightly = ci && !release
 val buildNumber = System.getenv("GITHUB_RUN_NUMBER")?.toIntOrNull()
-version = "${mod.version}+create.6.0.6-mc.${minecraftVersion}-fabric${if (nightly) "-build.${buildNumber}" else ""}${if (ci) "" else "-dev"}"
+version = "${mod.version}+create.6.0.8-mc.${minecraftVersion}-fabric${if (nightly) "-build.${buildNumber}" else ""}${if (ci) "" else "-dev"}"
 group = "${mod.group}.$loader"
 base {
 	archivesName.set(mod.id)
@@ -57,9 +57,9 @@ loom {
 			name("Fabric Data Generation")
 			vmArg("-Dfabric-api.datagen")
 			vmArg("-Dfabric-api.datagen.output-dir=${project.rootProject.file("fabric/src/generated/resources")}")
-			vmArg("-Dfabric-api.datagen.modid=createbigcannons")
-			vmArg("-Dporting_lib.datagen.existing_resources=${project.rootProject.file("common/src/main/resources")}")
-			vmArg("-Dcreatebigcannons.datagen.platform=fabric")
+			vmArg("-Dfabric-api.datagen.modid=escalated")
+			vmArg("-Dporting_lib.datagen.existing_resources=${project.rootProject.file("src/main/resources")}")
+			vmArg("-Descalated.datagen.platform=fabric")
 		}
 		create("DataGenForge") {
 			client()
@@ -67,9 +67,9 @@ loom {
 			name("Forge Data Generation (Fabric)")
 			vmArg("-Dfabric-api.datagen")
 			vmArg("-Dfabric-api.datagen.output-dir=${project.rootProject.file("forge/src/generated/resources")}")
-			vmArg("-Dfabric-api.datagen.modid=createbigcannons")
-			vmArg("-Dporting_lib.datagen.existing_resources=${project.rootProject.file("common/src/main/resources")}")
-			vmArg("-Dcreatebigcannons.datagen.platform=forge")
+			vmArg("-Dfabric-api.datagen.modid=escalated")
+			vmArg("-Dporting_lib.datagen.existing_resources=${project.rootProject.file("src/main/resources")}")
+			vmArg("-Descalated.datagen.platform=forge")
 		}
 		all {
 			isIdeConfigGenerated = true
@@ -96,6 +96,7 @@ dependencies {
 		officialMojangMappings { nameSyntheticMembers = false }
 		parchment("org.parchmentmc.data:parchment-${minecraftVersion}:${mod.dep("parchment_version")}@zip")
 	})
+
 	modImplementation("net.fabricmc:fabric-loader:${mod.dep("fabric_loader_version")}")
 	modApi("net.fabricmc.fabric-api:fabric-api:${mod.dep("fabric_api_version")}")
 
@@ -105,7 +106,7 @@ dependencies {
 	}
 
 	// Create - dependencies are added transitively
-	modImplementation("com.simibubi.create:create-fabric-${minecraftVersion}:${mod.dep("create_fabric_version")}")
+	modImplementation("com.simibubi.create:create-fabric:${mod.dep("create_fabric_version")}")
 
 	// Development QOL
 	//modLocalRuntime("curse.maven:spark-361579:${mod.dep("spark_fabric_file")}") // Spark
@@ -175,8 +176,6 @@ tasks.processResources {
 		"fabric_api_version" to mod.dep("fabric_api_version"),
 		"minecraft_version" to minecraftVersion,
 		"create_version" to mod.dep("create_fabric_version"), // on fabric, use the entire version, unlike forge
-		"copycats_breaks" to mod.dep("copycats_breaks_fabric"),
-		"trinkets_breaks" to mod.dep("trinkets_breaks_fabric")
 	)
 }
 
