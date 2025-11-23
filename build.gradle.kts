@@ -43,26 +43,16 @@ dependencies {
 		officialMojangMappings { nameSyntheticMembers = false }
 		parchment("org.parchmentmc.data:parchment-${minecraftVersion}:2023.09.03@zip")
 	})
-    //forge("net.minecraftforge:forge:$minecraftVersion-${mod.dep("forge_loader_version")}")
 
     modImplementation("net.fabricmc:fabric-loader:${mod.dep("fabric_loader_version")}")
     modImplementation("net.fabricmc.fabric-api:fabric-api:${mod.dep("fabric_api_version")}")
 
-    modImplementation("com.simibubi.create:create-fabric:${mod.dep("create_fabric_version")}")
-    //modImplementation("com.simibubi.create:create-${minecraftVersion}:${mod.dep("create_forge_version")}:slim") { isTransitive = false }
-    //modCompileOnly("net.createmod.ponder:Ponder-Forge-${minecraftVersion}:${mod.dep("ponder_forge_version")}")
-	//modImplementation("com.jozufozu.flywheel:flywheel-forge-${minecraftVersion}:${mod.dep("flywheel_forge_version")}")
-    //modCompileOnly("dev.engine-room.flywheel:flywheel-forge-api-${minecraftVersion}:${mod.dep("flywheel_forge_version")}")
-    //modRuntimeOnly("dev.engine-room.flywheel:flywheel-forge-${minecraftVersion}:${mod.dep("flywheel_forge_version")}")
-    //modCompileOnly("com.tterrag.registrate:Registrate:${mod.dep("registrate_forge_version")}")
+    modCompileOnly("com.simibubi.create:create-fabric:${mod.dep("create_fabric_version")}")
 
     "io.github.llamalad7:mixinextras-common:${mod.dep("mixinextras_version")}".let {
         annotationProcessor(it)
         implementation(it)
     }
-
-    //compileOnly("io.github.llamalad7:mixinextras-common:${mod.dep("mixinextras_version")}")
-    //annotationProcessor(include("io.github.llamalad7:mixinextras-forge:${mod.dep("mixinextras_version")}"){})
 }
 
 

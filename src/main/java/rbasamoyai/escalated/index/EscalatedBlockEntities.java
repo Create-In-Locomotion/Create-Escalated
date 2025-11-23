@@ -1,12 +1,13 @@
 package rbasamoyai.escalated.index;
 
+import com.tterrag.registrate.builders.BlockEntityBuilder;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
+import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
+import dev.architectury.injectables.annotations.ExpectPlatform;
 import rbasamoyai.escalated.handrails.HandrailBlockEntity;
 import rbasamoyai.escalated.handrails.HandrailRenderer;
-import rbasamoyai.escalated.handrails.HandrailVisual;
 import rbasamoyai.escalated.walkways.WalkwayBlockEntity;
 import rbasamoyai.escalated.walkways.WalkwayRenderer;
-import rbasamoyai.escalated.walkways.WalkwayVisual;
 
 import static rbasamoyai.escalated.CreateEscalated.REGISTRATE;
 
@@ -14,7 +15,8 @@ public class EscalatedBlockEntities {
 
     public static final BlockEntityEntry<WalkwayBlockEntity> WALKWAY = REGISTRATE
             .blockEntity("walkway", WalkwayBlockEntity::new)
-            .visual(() -> WalkwayVisual::new)
+            .transform(walkwayVisual())
+            //.visual(() -> WalkwayVisual::new)
             .renderer(() -> WalkwayRenderer::new)
             .validBlocks(EscalatedBlocks.METAL_WALKWAY_TERMINAL, EscalatedBlocks.METAL_NARROW_WALKWAY,
                     EscalatedBlocks.METAL_WIDE_WALKWAY_SIDE, EscalatedBlocks.METAL_WIDE_WALKWAY_CENTER,
@@ -26,12 +28,17 @@ public class EscalatedBlockEntities {
 
     public static final BlockEntityEntry<HandrailBlockEntity> HANDRAIL = REGISTRATE
             .blockEntity("handrail", HandrailBlockEntity::new)
-            .visual(() -> HandrailVisual::new)
+            .transform(handrailVisual())
+            //.visual(() -> HandrailVisual::new)
             .renderer(() -> HandrailRenderer::new)
             .validBlocks(EscalatedBlocks.METAL_WALKWAY_HANDRAIL, EscalatedBlocks.METAL_ESCALATOR_HANDRAIL,
                     EscalatedBlocks.WOODEN_WALKWAY_HANDRAIL, EscalatedBlocks.WOODEN_ESCALATOR_HANDRAIL,
                     EscalatedBlocks.GLASS_WALKWAY_HANDRAIL, EscalatedBlocks.GLASS_ESCALATOR_HANDRAIL)
             .register();
+
+    @ExpectPlatform public static <T> NonNullUnaryOperator<BlockEntityBuilder<WalkwayBlockEntity, T>> walkwayVisual() { throw new AssertionError(); }
+
+    @ExpectPlatform public static <T> NonNullUnaryOperator<BlockEntityBuilder<HandrailBlockEntity, T>> handrailVisual() { throw new AssertionError(); }
 
     public static void register() {}
 

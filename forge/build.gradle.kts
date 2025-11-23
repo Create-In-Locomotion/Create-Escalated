@@ -52,7 +52,6 @@ loom {
 		"escalated-common.mixins.json",
 		"escalated.mixins.json",
 	)
-	forge.useCustomMixin = false
 
 	runConfigs.all {
 		isIdeConfigGenerated = true
