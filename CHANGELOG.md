@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.2.0] - Unreleased
+## [1.2.0] - 2025-11-23
 
 Create: Escalated now supports Create v6.0.8 on Forge/Fabric 1.20.1 and NeoForge 1.21.1.
 
