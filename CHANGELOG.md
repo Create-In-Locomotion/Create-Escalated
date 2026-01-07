@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1] - Unreleased
+
+Create: Escalated now supports Create v6.0.8.1 on Fabric 1.20.1.
+
+### Changed:
+- Updated Chinese (Simplified) (zh_cn.json) translation courtesy of LogicWheat
+
 ## [1.2.0] - 2025-11-23
 
 Create: Escalated now supports Create v6.0.8 on Forge/Fabric 1.20.1 and NeoForge 1.21.1.
